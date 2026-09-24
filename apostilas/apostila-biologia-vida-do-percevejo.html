@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apostila Biologia — A Vida do Percevejo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:     #1E293B;
+      --secondary:   #0EA5E9;
+      --accent:      #F59E0B;
+      --bg:          #FFFFFF;
+      --text:        #334155;
+      --muted:       #64748B;
+      --surface:     #F8FAFC;
+      --surface2:    #F1F5F9;
+      --border:      #E2E8F0;
+      --border-dark: #CBD5E1;
+      --success:     #10B981;
+      --danger:      #EF4444;
+      --radius:      8px;
+      --radius-lg:   12px;
+      --shadow:      0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      --shadow-md:   0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15px; }
+    .page { display: block; }
+    main  { max-width: 820px; margin: 0 auto; padding: 3rem 3rem 4rem; }
+
+    .breadcrumb { display: flex; align-items: center; gap: .4rem; font-size: .78rem; color: var(--muted); font-family: 'Inter', sans-serif; margin-bottom: 2.5rem; }
+    .breadcrumb span { color: var(--secondary); font-weight: 600; }
+    .breadcrumb .sep { color: var(--border-dark); }
+
+    .hero { background: var(--primary); border-radius: var(--radius-lg); padding: 2.5rem 2.5rem 2rem; margin-bottom: 2.5rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; border-radius: 50%; background: rgba(14,165,233,.15); }
+    .hero::after  { content: ''; position: absolute; bottom: -40px; left: 40%; width: 160px; height: 160px; border-radius: 50%; background: rgba(245,158,11,.08); }
+    .hero .modulo-tag { display: inline-flex; align-items: center; gap: .4rem; background: rgba(14,165,233,.2); color: #7DD3FC; font-size: .72rem; font-weight: 700; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: .08em; padding: .3rem .75rem; border-radius: 20px; margin-bottom: 1.1rem; border: 1px solid rgba(14,165,233,.3); }
+    .hero h1 { font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 700; color: #fff; line-height: 1.25; margin-bottom: .6rem; }
+    .hero h1 em { color: var(--secondary); font-style: normal; }
+    .hero .hero-desc { color: #94A3B8; font-size: .9rem; max-width: 500px; }
+    .hero-meta { display: flex; gap: 1.5rem; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.08); }
+    .hero-meta .meta-item { font-size: .78rem; color: #64748B; font-family: 'Inter', sans-serif; }
+    .hero-meta .meta-item strong { display: block; color: #94A3B8; margin-bottom: .1rem; font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    .objetivos { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2.5rem; }
+    .objetivos h3 { font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; color: var(--secondary); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+    .objetivos ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .objetivos ul li { display: flex; align-items: flex-start; gap: .5rem; font-size: .85rem; color: var(--text); }
+    .objetivos ul li::before { content: '✓'; color: var(--success); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+
+    section { margin-bottom: 3rem; }
+    .section-header { display: flex; align-items: flex-start; gap: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem; }
+    .section-num { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--secondary); color: #fff; border-radius: var(--radius); font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; flex-shrink: 0; }
+    .section-title-wrap { flex: 1; }
+    .section-title-wrap h2 { font-family: 'Inter', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--primary); line-height: 1.3; }
+    .section-title-wrap .section-sub { font-size: .78rem; color: var(--muted); margin-top: .2rem; }
+    section h3 { font-family: 'Inter', sans-serif; font-size: .95rem; font-weight: 600; color: var(--primary); margin: 1.5rem 0 .6rem; }
+    section p  { color: var(--text); margin-bottom: .85rem; }
+    section ul, section ol { color: var(--text); padding-left: 1.5rem; margin-bottom: .85rem; }
+    section ul li, section ol li { margin-bottom: .4rem; }
+
+    .callout { border-left: 4px solid var(--secondary); background: #EFF6FF; border-radius: 0 var(--radius) var(--radius) 0; padding: 1rem 1.1rem; font-size: .875rem; color: var(--text); margin: 1.25rem 0; }
+    .callout strong { color: var(--primary); }
+    .callout-title { font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--secondary); margin-bottom: .35rem; }
+    .callout.warn { border-color: var(--accent); background: #FFFBEB; }
+    .callout.warn .callout-title { color: var(--accent); }
+    .callout.tip  { border-color: var(--success); background: #F0FDF4; }
+    .callout.tip .callout-title  { color: var(--success); }
+    .callout.key  { border-color: var(--primary); background: var(--surface); }
+    .callout.key .callout-title  { color: var(--primary); }
+
+    .table-wrap { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); margin: 1rem 0 1.5rem; box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    thead tr { background: var(--primary); }
+    thead th { padding: .75rem 1rem; text-align: left; font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #94A3B8; }
+    tbody tr:nth-child(even) { background: var(--surface); }
+    tbody tr:nth-child(odd)  { background: var(--bg); }
+    tbody td { padding: .7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text); }
+    tbody tr:last-child td { border-bottom: none; }
+
+    .steps { display: flex; gap: 0; margin: 1rem 0 1.5rem; }
+    .step { flex: 1; min-width: 90px; background: var(--surface); border: 1px solid var(--border); border-right: none; padding: 1rem .75rem; position: relative; text-align: center; }
+    .step:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+    .step:last-child  { border-right: 1px solid var(--border); border-radius: 0 var(--radius) var(--radius) 0; }
+    .step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--secondary); color: #fff; border-radius: 50%; font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 700; margin-bottom: .5rem; }
+    .step-title { font-size: .78rem; font-weight: 600; color: var(--primary); font-family: 'Inter', sans-serif; margin-bottom: .25rem; }
+    .step-desc  { font-size: .72rem; color: var(--muted); }
+    .step-arrow { position: absolute; right: -10px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; background: var(--secondary); clip-path: polygon(0 0, 100% 50%, 0 100%); z-index: 1; }
+    .step:last-child .step-arrow { display: none; }
+
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; position: relative; overflow: hidden; }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--secondary); border-radius: 4px 0 0 4px; }
+    .card.accent::before  { background: var(--accent); }
+    .card.success::before { background: var(--success); }
+    .card.danger::before  { background: var(--danger); }
+    .card h4 { font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; color: var(--primary); margin-bottom: .5rem; }
+    .card p  { font-size: .82rem; color: var(--muted); margin: 0; }
+
+    .quiz-wrap { margin-top: 1rem; }
+    .quiz { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; }
+    .quiz-q { font-family: 'Inter', sans-serif; font-size: .9rem; font-weight: 600; color: var(--primary); margin-bottom: .85rem; display: flex; gap: .6rem; align-items: flex-start; }
+    .quiz-q .q-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--secondary); color: #fff; border-radius: 50%; font-size: .72rem; font-weight: 700; flex-shrink: 0; margin-top: .1rem; }
+    .options { display: flex; flex-direction: column; gap: .4rem; margin-bottom: .75rem; }
+    .option { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius); padding: .55rem 1rem; font-size: .85rem; font-family: 'Roboto', sans-serif; color: var(--text); display: flex; align-items: center; gap: .6rem; }
+    .option .opt-letter { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border-dark); font-size: .7rem; font-weight: 700; font-family: 'Inter', sans-serif; color: var(--muted); flex-shrink: 0; }
+    .option.correct { border-color: var(--success); background: #F0FDF4; color: #166534; }
+    .option.correct .opt-letter { background: var(--success); border-color: var(--success); color: #fff; }
+    .quiz-answer { font-size: .8rem; color: #166534; background: #F0FDF4; border: 1px solid #86EFAC; border-radius: var(--radius); padding: .5rem .85rem; font-family: 'Inter', sans-serif; }
+
+    code { font-family: 'JetBrains Mono', monospace; font-size: .82em; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: .15em .45em; color: #0369A1; }
+
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 3rem; color: var(--muted); font-size: .78rem; display: flex; justify-content: space-between; align-items: center; font-family: 'Inter', sans-serif; }
+
+    @media (max-width: 768px) {
+      main { padding: 1.5rem 1.25rem; }
+      .objetivos ul, .cards { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.5rem; }
+      .steps { flex-direction: column; }
+      .step { border-right: 1px solid var(--border); border-radius: var(--radius) !important; margin-bottom: .5rem; }
+      footer { flex-direction: column; gap: .5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+<main>
+
+  <div class="breadcrumb">
+    Biologia <span class="sep">›</span> <span>Módulo 1</span> <span class="sep">›</span> Hemípteros — Percevejos
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="modulo-tag">🐛 Biologia · Módulo 1</div>
+    <h1>A Vida do <em>Percevejo</em></h1>
+    <p class="hero-desc">Do ovo ao adulto — explore o ciclo de vida, a anatomia, o comportamento, a ecologia e a importância dos percevejos nos ecossistemas e na agricultura.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><strong>Duração</strong>~40 min</div>
+      <div class="meta-item"><strong>Nível</strong>Ensino Médio / Graduação</div>
+      <div class="meta-item"><strong>Ordem</strong>Hemiptera</div>
+      <div class="meta-item"><strong>Versão</strong>1.0 · Set 2026</div>
+    </div>
+  </div>
+
+  <!-- Objetivos -->
+  <div class="objetivos">
+    <h3>🎯 Objetivos de Aprendizagem</h3>
+    <ul>
+      <li>Classificar o percevejo taxonomicamente</li>
+      <li>Descrever a anatomia externa e os aparelhos bucais</li>
+      <li>Compreender a metamorfose incompleta (hemimetabolia)</li>
+      <li>Identificar as principais espécies e seus habitats</li>
+      <li>Entender o impacto econômico nas culturas agrícolas</li>
+      <li>Reconhecer predadores naturais e métodos de controle</li>
+    </ul>
+  </div>
+
+  <!-- ════════
+       1. CLASSIFICAÇÃO
+  ════════ -->
+  <section id="classificacao">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title-wrap">
+        <h2>Classificação taxonômica</h2>
+        <div class="section-sub">Onde o percevejo se encaixa na árvore da vida</div>
+      </div>
+    </div>
+
+    <p>Os percevejos pertencem à ordem <strong>Hemiptera</strong> — uma das maiores ordens de insetos, com mais de 80.000 espécies descritas. O nome "Hemiptera" vem do grego: <em>hemi</em> (metade) + <em>pteron</em> (asa), referindo-se à característica única das asas anteriores, que são parcialmente endurecidas (chamadas de <strong>hemiélitros</strong>) e parcialmente membranosas.</p>
+
+    <p>Dentro dos Hemiptera, os percevejos verdadeiros pertencem à subordem <strong>Heteroptera</strong> — distinguidos dos demais hemípteros (como cigarrinhas e pulgões) pela posição de repouso das asas, cruzadas em X sobre o abdômen, e pela glândula de odor que produz o característico cheiro defensivo.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Nível</th><th>Classificação</th></tr></thead>
+        <tbody>
+          <tr><td>Reino</td><td>Animalia</td></tr>
+          <tr><td>Filo</td><td>Arthropoda</td></tr>
+          <tr><td>Classe</td><td>Insecta</td></tr>
+          <tr><td>Ordem</td><td>Hemiptera</td></tr>
+          <tr><td>Subordem</td><td>Heteroptera (percevejos verdadeiros)</td></tr>
+          <tr><td>Famílias mais comuns</td><td>Pentatomidae (percevejos-de-cheiro), Cimicidae (percevejos-de-cama), Reduviidae (barbeiros)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout key">
+      <div class="callout-title">🔑 Conceito-Chave</div>
+      Nem todo inseto chamado de "percevejo" é um percevejo verdadeiro. Somente os membros da subordem <strong>Heteroptera</strong> são percevejos verdadeiros. Pulgões, cochonilhas e cigarrinhas são Hemiptera, mas não Heteroptera.
+    </div>
+  </section>
+
+  <!-- ════════
+       2. ANATOMIA
+  ════════ -->
+  <section id="anatomia">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title-wrap">
+        <h2>Anatomia externa</h2>
+        <div class="section-sub">As estruturas que definem o corpo do percevejo</div>
+      </div>
+    </div>
+
+    <p>Como todos os insetos, o percevejo tem o corpo dividido em três tagmas: <strong>cabeça</strong>, <strong>tórax</strong> e <strong>abdômen</strong>. Mas algumas características anatômicas são exclusivas ou marcantes nos Heteroptera.</p>
+
+    <div class="cards">
+      <div class="card">
+        <h4>🔵 Cabeça</h4>
+        <p>Olhos compostos proeminentes, dois ocelos simples (em muitas espécies), antenas segmentadas (geralmente 4–5 segmentos) e o aparelho bucal picador-sugador em forma de rostro articulado.</p>
+      </div>
+      <div class="card accent">
+        <h4>🟡 Tórax — Escutelo</h4>
+        <p>O escutelo (parte dorsal do mesotórax) é uma das estruturas mais características — em Pentatomidae forma um triângulo grande e visível entre as asas. Abriga os músculos do voo e 3 pares de pernas.</p>
+      </div>
+      <div class="card success">
+        <h4>🟢 Hemiélitros (asas anteriores)</h4>
+        <p>Metade basal endurecida (córium) + metade apical membranosa. Em repouso, cruzam-se em X sobre o abdômen — característica diagnóstica dos Heteroptera.</p>
+      </div>
+      <div class="card">
+        <h4>🔴 Glândulas de odor</h4>
+        <p>Localizada no metatórax (adultos) e no abdômen (ninfas). Libera compostos químicos defensivos (aldeídos e ésteres) com odor forte e desagradável quando o animal é ameaçado.</p>
+      </div>
+    </div>
+
+    <h3>O aparelho bucal picador-sugador</h3>
+    <p>A característica mais importante dos Hemiptera é o <strong>rostro</strong> — um aparelho bucal transformado em uma estrutura tubular articulada, composta por estiletes (mandibulares e maxilares) encerrados em um labium (lábio inferior). Com ele, o percevejo perfura tecidos vegetais ou animais e suga seiva, sangue ou outros fluidos. Esse aparelho é responsável tanto pela alimentação quanto pelos danos agrícolas causados por essas espécies.</p>
+
+    <div class="callout tip">
+      <div class="callout-title">💡 Dica</div>
+      Observe a posição do rostro quando o percevejo está em repouso. Em Heteroptera, o rostro fica dobrado sob a cabeça e o tórax. Em outros Hemiptera (cigarrinhas, pulgões), o rostro nasce entre as pernas anteriores — essa diferença de posição é uma das formas de distinguir os grupos.
+    </div>
+  </section>
+
+  <!-- ════════
+       3. CICLO DE VIDA
+  ════════ -->
+  <section id="ciclo">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title-wrap">
+        <h2>Ciclo de vida — Hemimetabolia</h2>
+        <div class="section-sub">A metamorfose incompleta: ovo → ninfa → adulto</div>
+      </div>
+    </div>
+
+    <p>Ao contrário de borboletas e besouros (que passam por metamorfose completa — ovo, larva, pupa, adulto), os percevejos têm <strong>metamorfose incompleta ou hemimetabolia</strong>: o ciclo passa por <strong>ovo → ninfas (5 instares) → adulto</strong>, sem fase de pupa. As ninfas se parecem com adultos em miniatura, mas sem asas desenvolvidas e sem capacidade reprodutiva.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">🥚</div>
+        <div class="step-title">Ovo</div>
+        <div class="step-desc">Postos em grupos de 14–28, geralmente sobre folhas. Formato cilíndrico com opérculo (tampa).</div>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">1°</div>
+        <div class="step-title">1° Instar</div>
+        <div class="step-desc">Ninfas recém-eclodidas. Permanecem agrupadas, ainda não se alimentam de plantas.</div>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">2–4°</div>
+        <div class="step-title">2° ao 4° Instar</div>
+        <div class="step-desc">Alimentação ativa. Surgem brotos de asas progressivamente maiores a cada muda.</div>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">5°</div>
+        <div class="step-title">5° Instar</div>
+        <div class="step-desc">Última fase ninfal. Brotos de asas quase completos. Muito voraz e destrutivo nas lavouras.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">🦟</div>
+        <div class="step-title">Adulto</div>
+        <div class="step-desc">Asas completas, maturidade reprodutiva. Vive de 1 a vários meses conforme a espécie.</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Espécie</th><th>Duração do ciclo</th><th>Gerações por ano</th><th>Longevidade do adulto</th></tr></thead>
+        <tbody>
+          <tr><td><em>Nezara viridula</em> (percevejo-verde)</td><td>30–60 dias</td><td>3–4</td><td>30–90 dias</td></tr>
+          <tr><td><em>Euschistus heros</em> (percevejo-marrom-da-soja)</td><td>40–70 dias</td><td>2–3</td><td>60–120 dias</td></tr>
+          <tr><td><em>Cimex lectularius</em> (percevejo-de-cama)</td><td>35–48 dias</td><td>3–4</td><td>6–12 meses</td></tr>
+          <tr><td><em>Triatoma infestans</em> (barbeiro)</td><td>180–240 dias</td><td>1</td><td>1–2 anos</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">📌 Nota — Diapausa</div>
+      Muitas espécies entram em <strong>diapausa</strong> (dormência fisiológica) durante o inverno, acumulando reservas lipídicas e migrando para refúgios (folhagem seca, fendas em paredes, liteira). Isso explica o aparecimento súbito de grandes populações no início da primavera.
+    </div>
+  </section>
+
+  <!-- ════════
+       4. ALIMENTAÇÃO
+  ════════ -->
+  <section id="alimentacao">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title-wrap">
+        <h2>Alimentação e hábitos</h2>
+        <div class="section-sub">Fitófagos, predadores, hematófagos e detritívoros</div>
+      </div>
+    </div>
+
+    <p>Os percevejos exploram praticamente todos os recursos alimentares disponíveis no ambiente. Embora os fitófagos (que se alimentam de plantas) sejam os mais conhecidos por causa dos danos agrícolas, há grupos predadores importantes no controle biológico, hematófagos de vertebrados e até detritívoros.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Guilda alimentar</th><th>O que comem</th><th>Exemplos</th><th>Papel ecológico</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Fitófago</strong></td>
+            <td>Seiva de plantas — folhas, frutos, sementes, caules</td>
+            <td><em>Nezara viridula</em>, <em>Euschistus heros</em></td>
+            <td>Praga agrícola, vetor de patógenos vegetais</td>
+          </tr>
+          <tr>
+            <td><strong>Predador</strong></td>
+            <td>Outros insetos — lagartas, ácaros, ovos de insetos</td>
+            <td><em>Podisus nigrispinus</em>, <em>Supputius cincticeps</em></td>
+            <td>Controle biológico de pragas</td>
+          </tr>
+          <tr>
+            <td><strong>Hematófago</strong></td>
+            <td>Sangue de vertebrados (humanos, aves, roedores)</td>
+            <td><em>Cimex lectularius</em>, <em>Triatoma infestans</em></td>
+            <td>Parasita; vetor de <em>Trypanosoma cruzi</em> (Doença de Chagas)</td>
+          </tr>
+          <tr>
+            <td><strong>Zoofitófago</strong></td>
+            <td>Mistura de plantas e presas animais</td>
+            <td><em>Orius insidiosus</em></td>
+            <td>Agente de controle biológico de tripes e ácaros</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Como o percevejo fitófago causa dano</h3>
+    <p>O percevejo introduz o rostro no tecido vegetal e injeta saliva com enzimas digestivas que liquefazem as células antes de sugá-las. Esse processo causa: manchas necróticas nas folhas, abortamento de flores e frutos, sementes chochas (sem endosperma), e pode transmitir fungos e vírus fitopatogênicos. Em soja — principal cultura afetada no Brasil — o dano por percevejos é responsável por perdas de <strong>R$ 2–4 bilhões anuais</strong>.</p>
+  </section>
+
+  <!-- ════════
+       5. PRINCIPAIS ESPÉCIES
+  ════════ -->
+  <section id="especies">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title-wrap">
+        <h2>Principais espécies no Brasil</h2>
+        <div class="section-sub">Das lavouras aos domicílios — as espécies de maior relevância</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card danger">
+        <h4>🌱 <em>Euschistus heros</em> — Percevejo-marrom-da-soja</h4>
+        <p>Principal praga da soja no Brasil. Corpo marrom-acinzentado, 11–13 mm. Causa abortamento de vagens e sementes chochas. Desenvolveu resistência a vários inseticidas.</p>
+      </div>
+      <div class="card danger">
+        <h4>🟢 <em>Nezara viridula</em> — Percevejo-verde</h4>
+        <p>Espécie cosmopolita. Verde brilhante em adultos, coloração variável nas ninfas. Ataca soja, feijão, arroz, algodão e mais de 150 espécies de plantas.</p>
+      </div>
+      <div class="card accent">
+        <h4>🏠 <em>Cimex lectularius</em> — Percevejo-de-cama</h4>
+        <p>Hematófago exclusivo de ambientes domésticos. Corpo oval achatado (1,5–7 mm), marrom-avermelhado. Ativo à noite, se esconde em colchões, móveis e frestas durante o dia.</p>
+      </div>
+      <div class="card accent">
+        <h4>🦠 <em>Triatoma infestans</em> — Barbeiro</h4>
+        <p>Vetor da Doença de Chagas (<em>Trypanosoma cruzi</em>). Predominante em regiões rurais do Norte e Nordeste. Defeca ao picar — a infecção ocorre pelo contato das fezes com a picada.</p>
+      </div>
+      <div class="card success">
+        <h4>🔬 <em>Podisus nigrispinus</em> — Percevejo-predador</h4>
+        <p>Predador de lagartas desfolhadoras (principalmente <em>Spodoptera</em>). Usado em programas de controle biológico em eucalipto e soja. Criado comercialmente em laboratório.</p>
+      </div>
+      <div class="card">
+        <h4>🌳 <em>Tibraca limbativentris</em> — Percevejo-do-colmo</h4>
+        <p>Praga do arroz irrigado. Perfura o colmo durante o enchimento do grão causando o sintoma "coração-morto" — o perfilho central murcha e seca enquanto os demais permanecem verdes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════
+       6. DEFESA E COMUNICAÇÃO
+  ════════ -->
+  <section id="defesa">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div class="section-title-wrap">
+        <h2>Mecanismos de defesa e comunicação</h2>
+        <div class="section-sub">O cheiro, os sinais químicos e a vibração como linguagem</div>
+      </div>
+    </div>
+
+    <p>Os percevejos são mestres em comunicação química. A famosa glândula de odor não serve apenas para defesa — os percevejos também usam feromônios para agregar grupos, atrair parceiros sexuais, marcar fontes de alimento e coordenar comportamentos sociais.</p>
+
+    <div class="cards">
+      <div class="card danger">
+        <h4>🛡️ Feromônio de alarme</h4>
+        <p>Liberado pela glândula metatocaral quando o animal é perturbado. Compostos como <em>trans</em>-2-hexenal e aldeídos C6 têm odor forte e alertam outros indivíduos nas proximidades para fuga.</p>
+      </div>
+      <div class="card success">
+        <h4>🤝 Feromônio de agregação</h4>
+        <p>Produzido pelos machos de várias espécies para atrair fêmeas e outros machos ao mesmo local. Base da armadilha de feromônio usada no monitoramento de populações na agricultura.</p>
+      </div>
+      <div class="card accent">
+        <h4>📳 Comunicação por vibração</h4>
+        <p>Percevejos transmitem sinais vibratórios pelo substrato (ramo, caule) com frequências entre 80–200 Hz. Usados durante a corte, para localizar parceiros e coordenar movimentos em grupo.</p>
+      </div>
+      <div class="card">
+        <h4>🎨 Camuflagem e mimetismo</h4>
+        <p>Muitas espécies são verdes ou marrons para mimetizar folhas e cascas. Algumas ninfas imitam formigas (mirmecomorfia) como proteção contra predadores que evitam formigas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════
+       7. IMPACTO ECOLÓGICO E AGRÍCOLA
+  ════════ -->
+  <section id="impacto">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div class="section-title-wrap">
+        <h2>Impacto ecológico e agrícola</h2>
+        <div class="section-sub">Pragas, vetores de doenças e agentes de controle biológico</div>
+      </div>
+    </div>
+
+    <p>Os percevejos ocupam papéis contraditórios nos ecossistemas: são pragas devastadoras de lavouras, vetores de doenças humanas — mas também predadores importantes que controlam populações de outros insetos-praga. Compreender esse dualismo é essencial para manejo sustentável.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Papel</th><th>Espécies envolvidas</th><th>Impacto</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Praga agrícola</strong></td><td><em>E. heros</em>, <em>N. viridula</em>, <em>T. limbativentris</em></td><td>Perdas de até 30% na produção de soja e arroz</td></tr>
+          <tr><td><strong>Vetor de doenças humanas</strong></td><td><em>Triatoma</em> spp. (barbeiros)</td><td>~6–7 milhões de infectados com Chagas no mundo (OMS)</td></tr>
+          <tr><td><strong>Praga doméstica</strong></td><td><em>Cimex lectularius</em></td><td>Dermatite, distúrbios do sono, estigma social</td></tr>
+          <tr><td><strong>Controle biológico</strong></td><td><em>Podisus</em> spp., <em>Orius</em> spp.</td><td>Redução de 40–70% de lagartas e tripes em algumas culturas</td></tr>
+          <tr><td><strong>Polinização e dispersão</strong></td><td>Diversas espécies de Pentatomidae</td><td>Visitantes florais secundários em algumas espécies de plantas</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-title">⚠️ Atenção — Resistência a inseticidas</div>
+      <em>Euschistus heros</em> desenvolveu resistência a piretroides e organofosforados em várias regiões do Brasil — resultado do uso excessivo e sem rotação de princípios ativos. O manejo integrado de pragas (MIP), combinando controle biológico, monitoramento e uso racional de inseticidas, é a abordagem recomendada pela Embrapa.
+    </div>
+  </section>
+
+  <!-- ════════
+       8. EXERCÍCIO PRÁTICO
+  ════════ -->
+  <section id="pratica">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div class="section-title-wrap">
+        <h2>Exercício Prático</h2>
+        <div class="section-sub">Identifique as espécies e classifique os impactos</div>
+      </div>
+    </div>
+
+    <p>Para cada descrição abaixo, identifique a espécie ou grupo e classifique o impacto (benéfico, neutro ou prejudicial):</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Descrição</th><th>Espécie / Grupo</th><th>Impacto</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Inseto marrom, 12 mm, encontrado em vagens de soja no Mato Grosso. Causa sementes chochas e desenvolveu resistência a piretroides.</td>
+            <td style="color:#1D4ED8; font-weight:600;"><em>Euschistus heros</em></td>
+            <td style="color:#DC2626; font-weight:600;">Prejudicial — praga</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Percevejo verde-vivo, encontrado em lavoura de feijão, com rostro inserido em lagarta de <em>Spodoptera</em>. Não há dano visível nas plantas.</td>
+            <td style="color:#15803D; font-weight:600;"><em>Podisus nigrispinus</em></td>
+            <td style="color:#15803D; font-weight:600;">Benéfico — predador</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Inseto oval, achatado, avermelhado, encontrado em colchão de hotel. Paciente relata picadas durante a noite com erupções cutâneas.</td>
+            <td style="color:#1D4ED8; font-weight:600;"><em>Cimex lectularius</em></td>
+            <td style="color:#DC2626; font-weight:600;">Prejudicial — praga doméstica</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Inseto de 2–3 cm encontrado em casa de pau-a-pique no Nordeste. Pica durante o sono e defeca sobre a picada. Paciente com febre e miocardite.</td>
+            <td style="color:#1D4ED8; font-weight:600;"><em>Triatoma infestans</em> (barbeiro)</td>
+            <td style="color:#DC2626; font-weight:600;">Prejudicial — vetor de Chagas</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">✅ Gabarito</div>
+      Os quatro casos foram corretamente identificados na tabela acima. Atenção ao caso 4: a Doença de Chagas não é transmitida pela picada em si, mas pelo contato das <strong>fezes do barbeiro</strong> com a ferida ou mucosas. O reflexo de coçar o local da picada é o principal vetor da transmissão.
+    </div>
+  </section>
+
+  <!-- ════════
+       9. RESUMO
+  ════════ -->
+  <section id="resumo">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div class="section-title-wrap">
+        <h2>Resumo</h2>
+        <div class="section-sub">Principais aprendizados e próximos passos</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h4>🔬 Hemiptera → Heteroptera</h4>
+        <p>Percevejos verdadeiros são da subordem Heteroptera, distinguidos pelos hemiélitros cruzados em X e pela glândula de odor metatoracal.</p>
+      </div>
+      <div class="card accent">
+        <h4>🔄 Metamorfose incompleta</h4>
+        <p>Ovo → 5 instares ninfais → adulto. Sem fase de pupa. Ninfas se parecem com adultos, mas sem asas funcionais nem reprodução.</p>
+      </div>
+      <div class="card success">
+        <h4>⚖️ Vilões e heróis</h4>
+        <p>O mesmo grupo inclui pragas bilionárias da soja, vetores da Doença de Chagas E predadores benéficos usados em controle biológico.</p>
+      </div>
+      <div class="card">
+        <h4>🧪 Química sofisticada</h4>
+        <p>Feromônios de alarme, agregação e corte, além de sinais vibracionais pelo substrato — percevejos têm um dos sistemas de comunicação química mais ricos entre insetos.</p>
+      </div>
+    </div>
+
+    <div class="callout key">
+      <div class="callout-title">🚀 Próximos Passos</div>
+      Aprofunde-se em: <strong>Manejo Integrado de Pragas (MIP) na soja</strong> — uso estratégico de percevejos predadores, monitoramento com armadilhas de feromônio e nível de dano econômico. Explore também <strong>a Doença de Chagas</strong> — epidemiologia, ciclo do <em>Trypanosoma cruzi</em> e programas de controle vetorial no Brasil.
+    </div>
+  </section>
+
+  <!-- ════════
+       10. QUIZ
+  ════════ -->
+  <section id="quiz">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div class="section-title-wrap">
+        <h2>Quiz de Fixação</h2>
+        <div class="section-sub">Teste seus conhecimentos sobre a vida do percevejo</div>
+      </div>
+    </div>
+
+    <div class="quiz-wrap">
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">1</span>Qual é a característica anatômica que dá nome à subordem Heteroptera?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Ter três pares de pernas articuladas</div>
+          <div class="option"><span class="opt-letter">B</span>Possuir aparelho bucal mastigador</div>
+          <div class="option correct"><span class="opt-letter">C</span>Asas anteriores (hemiélitros) com metade endurecida e metade membranosa</div>
+          <div class="option"><span class="opt-letter">D</span>Passar por metamorfose completa com fase de pupa</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — Os hemiélitros (do grego <em>hemi</em> = metade) são a característica definidora dos Heteroptera. A metade basal é esclerotinizada (córium) e a apical é membranosa, cruzando-se em X sobre o abdômen em repouso.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">2</span>Como os percevejos fitófagos causam dano às plantas?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Mastigando e engolindo pedaços de folhas</div>
+          <div class="option correct"><span class="opt-letter">B</span>Injetando saliva com enzimas pelo rostro e sugando as células liquefadas</div>
+          <div class="option"><span class="opt-letter">C</span>Depositando ovos dentro dos frutos, onde as ninfas se desenvolvem</div>
+          <div class="option"><span class="opt-letter">D</span>Secretando toxinas sobre a superfície foliar</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: B — O rostro picador-sugador perfura o tecido vegetal, injeta saliva com enzimas que digerem extracelularmente as células e o conteúdo é absorvido. Isso causa manchas necróticas, frutos abortados e sementes chochas.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">3</span>Qual é o tipo de metamorfose dos percevejos e quais são suas fases?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Holometabolia — ovo, larva, pupa, adulto</div>
+          <div class="option"><span class="opt-letter">B</span>Ametabolia — sem transformação, apenas crescimento</div>
+          <div class="option correct"><span class="opt-letter">C</span>Hemimetabolia — ovo, ninfas (5 instares), adulto</div>
+          <div class="option"><span class="opt-letter">D</span>Holometabolia — ovo, ninfa, crisálida, adulto</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — Hemimetabolia (metamorfose incompleta) é a característica dos Hemiptera. Não há fase de pupa; as ninfas se assemelham ao adulto e passam por 5 mudas antes de atingir a forma adulta com asas funcionais.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">4</span>Como ocorre a transmissão da Doença de Chagas pelo barbeiro (<em>Triatoma infestans</em>)?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Diretamente pela picada, pois a saliva contém o <em>Trypanosoma</em></div>
+          <div class="option"><span class="opt-letter">B</span>Por inalação de fezes secas do barbeiro no ambiente</div>
+          <div class="option correct"><span class="opt-letter">C</span>Pelo contato das fezes do barbeiro com a ferida da picada ou mucosas, ao coçar o local</div>
+          <div class="option"><span class="opt-letter">D</span>Por transfusão sanguínea entre barbeiros — não afeta humanos diretamente</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — O <em>Trypanosoma cruzi</em> está nas fezes do barbeiro, não na saliva. O inseto defeca sobre ou perto do local da picada; ao coçar, a pessoa introduz o parasita pela ferida ou mucosas. Por isso a localização da picada importa — picadas próximas aos olhos (sinal de Romaña) são de alto risco.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">5</span>Qual percevejo é utilizado como agente de controle biológico em lavouras de soja e eucalipto?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span><em>Euschistus heros</em></div>
+          <div class="option"><span class="opt-letter">B</span><em>Nezara viridula</em></div>
+          <div class="option correct"><span class="opt-letter">C</span><em>Podisus nigrispinus</em></div>
+          <div class="option"><span class="opt-letter">D</span><em>Tibraca limbativentris</em></div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — <em>Podisus nigrispinus</em> é um percevejo predador da família Pentatomidae, criado comercialmente para controle de lagartas desfolhadoras como <em>Spodoptera frugiperda</em> e <em>Anticarsia gemmatalis</em>. As outras opções são pragas fitófagas.</div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+</div>
+
+<footer>
+  <span>Apostila Biologia — Módulo 1: A Vida do Percevejo</span>
+  <span>LAB365 × SENAI · Workshop Kiro &amp; Agentes na AWS</span>
+</footer>
+
+</body>
+</html>

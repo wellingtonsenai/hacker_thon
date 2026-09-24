@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apostila Saúde — A Importância de Beber Água</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:     #1E293B;
+      --secondary:   #0EA5E9;
+      --accent:      #F59E0B;
+      --bg:          #FFFFFF;
+      --text:        #334155;
+      --muted:       #64748B;
+      --surface:     #F8FAFC;
+      --surface2:    #F1F5F9;
+      --border:      #E2E8F0;
+      --border-dark: #CBD5E1;
+      --success:     #10B981;
+      --danger:      #EF4444;
+      --code-bg:     #0F172A;
+      --code-text:   #E2E8F0;
+      --radius:      8px;
+      --radius-lg:   12px;
+      --shadow:      0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      --shadow-md:   0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15px; }
+    .page { display: block; }
+    main  { max-width: 820px; margin: 0 auto; padding: 3rem 3rem 4rem; }
+
+    .breadcrumb { display: flex; align-items: center; gap: .4rem; font-size: .78rem; color: var(--muted); font-family: 'Inter', sans-serif; margin-bottom: 2.5rem; }
+    .breadcrumb span { color: var(--secondary); font-weight: 600; }
+    .breadcrumb .sep { color: var(--border-dark); }
+
+    .hero { background: var(--primary); border-radius: var(--radius-lg); padding: 2.5rem 2.5rem 2rem; margin-bottom: 2.5rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; border-radius: 50%; background: rgba(14,165,233,.15); }
+    .hero::after  { content: ''; position: absolute; bottom: -40px; left: 40%; width: 160px; height: 160px; border-radius: 50%; background: rgba(245,158,11,.08); }
+    .hero .modulo-tag { display: inline-flex; align-items: center; gap: .4rem; background: rgba(14,165,233,.2); color: #7DD3FC; font-size: .72rem; font-weight: 700; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: .08em; padding: .3rem .75rem; border-radius: 20px; margin-bottom: 1.1rem; border: 1px solid rgba(14,165,233,.3); }
+    .hero h1 { font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 700; color: #fff; line-height: 1.25; margin-bottom: .6rem; }
+    .hero h1 em { color: var(--secondary); font-style: normal; }
+    .hero .hero-desc { color: #94A3B8; font-size: .9rem; max-width: 500px; }
+    .hero-meta { display: flex; gap: 1.5rem; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.08); }
+    .hero-meta .meta-item { font-size: .78rem; color: #64748B; font-family: 'Inter', sans-serif; }
+    .hero-meta .meta-item strong { display: block; color: #94A3B8; margin-bottom: .1rem; font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    .objetivos { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2.5rem; }
+    .objetivos h3 { font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; color: var(--secondary); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+    .objetivos ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .objetivos ul li { display: flex; align-items: flex-start; gap: .5rem; font-size: .85rem; color: var(--text); }
+    .objetivos ul li::before { content: '✓'; color: var(--success); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+
+    section { margin-bottom: 3rem; }
+    .section-header { display: flex; align-items: flex-start; gap: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem; }
+    .section-num { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--secondary); color: #fff; border-radius: var(--radius); font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; flex-shrink: 0; }
+    .section-title-wrap { flex: 1; }
+    .section-title-wrap h2 { font-family: 'Inter', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--primary); line-height: 1.3; }
+    .section-title-wrap .section-sub { font-size: .78rem; color: var(--muted); margin-top: .2rem; }
+    section h3 { font-family: 'Inter', sans-serif; font-size: .95rem; font-weight: 600; color: var(--primary); margin: 1.5rem 0 .6rem; }
+    section p  { color: var(--text); margin-bottom: .85rem; }
+    section ul, section ol { color: var(--text); padding-left: 1.5rem; margin-bottom: .85rem; }
+    section ul li, section ol li { margin-bottom: .4rem; }
+
+    .callout { border-left: 4px solid var(--secondary); background: #EFF6FF; border-radius: 0 var(--radius) var(--radius) 0; padding: 1rem 1.1rem; font-size: .875rem; color: var(--text); margin: 1.25rem 0; }
+    .callout strong { color: var(--primary); }
+    .callout-title { font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--secondary); margin-bottom: .35rem; }
+    .callout.warn { border-color: var(--accent); background: #FFFBEB; }
+    .callout.warn .callout-title { color: var(--accent); }
+    .callout.tip  { border-color: var(--success); background: #F0FDF4; }
+    .callout.tip .callout-title  { color: var(--success); }
+    .callout.key  { border-color: var(--primary); background: var(--surface); }
+    .callout.key .callout-title  { color: var(--primary); }
+
+    .table-wrap { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); margin: 1rem 0 1.5rem; box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    thead tr { background: var(--primary); }
+    thead th { padding: .75rem 1rem; text-align: left; font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #94A3B8; }
+    tbody tr:nth-child(even) { background: var(--surface); }
+    tbody tr:nth-child(odd)  { background: var(--bg); }
+    tbody td { padding: .7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text); }
+    tbody tr:last-child td { border-bottom: none; }
+
+    .steps { display: flex; gap: 0; margin: 1rem 0 1.5rem; }
+    .step { flex: 1; min-width: 90px; background: var(--surface); border: 1px solid var(--border); border-right: none; padding: 1rem .75rem; position: relative; text-align: center; }
+    .step:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+    .step:last-child  { border-right: 1px solid var(--border); border-radius: 0 var(--radius) var(--radius) 0; }
+    .step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--secondary); color: #fff; border-radius: 50%; font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 700; margin-bottom: .5rem; }
+    .step-title { font-size: .78rem; font-weight: 600; color: var(--primary); font-family: 'Inter', sans-serif; margin-bottom: .25rem; }
+    .step-desc  { font-size: .72rem; color: var(--muted); }
+    .step-arrow { position: absolute; right: -10px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; background: var(--secondary); clip-path: polygon(0 0, 100% 50%, 0 100%); z-index: 1; }
+    .step:last-child .step-arrow { display: none; }
+
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; position: relative; overflow: hidden; }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--secondary); border-radius: 4px 0 0 4px; }
+    .card.accent::before  { background: var(--accent); }
+    .card.success::before { background: var(--success); }
+    .card.danger::before  { background: var(--danger); }
+    .card h4 { font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; color: var(--primary); margin-bottom: .5rem; }
+    .card p  { font-size: .82rem; color: var(--muted); margin: 0; }
+
+    /* Medidor de hidratação visual */
+    .hidro-bar { margin: 1rem 0 1.5rem; }
+    .hidro-row { display: flex; align-items: center; gap: .75rem; margin-bottom: .6rem; }
+    .hidro-label { font-size: .78rem; font-family: 'Inter', sans-serif; color: var(--muted); width: 120px; flex-shrink: 0; }
+    .hidro-track { flex: 1; height: 10px; background: var(--surface2); border-radius: 10px; overflow: hidden; }
+    .hidro-fill  { height: 100%; border-radius: 10px; }
+    .hidro-val   { font-size: .75rem; font-family: 'JetBrains Mono', monospace; color: var(--text); width: 50px; text-align: right; flex-shrink: 0; }
+
+    .quiz-wrap { margin-top: 1rem; }
+    .quiz { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; }
+    .quiz-q { font-family: 'Inter', sans-serif; font-size: .9rem; font-weight: 600; color: var(--primary); margin-bottom: .85rem; display: flex; gap: .6rem; align-items: flex-start; }
+    .quiz-q .q-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--secondary); color: #fff; border-radius: 50%; font-size: .72rem; font-weight: 700; flex-shrink: 0; margin-top: .1rem; }
+    .options { display: flex; flex-direction: column; gap: .4rem; margin-bottom: .75rem; }
+    .option { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius); padding: .55rem 1rem; font-size: .85rem; font-family: 'Roboto', sans-serif; color: var(--text); display: flex; align-items: center; gap: .6rem; }
+    .option .opt-letter { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border-dark); font-size: .7rem; font-weight: 700; font-family: 'Inter', sans-serif; color: var(--muted); flex-shrink: 0; }
+    .option.correct { border-color: var(--success); background: #F0FDF4; color: #166534; }
+    .option.correct .opt-letter { background: var(--success); border-color: var(--success); color: #fff; }
+    .quiz-answer { font-size: .8rem; color: #166534; background: #F0FDF4; border: 1px solid #86EFAC; border-radius: var(--radius); padding: .5rem .85rem; font-family: 'Inter', sans-serif; }
+
+    code { font-family: 'JetBrains Mono', monospace; font-size: .82em; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: .15em .45em; color: #0369A1; }
+
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 3rem; color: var(--muted); font-size: .78rem; display: flex; justify-content: space-between; align-items: center; font-family: 'Inter', sans-serif; }
+
+    @media (max-width: 768px) {
+      main { padding: 1.5rem 1.25rem; }
+      .objetivos ul, .cards { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.5rem; }
+      .steps { flex-direction: column; }
+      .step { border-right: 1px solid var(--border); border-radius: var(--radius) !important; margin-bottom: .5rem; }
+      footer { flex-direction: column; gap: .5rem; text-align: center; }
+      .hidro-row { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+<main>
+
+  <div class="breadcrumb">
+    Saúde &amp; Bem-estar <span class="sep">›</span> <span>Módulo 1</span> <span class="sep">›</span> Hidratação
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="modulo-tag">💧 Saúde · Módulo 1</div>
+    <h1>A Importância de <em>Beber Água</em></h1>
+    <p class="hero-desc">Entenda por que a água é o nutriente mais essencial do corpo humano, quanto você realmente precisa beber por dia, o que acontece quando você não bebe o suficiente — e como criar o hábito de se hidratar corretamente.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><strong>Duração</strong>~35 min</div>
+      <div class="meta-item"><strong>Nível</strong>Todos os públicos</div>
+      <div class="meta-item"><strong>Módulo</strong>1 de 1</div>
+      <div class="meta-item"><strong>Versão</strong>1.0 · Set 2026</div>
+    </div>
+  </div>
+
+  <!-- Objetivos -->
+  <div class="objetivos">
+    <h3>🎯 Objetivos de Aprendizagem</h3>
+    <ul>
+      <li>Compreender as funções vitais da água no organismo</li>
+      <li>Calcular a quantidade ideal de água por dia</li>
+      <li>Reconhecer os sinais de desidratação leve e grave</li>
+      <li>Entender como a desidratação afeta o cérebro e o humor</li>
+      <li>Identificar alimentos que contribuem para a hidratação</li>
+      <li>Criar estratégias práticas para beber mais água no dia a dia</li>
+    </ul>
+  </div>
+
+  <!-- ════════
+       1. O CORPO É ÁGUA
+  ════════ -->
+  <section id="corpo-agua">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title-wrap">
+        <h2>O corpo humano é feito de água</h2>
+        <div class="section-sub">Por que a água é o nutriente mais essencial da vida</div>
+      </div>
+    </div>
+
+    <p>Cerca de <strong>60% do peso corporal de um adulto é água</strong> — chegando a 75% em recém-nascidos. Não existe nenhum processo biológico no corpo humano que não dependa direta ou indiretamente da água: desde a digestão e absorção de nutrientes até a regulação da temperatura, a transmissão de impulsos nervosos e a lubrificação das articulações.</p>
+
+    <p>Diferente de gorduras, proteínas e carboidratos, o corpo não armazena água. Perdemos água continuamente através da urina, suor, respiração e fezes — e precisamos repor constantemente. Uma perda de apenas <strong>2% do peso corporal em água</strong> já compromete o desempenho físico e cognitivo.</p>
+
+    <div class="callout key">
+      <div class="callout-title">🔑 Conceito-Chave</div>
+      A água não é apenas "sede" — é o <strong>solvente universal da bioquímica humana</strong>. Todas as reações químicas do metabolismo acontecem em meio aquoso. Sem água suficiente, enzimas trabalham com menos eficiência, toxinas se acumulam e células não conseguem se comunicar.
+    </div>
+
+    <h3>Distribuição da água no corpo</h3>
+    <div class="hidro-bar">
+      <div class="hidro-row">
+        <div class="hidro-label">Sangue</div>
+        <div class="hidro-track"><div class="hidro-fill" style="width:83%;background:#0EA5E9;"></div></div>
+        <div class="hidro-val">83%</div>
+      </div>
+      <div class="hidro-row">
+        <div class="hidro-label">Pulmões</div>
+        <div class="hidro-track"><div class="hidro-fill" style="width:80%;background:#38BDF8;"></div></div>
+        <div class="hidro-val">80%</div>
+      </div>
+      <div class="hidro-row">
+        <div class="hidro-label">Músculos</div>
+        <div class="hidro-track"><div class="hidro-fill" style="width:75%;background:#0EA5E9;"></div></div>
+        <div class="hidro-val">75%</div>
+      </div>
+      <div class="hidro-row">
+        <div class="hidro-label">Cérebro</div>
+        <div class="hidro-track"><div class="hidro-fill" style="width:73%;background:#38BDF8;"></div></div>
+        <div class="hidro-val">73%</div>
+      </div>
+      <div class="hidro-row">
+        <div class="hidro-label">Pele</div>
+        <div class="hidro-track"><div class="hidro-fill" style="width:64%;background:#7DD3FC;"></div></div>
+        <div class="hidro-val">64%</div>
+      </div>
+      <div class="hidro-row">
+        <div class="hidro-label">Ossos</div>
+        <div class="hidro-track"><div class="hidro-fill" style="width:31%;background:#BAE6FD;"></div></div>
+        <div class="hidro-val">31%</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════
+       2. FUNÇÕES DA ÁGUA
+  ════════ -->
+  <section id="funcoes">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title-wrap">
+        <h2>Funções vitais da água no organismo</h2>
+        <div class="section-sub">O que acontece dentro do seu corpo a cada gole</div>
+      </div>
+    </div>
+
+    <p>A água não serve apenas para "hidratar" — ela desempenha funções essenciais em praticamente todos os sistemas do corpo. Entender essas funções transforma a água de algo trivial em algo que você passa a valorizar de verdade.</p>
+
+    <div class="cards">
+      <div class="card">
+        <h4>🌡️ Regulação térmica</h4>
+        <p>O suor é o mecanismo de resfriamento do corpo. Sem água suficiente, a produção de suor cai, a temperatura corporal sobe e o risco de hipertermia (superaquecimento) aumenta — especialmente em exercícios ou dias quentes.</p>
+      </div>
+      <div class="card success">
+        <h4>🧹 Eliminação de toxinas</h4>
+        <p>Os rins filtram cerca de 180 litros de sangue por dia, eliminando resíduos metabólicos pela urina. Pouca água = urina concentrada = maior risco de cálculos renais e infecções urinárias.</p>
+      </div>
+      <div class="card accent">
+        <h4>🍽️ Digestão e absorção</h4>
+        <p>A saliva, o suco gástrico e os sucos intestinais são compostos majoritariamente de água. A digestão de fibras, proteínas e carboidratos depende de um ambiente aquoso adequado para as enzimas digestivas atuarem.</p>
+      </div>
+      <div class="card">
+        <h4>🦴 Lubrificação das articulações</h4>
+        <p>O líquido sinovial (que protege as articulações) é composto de água. Desidratação crônica reduz esse líquido, aumentando o atrito entre ossos e contribuindo para dores articulares.</p>
+      </div>
+      <div class="card">
+        <h4>🧠 Função cerebral</h4>
+        <p>O cérebro é 73% água. Mesmo uma desidratação leve (1–2%) reduz concentração, velocidade de raciocínio, memória de curto prazo e eleva a percepção de fadiga e ansiedade.</p>
+      </div>
+      <div class="card success">
+        <h4>💉 Transporte de nutrientes</h4>
+        <p>O sangue — que é 83% água — é o veículo que transporta oxigênio, glicose, vitaminas e minerais para cada célula do corpo, e leva os resíduos metabólicos de volta aos órgãos de eliminação.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════
+       3. QUANTO BEBER
+  ════════ -->
+  <section id="quantidade">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title-wrap">
+        <h2>Quanto você precisa beber por dia?</h2>
+        <div class="section-sub">Calculando a ingestão ideal para o seu perfil</div>
+      </div>
+    </div>
+
+    <p>A recomendação genérica de "8 copos por dia" é uma simplificação. A necessidade real varia com peso, nível de atividade física, temperatura ambiente, e condições de saúde. A fórmula mais usada por nutricionistas é baseada no peso corporal.</p>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:1.5rem; margin:1rem 0 1.5rem; text-align:center;">
+      <p style="font-family:'Inter',sans-serif; font-size:.78rem; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:.5rem;">Fórmula base (OMS)</p>
+      <p style="font-family:'JetBrains Mono',monospace; font-size:1.3rem; color:var(--secondary); font-weight:700; margin-bottom:.5rem;">35 ml × kg de peso corporal</p>
+      <p style="font-size:.82rem; color:var(--muted); margin:0;">Exemplo: 70 kg × 35 ml = <strong style="color:var(--primary)">2.450 ml/dia (~2,4 litros)</strong></p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Perfil</th><th>Recomendação diária</th><th>Observação</th></tr></thead>
+        <tbody>
+          <tr><td>Adulto sedentário (70 kg)</td><td>2,0 – 2,5 litros</td><td>Inclui água de alimentos (~20% do total)</td></tr>
+          <tr><td>Adulto ativo / pratica esporte</td><td>3,0 – 4,0 litros</td><td>+500 ml a cada hora de exercício intenso</td></tr>
+          <tr><td>Gestante</td><td>2,3 – 3,0 litros</td><td>Recomendação aumenta no 3° trimestre</td></tr>
+          <tr><td>Lactante</td><td>3,1 – 3,8 litros</td><td>A produção de leite consome ~800 ml/dia</td></tr>
+          <tr><td>Idosos (60+ anos)</td><td>1,6 – 2,0 litros</td><td>Senso de sede reduzido — hidratação ativa necessária</td></tr>
+          <tr><td>Criança (6–12 anos)</td><td>1,5 – 2,0 litros</td><td>Adaptar conforme peso e atividade</td></tr>
+          <tr><td>Clima quente / febre</td><td>+500 ml por grau acima de 37°C</td><td>Reposição de perdas aumentadas por suor</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">💡 Dica — A cor da urina é o melhor indicador</div>
+      Não precisa contar copos. Observe a cor da urina: <strong>amarelo claro (palha)</strong> = bem hidratado. <strong>Amarelo escuro ou âmbar</strong> = precisa beber mais. <strong>Incolor</strong> = excessivamente hidratado (raro problema, mas possível). Urina com cheiro forte também sinaliza concentração excessiva.
+    </div>
+  </section>
+
+  <!-- ════════
+       4. DESIDRATAÇÃO
+  ════════ -->
+  <section id="desidratacao">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title-wrap">
+        <h2>Desidratação — níveis e consequências</h2>
+        <div class="section-sub">O que acontece quando o corpo perde mais água do que recebe</div>
+      </div>
+    </div>
+
+    <p>A desidratação é progressiva. O corpo manda sinais crescentes de alerta — mas muitas pessoas ignoram ou confundem esses sinais com outras condições (dor de cabeça, cansaço, irritabilidade). Conhecer os estágios ajuda a agir antes de chegar a um nível perigoso.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Nível</th><th>Perda de água</th><th>Sintomas</th><th>O que fazer</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong style="color:#F59E0B;">Leve</strong></td>
+            <td>1 – 2%</td>
+            <td>Sede, boca seca, urina amarela escura, leve dor de cabeça, redução da concentração</td>
+            <td>Beber água imediatamente — 1–2 copos</td>
+          </tr>
+          <tr>
+            <td><strong style="color:#F97316;">Moderada</strong></td>
+            <td>3 – 5%</td>
+            <td>Dor de cabeça intensa, fadiga, tontura, redução da urina, irritabilidade, câimbras</td>
+            <td>Reidratação oral com água ou soro; descanso</td>
+          </tr>
+          <tr>
+            <td><strong style="color:#EF4444;">Grave</strong></td>
+            <td>6 – 8%</td>
+            <td>Confusão mental, batimentos cardíacos acelerados, pele sem elasticidade, febre, ausência de urina</td>
+            <td>Atendimento médico urgente — risco de vida</td>
+          </tr>
+          <tr>
+            <td><strong style="color:#7C3AED;">Crítica</strong></td>
+            <td>acima de 10%</td>
+            <td>Falência de órgãos, choque hipovolêmico, inconsciência</td>
+            <td>Emergência hospitalar — reidratação intravenosa</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Desidratação crônica leve — o problema silencioso</h3>
+    <p>A maioria das pessoas não chega a desidratação grave, mas vive em estado de <strong>desidratação crônica leve</strong> — perdendo 1–2% de água diariamente sem repor adequadamente. Os efeitos se acumulam: queda de produtividade, constipação intestinal, dores de cabeça recorrentes, pele ressecada, raciocínio mais lento e humor instável.</p>
+
+    <div class="callout warn">
+      <div class="callout-title">⚠️ Atenção — Idosos e crianças pequenas</div>
+      Idosos têm o mecanismo de sede comprometido — não sentem sede mesmo desidratados. Crianças pequenas perdem água proporcionalmente mais rápido pelo peso. Nesses grupos, a hidratação precisa ser <strong>ativa e programada</strong>, não dependente da sensação de sede.
+    </div>
+  </section>
+
+  <!-- ════════
+       5. ÁGUA E O CÉREBRO
+  ════════ -->
+  <section id="cerebro">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title-wrap">
+        <h2>Água e o cérebro</h2>
+        <div class="section-sub">Como a hidratação afeta concentração, humor e desempenho mental</div>
+      </div>
+    </div>
+
+    <p>O cérebro é o órgão mais sensível à desidratação depois dos rins. Como é composto por 73% de água e tem altíssima demanda metabólica, uma queda de apenas <strong>1–2% na hidratação</strong> já produz efeitos mensuráveis na função cognitiva — mesmo sem a pessoa sentir sede intensa.</p>
+
+    <div class="cards">
+      <div class="card danger">
+        <h4>🧩 Concentração e memória</h4>
+        <p>Estudos mostram queda de até 12% no desempenho em testes de atenção e memória de trabalho com desidratação de apenas 1,4%. O raciocínio fica mais lento e os erros aumentam.</p>
+      </div>
+      <div class="card danger">
+        <h4>😟 Humor e ansiedade</h4>
+        <p>Desidratação leve aumenta a percepção de fadiga, tensão e ansiedade. Pesquisas com mulheres jovens mostraram piora significativa no humor mesmo com perda mínima de líquido.</p>
+      </div>
+      <div class="card success">
+        <h4>⚡ Energia e disposição</h4>
+        <p>A sensação de cansaço sem causa aparente pela tarde é frequentemente desidratação leve. Um copo de água pode restaurar a disposição mais rapidamente do que uma xícara de café.</p>
+      </div>
+      <div class="card success">
+        <h4>🤕 Dor de cabeça</h4>
+        <p>A cefaleia por desidratação ocorre porque o volume de sangue cai levemente, reduzindo a pressão ao redor do cérebro. É um dos primeiros e mais comuns sinais de que você precisa de água.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">💡 Dica — Beba antes de sentir sede</div>
+      A sensação de sede é um sinal tardio de desidratação — quando ela aparece, você já perdeu cerca de 1–2% do peso em água. Estabeleça o hábito de beber nos horários fixos do dia, independente de sentir sede.
+    </div>
+  </section>
+
+  <!-- ════════
+       6. ALIMENTOS COM ÁGUA
+  ════════ -->
+  <section id="alimentos">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div class="section-title-wrap">
+        <h2>Alimentos que hidratam</h2>
+        <div class="section-sub">Cerca de 20% da hidratação diária vem dos alimentos</div>
+      </div>
+    </div>
+
+    <p>Beber água pura é a forma mais eficiente de se hidratar, mas a alimentação contribui com cerca de <strong>20% da ingestão hídrica diária</strong>. Frutas e vegetais frescos têm alto teor de água e, além de hidratar, fornecem eletrólitos (potássio, magnésio, sódio) que ajudam o corpo a reter e utilizar a água de forma mais eficiente.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Alimento</th><th>Teor de água</th><th>Bônus nutricional</th></tr></thead>
+        <tbody>
+          <tr><td>🥒 Pepino</td><td>97%</td><td>Vitamina K, potássio, sílica (pele e unhas)</td></tr>
+          <tr><td>🍉 Melancia</td><td>92%</td><td>Licopeno (antioxidante), potássio, vitamina C</td></tr>
+          <tr><td>🍓 Morango</td><td>91%</td><td>Vitamina C, folato, antioxidantes</td></tr>
+          <tr><td>🍑 Pêssego</td><td>89%</td><td>Vitaminas A e C, betacaroteno</td></tr>
+          <tr><td>🫑 Pimentão</td><td>92%</td><td>3× mais vitamina C que laranja</td></tr>
+          <tr><td>🥬 Alface</td><td>96%</td><td>Ferro, cálcio, vitamina K</td></tr>
+          <tr><td>🍊 Laranja</td><td>87%</td><td>Vitamina C, folato, flavonoides</td></tr>
+          <tr><td>🧅 Caldo de sopa</td><td>92–95%</td><td>Eletrólitos, colágeno (caldo de ossos)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-title">⚠️ Atenção — Bebidas que desidratam</div>
+      Café e chá com cafeína têm leve efeito diurético — fazem o corpo eliminar mais água. <strong>Álcool</strong> suprime o hormônio antidiurético (ADH), causando desidratação intensa (o que explica a ressaca). Refrigerantes e bebidas açucaradas não substituem a água — o açúcar e o sódio podem piorar a desidratação.
+    </div>
+  </section>
+
+  <!-- ════════
+       7. COMO CRIAR O HÁBITO
+  ════════ -->
+  <section id="habito">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div class="section-title-wrap">
+        <h2>Como criar o hábito de beber mais água</h2>
+        <div class="section-sub">Estratégias práticas que funcionam no dia a dia</div>
+      </div>
+    </div>
+
+    <p>Saber que precisa beber mais água é fácil. O desafio é transformar isso em comportamento automático. As melhores estratégias se baseiam na ancoragem de hábitos — vincular o ato de beber água a algo que você já faz todos os dias.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">1</div>
+        <div class="step-title">Ao acordar</div>
+        <div class="step-desc">1 copo (300 ml) em jejum — reidrata após 8h sem ingestão</div>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">2</div>
+        <div class="step-title">Antes das refeições</div>
+        <div class="step-desc">1 copo 30 min antes — auxilia digestão e reduz compulsão</div>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">3</div>
+        <div class="step-title">A cada 1–2h</div>
+        <div class="step-desc">Garrafa visível na mesa como lembrete passivo</div>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">4</div>
+        <div class="step-title">Após o banheiro</div>
+        <div class="step-desc">Repõe imediatamente o que foi eliminado</div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-title">Antes de dormir</div>
+        <div class="step-desc">1 copo pequeno — sem exagerar para não interromper o sono</div>
+      </div>
+    </div>
+
+    <h3>Outras estratégias eficazes</h3>
+    <ul>
+      <li><strong>Garrafa com marcações de hora</strong> — indica quanto você deveria ter bebido em cada momento do dia</li>
+      <li><strong>Adicionar sabor</strong> — rodelas de limão, pepino, gengibre ou folhas de hortelã tornam a água mais apetitosa</li>
+      <li><strong>Substituir um refrigerante por dia</strong> — começa com pequenas trocas, não com mudanças radicais</li>
+      <li><strong>Aplicativo de lembretes</strong> — apps como Plant Nanny, WaterMinder ou lembretes simples do celular funcionam bem no início</li>
+      <li><strong>Beber antes de café ou chá</strong> — cria associação automática entre o hábito atual e o novo</li>
+    </ul>
+  </section>
+
+  <!-- ════════
+       8. EXERCÍCIO
+  ════════ -->
+  <section id="pratica">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div class="section-title-wrap">
+        <h2>Exercício Prático</h2>
+        <div class="section-sub">Calcule sua necessidade diária e identifique os erros</div>
+      </div>
+    </div>
+
+    <p>Use a fórmula <code>35 ml × peso (kg)</code> para calcular quanto você deveria beber por dia. Depois, analise o cenário abaixo e identifique os problemas:</p>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:1.5rem; margin:1rem 0; font-size:.875rem; line-height:1.9;">
+      <p style="margin:0;"><em>"João tem 80 kg, trabalha 8h por dia em escritório com ar-condicionado, pratica musculação 3× por semana. No dia típico ele toma 2 cafés pela manhã, almoça e janta normalmente, bebe 1 copo de refrigerante no jantar e às vezes toma água quando sente sede — em média 3–4 copos por dia. Ultimamente tem acordado com dor de cabeça, sente cansaço à tarde e percebe que a urina está amarela escura."</em></p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">✅ Gabarito</div>
+      <p style="margin:.4rem 0 .5rem; font-weight:600;">Necessidade diária de João:</p>
+      <p style="margin:0 0 .75rem;">80 kg × 35 ml = <strong>2.800 ml/dia</strong>. Com musculação, acrescente +500 ml nos dias de treino = <strong>3.300 ml</strong>.</p>
+      <p style="margin:.4rem 0 .5rem; font-weight:600;">Problemas identificados:</p>
+      <ol style="margin:0 0 0 1.25rem; font-size:.85rem; line-height:1.8;">
+        <li><strong>Ingestão insuficiente</strong> — 3–4 copos (~750 ml) é menos de 30% do necessário</li>
+        <li><strong>Dependência da sede</strong> — sede é sinal tardio; deve beber proativamente</li>
+        <li><strong>Café sem compensação</strong> — 2 cafés têm leve efeito diurético; cada um deve ser compensado com 1 copo extra de água</li>
+        <li><strong>Refrigerante no jantar</strong> — açúcar e sódio pioram a hidratação; substituir por água com limão</li>
+        <li><strong>Ar-condicionado</strong> — ambiente seco aumenta a perda de água pela respiração</li>
+        <li><strong>Sintomas já presentes</strong> — dor de cabeça matinal, cansaço à tarde e urina escura são sinais clássicos de desidratação crônica leve</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ════════
+       9. RESUMO
+  ════════ -->
+  <section id="resumo">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div class="section-title-wrap">
+        <h2>Resumo</h2>
+        <div class="section-sub">Principais aprendizados e próximos passos</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h4>💧 60% do seu corpo é água</h4>
+        <p>Cada célula, cada reação química, cada processo vital depende de água. Não existe nutriente mais essencial — nem mais negligenciado.</p>
+      </div>
+      <div class="card accent">
+        <h4>🧮 35 ml por kg, por dia</h4>
+        <p>A fórmula base. Ajuste para cima se praticar exercícios, estiver em clima quente, for gestante ou estiver doente.</p>
+      </div>
+      <div class="card success">
+        <h4>🚿 Observe a urina</h4>
+        <p>Amarelo claro = bem hidratado. Escuro ou âmbar = beba água agora. É o indicador mais simples, gratuito e confiável de hidratação.</p>
+      </div>
+      <div class="card">
+        <h4>⏰ Não espere a sede</h4>
+        <p>Crie horários fixos e vínculos com atividades do dia. Sede é sinal tardio — quando ela aparece, você já está 1–2% desidratado.</p>
+      </div>
+    </div>
+
+    <div class="callout key">
+      <div class="callout-title">🚀 Próximos Passos</div>
+      Agora que você entende a importância da hidratação, aprofunde-se em: <strong>eletrólitos e hidratação esportiva</strong> (quando água pura não é suficiente), <strong>hidratação e emagrecimento</strong> (como a água influencia o metabolismo e a saciedade) e <strong>qualidade da água</strong> (filtrada, mineral, alcalina — o que faz diferença de fato).
+    </div>
+  </section>
+
+  <!-- ════════
+       10. QUIZ
+  ════════ -->
+  <section id="quiz">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div class="section-title-wrap">
+        <h2>Quiz de Fixação</h2>
+        <div class="section-sub">Teste seus conhecimentos sobre hidratação</div>
+      </div>
+    </div>
+
+    <div class="quiz-wrap">
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">1</span>Qual percentual do corpo humano adulto é composto por água?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Cerca de 30%</div>
+          <div class="option"><span class="opt-letter">B</span>Cerca de 45%</div>
+          <div class="option correct"><span class="opt-letter">C</span>Cerca de 60%</div>
+          <div class="option"><span class="opt-letter">D</span>Cerca de 80%</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — Adultos são aproximadamente 60% água em peso corporal. Recém-nascidos chegam a 75%, e esse percentual diminui com a idade e com o aumento de gordura corporal.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">2</span>Qual é o melhor indicador prático de que você está bem hidratado?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Não sentir sede durante o dia</div>
+          <div class="option"><span class="opt-letter">B</span>Ter bebido pelo menos 8 copos de água</div>
+          <div class="option correct"><span class="opt-letter">C</span>Urina de cor amarelo claro (palha)</div>
+          <div class="option"><span class="opt-letter">D</span>Não ter dor de cabeça</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — A cor da urina é o indicador mais simples e confiável. Amarelo claro = bem hidratado. Escuro = desidratado. A sede é um sinal tardio — quando aparece, você já está 1–2% desidratado.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">3</span>Uma pessoa de 70 kg quantos ml de água deveria consumir por dia, segundo a fórmula base?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>1.400 ml (1,4 litros)</div>
+          <div class="option"><span class="opt-letter">B</span>2.000 ml (2,0 litros)</div>
+          <div class="option correct"><span class="opt-letter">C</span>2.450 ml (2,45 litros)</div>
+          <div class="option"><span class="opt-letter">D</span>3.500 ml (3,5 litros)</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — 70 kg × 35 ml = 2.450 ml. Essa é a base para uma pessoa sedentária. Exercícios, clima quente ou gestação aumentam essa necessidade.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">4</span>Por que a desidratação causa dor de cabeça?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>A água faz pressão no crânio e sua falta cria vácuo</div>
+          <div class="option"><span class="opt-letter">B</span>O cérebro encolhe fisicamente sem água</div>
+          <div class="option correct"><span class="opt-letter">C</span>O volume de sangue reduz, diminuindo a pressão ao redor do cérebro</div>
+          <div class="option"><span class="opt-letter">D</span>Os neurônios param de funcionar sem água</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — Com menos volume de sangue, a pressão nas meninges (membranas que envolvem o cérebro) cai levemente. Isso ativa receptores de dor, causando a cefaleia por desidratação — que melhora rapidamente ao beber água.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">5</span>Qual das estratégias abaixo é mais eficaz para criar o hábito de beber mais água?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Forçar-se a beber 2 litros de uma vez, de manhã</div>
+          <div class="option"><span class="opt-letter">B</span>Esperar sentir sede e então beber bastante</div>
+          <div class="option correct"><span class="opt-letter">C</span>Vincular o ato de beber água a atividades já existentes na rotina (ao acordar, antes das refeições, após o banheiro)</div>
+          <div class="option"><span class="opt-letter">D</span>Substituir toda a ingestão de água por sucos naturais</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — Ancorar novos hábitos a comportamentos já estabelecidos é a técnica de formação de hábitos mais eficaz (James Clear, Atomic Habits). Beber 2 litros de uma vez é ruim para os rins; esperar a sede é ineficaz; sucos têm açúcar e não substituem a água.</div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+</div>
+
+<footer>
+  <span>Apostila Saúde — Módulo 1: A Importância de Beber Água</span>
+  <span>LAB365 × SENAI · Workshop Kiro &amp; Agentes na AWS</span>
+</footer>
+
+</body>
+</html>

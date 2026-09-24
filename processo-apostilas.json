@@ -1,0 +1,316 @@
+{
+  "meta": {
+    "titulo": "Assistente de Apostilas com RAG — Processo e Handoff para Slides",
+    "descricao": "Documento técnico que descreve como o sistema de geração de apostilas foi construído, o caso de uso RAG escolhido para o hackathon e as instruções para um segundo desenvolvedor criar os slides de apresentação com o Kiro.",
+    "data": "2026-09-24",
+    "evento": "Workshop Kiro & Agentes na AWS — LAB365 × SENAI",
+    "caso_escolhido": "Assistente das Apostilas (RAG que responde dúvidas dos alunos com base nas apostilas geradas)"
+  },
+
+  "caso_de_uso": {
+    "nome": "Assistente das Apostilas",
+    "tipo": "RAG — Retrieval-Augmented Generation",
+    "problema": "Alunos de cursos técnicos têm dúvidas sobre o conteúdo das apostilas fora do horário de aula e sem acesso imediato ao instrutor.",
+    "solucao": "Um chatbot baseado em RAG que ingere as apostilas HTML geradas, indexa o conteúdo em uma base vetorial e responde perguntas dos alunos citando trechos relevantes das apostilas.",
+    "fluxo": [
+      {
+        "etapa": 1,
+        "nome": "Geração das Apostilas",
+        "descricao": "Instrutor usa o comando 'gerarapostila <tema> <url>' no Kiro. O Kiro busca o conteúdo na URL, estrutura em HTML seguindo o design system padronizado e salva em apostilas/<nome>.html.",
+        "tecnologia": "Kiro (skill gerador-apostila) + HTML estático"
+      },
+      {
+        "etapa": 2,
+        "nome": "Ingestão e Indexação",
+        "descricao": "O conteúdo HTML das apostilas é parseado, dividido em chunks semânticos (por seção) e vetorizado usando Amazon Bedrock Embeddings (amazon.titan-embed-text-v2). Os vetores são armazenados no Amazon OpenSearch Serverless (coleção vetorial) ou FAISS local para prototipagem.",
+        "tecnologia": "Amazon Bedrock (Titan Embeddings) + Amazon OpenSearch Serverless / FAISS"
+      },
+      {
+        "etapa": 3,
+        "nome": "Pergunta do Aluno",
+        "descricao": "O aluno digita uma dúvida em linguagem natural. A pergunta é vetorizada com o mesmo modelo de embeddings.",
+        "tecnologia": "Amazon Bedrock (Titan Embeddings)"
+      },
+      {
+        "etapa": 4,
+        "nome": "Retrieval (Busca Vetorial)",
+        "descricao": "O sistema busca os top-K chunks mais similares à pergunta na base vetorial (similaridade por cosseno). Retorna os trechos mais relevantes das apostilas com metadados (apostila de origem, seção, número).",
+        "tecnologia": "Amazon OpenSearch Serverless (k-NN) ou FAISS"
+      },
+      {
+        "etapa": 5,
+        "nome": "Geração da Resposta (Augmented Generation)",
+        "descricao": "Os chunks recuperados são injetados no prompt como contexto. O LLM (Claude 3 Sonnet via Amazon Bedrock) gera uma resposta em português, citando a fonte (nome da apostila e seção).",
+        "tecnologia": "Amazon Bedrock (Claude 3 Sonnet / Haiku) + Prompt Engineering"
+      },
+      {
+        "etapa": 6,
+        "nome": "Interface do Aluno",
+        "descricao": "Chat web simples (HTML + JS ou Streamlit) onde o aluno digita a dúvida e recebe a resposta com indicação da apostila e seção de origem.",
+        "tecnologia": "HTML/JS (index.html existente no projeto) ou Streamlit"
+      }
+    ]
+  },
+
+  "como_geramos_as_apostilas": {
+    "resumo": "O processo completo foi desenvolvido iterativamente dentro do Kiro durante o hackathon, passando por 5 fases principais.",
+    "fases": [
+      {
+        "fase": 1,
+        "nome": "Design System baseado em especificação JSON",
+        "descricao": "A partir de um JSON de identidade visual (paleta de cores, tipografia, componentes), definimos os tokens CSS imutáveis que toda apostila deve respeitar. O design system foi extraído dos slides do curso (PDF) e transformado em variáveis CSS reutilizáveis.",
+        "artefatos": [".kiro/steering/guia-visual-aws.md"],
+        "decisoes": [
+          "Fundo branco (#FFFFFF) para compatibilidade com impressão/PDF",
+          "Inter para títulos (legibilidade em cabeçalhos), Roboto para corpo (conforto de leitura), JetBrains Mono para código",
+          "Primária #1E293B (Slate 800) — tom sério e profissional",
+          "Secundária #0EA5E9 (Sky 500) — destaques e interações",
+          "Acento #F59E0B (Amber 500) — avisos e alertas"
+        ]
+      },
+      {
+        "fase": 2,
+        "nome": "Remoção de interatividade para PDF",
+        "descricao": "A primeira versão tinha elementos interativos (sliders RGB/HSL, quiz com botões clicáveis, barra de progresso dinâmica). Para gerar PDF corretamente, todos foram substituídos por equivalentes estáticos.",
+        "substituicoes": {
+          "input_range_slider": "Tabela de referência com amostras de cor estáticas (span colorido + código)",
+          "button_onclick_quiz": "Lista de alternativas com a correta destacada em verde (#F0FDF4) + gabarito explicado embaixo",
+          "progress_bar_dinamica": "Removida completamente",
+          "sidebar_navegacao": "Removida completamente — layout coluna única max-width 820px",
+          "script_tag": "Zero JavaScript — documento 100% estático"
+        }
+      },
+      {
+        "fase": 3,
+        "nome": "Criação da Skill gerador-apostila",
+        "descricao": "Para tornar o processo replicável, criamos uma skill do Kiro que codifica todas as regras: paleta de cores, fontes, componentes HTML, estrutura obrigatória de seções e restrições para PDF. Qualquer dev pode usar 'gerarapostila <tema>' e obter uma apostila no mesmo padrão visual.",
+        "arquivo": ".kiro/skills/gerador-apostila/skill.md",
+        "estrutura_obrigatoria": [
+          "Capa/Hero com metadados (duração, nível, módulo, versão)",
+          "Objetivos de Aprendizagem (grid 2 colunas, 6 itens com ✓)",
+          "Seções de conteúdo (mín. 6, máx. 12) com section-header numerado",
+          "Exercício Prático com gabarito em callout .tip",
+          "Resumo (4 cards Key Takeaways + próximos passos)",
+          "Quiz de Fixação (5 perguntas estáticas com gabarito visível)"
+        ]
+      },
+      {
+        "fase": 4,
+        "nome": "Nomenclatura e organização dos arquivos",
+        "descricao": "Definimos que cada apostila gerada recebe um nome único em kebab-case derivado do tema, salvo na pasta /apostilas/. Nunca sobrescreve arquivo existente.",
+        "convencao": "apostilas/apostila-<tecnologia>-<topico>.html",
+        "exemplos": [
+          "apostilas/apostila-php-comentarios.html",
+          "apostilas/apostila-aws-cloud-computing.html",
+          "apostilas/apostila-culinaria-como-fazer-um-bolo.html"
+        ]
+      },
+      {
+        "fase": 5,
+        "nome": "Script de conversão para PDF",
+        "descricao": "Criamos scripts/html-para-pdf.py (Python + WeasyPrint) para converter apostilas HTML em PDF preservando cores, fontes e layout. WeasyPrint já estava instalado no ambiente (v70.0). A skill gerador-apostila-pdf encapsula o fluxo completo: gera HTML + converte para PDF.",
+        "arquivo": "scripts/html-para-pdf.py",
+        "dependencia": "weasyprint>=70.0 (pip install weasyprint)",
+        "uso": "python scripts/html-para-pdf.py apostilas/apostila-php-comentarios.html"
+      }
+    ]
+  },
+
+  "componentes_html_disponiveis": {
+    "descricao": "Todos os componentes abaixo têm CSS definido na skill e devem ser usados sem modificação para manter o padrão visual.",
+    "componentes": {
+      "hero": {
+        "classe": ".hero",
+        "descricao": "Capa do documento. Fundo #1E293B com círculos decorativos. Contém .modulo-tag, h1 com em destacado, .hero-desc e .hero-meta.",
+        "uso": "Sempre o primeiro elemento de conteúdo, antes dos objetivos."
+      },
+      "objetivos": {
+        "classe": ".objetivos",
+        "descricao": "Grid 2x3 com itens marcados com ✓ verde. Título em uppercase azul.",
+        "uso": "Logo após o hero, antes das seções de conteúdo."
+      },
+      "section_header": {
+        "classe": ".section-header",
+        "descricao": "Cabeçalho de seção com número em badge azul, título Inter 700 e subtítulo em muted.",
+        "uso": "Primeiro elemento dentro de cada <section>."
+      },
+      "callout_4_tipos": {
+        "info": ".callout (borda azul, fundo #EFF6FF)",
+        "warn": ".callout.warn (borda âmbar, fundo #FFFBEB)",
+        "tip":  ".callout.tip (borda verde, fundo #F0FDF4)",
+        "key":  ".callout.key (borda slate, fundo #F8FAFC)"
+      },
+      "code_block": {
+        "estrutura": "pre > .code-header (dots + lang) + .code-body > code",
+        "highlight_classes": ".kw=roxo .prop=azul .val=verde .str=laranja .com=cinza .sel=amarelo .tag=rosa",
+        "fundo": "#0F172A (Slate 950)"
+      },
+      "table": {
+        "wrapper": ".table-wrap (overflow:hidden, border-radius:12px)",
+        "header": "thead #1E293B com th em uppercase, font 0.72rem, cor #94A3B8",
+        "rows": "zebra: par=#F8FAFC, ímpar=#FFFFFF"
+      },
+      "steps": {
+        "classe": ".steps > .step",
+        "descricao": "Blocos horizontais conectados por setas (#0EA5E9). Cada step tem .step-num (círculo azul), .step-title e .step-desc.",
+        "uso": "Fluxos de processo, pipelines, sequências numeradas."
+      },
+      "cards": {
+        "classe": ".cards > .card",
+        "descricao": "Grid 2x2 com barra lateral colorida (azul padrão, .accent=âmbar, .success=verde).",
+        "uso": "Key Takeaways, benefícios, comparações."
+      },
+      "quiz_estatico": {
+        "estrutura": ".quiz > .quiz-q + .options > .option (+ .correct) + .quiz-answer",
+        "regra": "NUNCA usar button ou onclick. Resposta correta com .option.correct, gabarito em .quiz-answer.",
+        "uso": "Seção de fixação, sempre a última seção."
+      }
+    }
+  },
+
+  "instrucoes_slides": {
+    "descricao": "Instruções para um segundo desenvolvedor criar os slides de apresentação do caso 'Assistente das Apostilas' usando o Kiro.",
+    "comando_kiro": "gerarapostila <tema> — mas para slides, adapte a skill gerador-slides",
+    "passos": [
+      {
+        "passo": 1,
+        "titulo": "Ative o contexto do projeto",
+        "instrucao": "Abra o workspace c:/Users/weto/Desktop/hacker_thon no Kiro. Leia os arquivos .kiro/steering/*.md para entender o design system antes de qualquer ação.",
+        "arquivos_para_ler": [
+          ".kiro/steering/product.md",
+          ".kiro/steering/structure.md",
+          ".kiro/steering/guia-visual-aws.md",
+          ".kiro/skills/gerador-apostila/skill.md"
+        ]
+      },
+      {
+        "passo": 2,
+        "titulo": "Estrutura dos slides",
+        "instrucao": "Crie apostilas/slides-assistente-apostilas.html seguindo o mesmo design system das apostilas (mesmas fontes, mesma paleta, sem interatividade). Cada 'slide' é uma section com altura fixa 595px (A4 landscape) separada por page-break.",
+        "slides_obrigatorios": [
+          "Slide 1 — Capa: título 'Assistente das Apostilas', subtítulo 'RAG com Amazon Bedrock', nomes, data",
+          "Slide 2 — Problema: alunos sem acesso ao instrutor fora do horário",
+          "Slide 3 — Solução: diagrama do fluxo RAG (6 etapas do campo caso_de_uso.fluxo)",
+          "Slide 4 — Demo: apostila gerada pelo Kiro (screenshot ou código do hero)",
+          "Slide 5 — Arquitetura AWS: diagrama com CloudFront → Lambda → Bedrock → OpenSearch",
+          "Slide 6 — Como o Kiro gerou as apostilas: skill gerador-apostila em 5 fases",
+          "Slide 7 — Design System: paleta de cores, fontes e componentes",
+          "Slide 8 — Próximos passos: deploy na AWS, interface do aluno, monitoramento",
+          "Slide 9 — Conclusão + Q&A"
+        ]
+      },
+      {
+        "passo": 3,
+        "titulo": "CSS específico para slides",
+        "instrucao": "Adicione ao <style> da apostila o CSS de paginação para impressão.",
+        "css_adicionar": "@page { size: A4 landscape; margin: 0; } .slide { width: 297mm; height: 210mm; padding: 2rem 2.5rem; page-break-after: always; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }"
+      },
+      {
+        "passo": 4,
+        "titulo": "Diagrama do fluxo RAG",
+        "instrucao": "Use o componente .steps do design system para representar as 6 etapas do RAG. Labels: Gerar Apostila → Ingestão → Pergunta do Aluno → Retrieval → Geração → Interface.",
+        "componente": ".steps > .step (já definido no CSS da apostila)"
+      },
+      {
+        "passo": 5,
+        "titulo": "Diagrama de arquitetura AWS",
+        "instrucao": "Use o renderizador do projeto para gerar o diagrama. Crie arquiteturas/assistente-apostilas.yaml com os serviços: CloudFront, API Gateway, Lambda, Bedrock, OpenSearch. Rode: node renderizador/render.mjs arquiteturas/assistente-apostilas.yaml saida/assistente-apostilas.png",
+        "yaml_servicos": [
+          "aws-cloudfront (interface aluno)",
+          "aws-api-gateway (endpoint do chatbot)",
+          "aws-lambda (orquestrador RAG)",
+          "aws-bedrock (embeddings + LLM Claude)",
+          "aws-dynamodb (histórico de conversas)",
+          "aws-s3 (armazenamento das apostilas HTML)"
+        ]
+      },
+      {
+        "passo": 6,
+        "titulo": "Gere o PDF dos slides",
+        "instrucao": "Após criar o HTML, converta para PDF com o script Python já configurado no projeto.",
+        "comando": "python scripts/html-para-pdf.py apostilas/slides-assistente-apostilas.html"
+      }
+    ],
+    "dicas": [
+      "Use o mesmo bloco <style> das apostilas como base — não reescreva os tokens CSS",
+      "Slides não têm interatividade (mesmo critério das apostilas para PDF)",
+      "Para o diagrama RAG, prefira o componente .steps horizontal já existente",
+      "O diagrama de arquitetura AWS pode ser gerado pelo render.mjs do projeto e embutido como <img>",
+      "Fonte dos ícones AWS: pasta /icones/ (adicione SVGs oficiais se necessário)"
+    ]
+  },
+
+  "arquitetura_rag_aws": {
+    "descricao": "Arquitetura de referência para implementar o Assistente das Apostilas na AWS.",
+    "servicos": {
+      "interface": {
+        "servico": "Amazon CloudFront + S3",
+        "funcao": "Hospeda e distribui a interface do chat (HTML/JS estático)",
+        "custo_estimado": "~$0 no Free Tier para tráfego baixo"
+      },
+      "api": {
+        "servico": "Amazon API Gateway",
+        "funcao": "Endpoint REST/WebSocket que recebe a pergunta do aluno e retorna a resposta",
+        "tipo": "HTTP API (mais barato que REST API para este caso)"
+      },
+      "orquestrador": {
+        "servico": "AWS Lambda",
+        "funcao": "Função Python que: vetoriza a pergunta → busca no OpenSearch → monta o prompt → chama o Bedrock → retorna resposta",
+        "runtime": "Python 3.12",
+        "timeout": "30 segundos",
+        "memoria": "512 MB"
+      },
+      "embeddings_llm": {
+        "servico": "Amazon Bedrock",
+        "modelos": {
+          "embeddings": "amazon.titan-embed-text-v2:0 (dimensão 1024)",
+          "llm": "anthropic.claude-3-haiku-20240307-v1:0 (rápido e barato para Q&A)"
+        },
+        "regiao": "us-east-1"
+      },
+      "base_vetorial": {
+        "servico": "Amazon OpenSearch Serverless",
+        "tipo": "Coleção vetorial (vector search)",
+        "indice": "apostilas-index",
+        "campos": {
+          "embedding": "vetor float[1024]",
+          "conteudo": "text (trecho da apostila)",
+          "apostila": "keyword (nome do arquivo)",
+          "secao": "keyword (id da seção HTML)",
+          "titulo_secao": "text"
+        }
+      },
+      "armazenamento_apostilas": {
+        "servico": "Amazon S3",
+        "bucket": "apostilas-lab365-senai",
+        "estrutura": "apostilas/<nome>.html",
+        "trigger": "S3 Event → Lambda de ingestão ao fazer upload de nova apostila"
+      },
+      "historico": {
+        "servico": "Amazon DynamoDB",
+        "tabela": "historico-conversas",
+        "chave": "session_id + timestamp",
+        "uso": "Manter contexto de conversas multi-turno"
+      }
+    },
+    "prompt_template": {
+      "descricao": "Template de prompt para o Claude responder com base nos chunks recuperados.",
+      "template": "Você é um assistente educacional que responde dúvidas de alunos com base nas apostilas do curso.\n\nContexto recuperado das apostilas:\n{chunks}\n\nPergunta do aluno: {pergunta}\n\nResponda de forma didática, em português, citando a apostila e seção de origem quando relevante. Se a resposta não estiver no contexto fornecido, diga que não encontrou essa informação nas apostilas disponíveis."
+    }
+  },
+
+  "estrutura_projeto": {
+    "descricao": "Estrutura atual do repositório após o hackathon.",
+    "arvore": {
+      "apostilas/": "HTML das apostilas geradas (PHP, AWS, Culinária)",
+      "scripts/html-para-pdf.py": "Conversor HTML → PDF com WeasyPrint",
+      "renderizador/render.mjs": "Gerador de diagramas AWS em SVG/PNG",
+      "arquiteturas/*.yaml": "Definições YAML de arquiteturas AWS",
+      "arquitetura/validador.py": "Validador de arquiteturas YAML",
+      ".kiro/skills/gerador-apostila/": "Skill que padroniza a geração de apostilas",
+      ".kiro/skills/gerador-apostila-pdf/": "Skill que gera apostila + converte para PDF",
+      ".kiro/steering/*.md": "Padrões de produto, tech e design do projeto",
+      "icones/": "Ícones AWS SVG para os diagramas"
+    }
+  }
+}

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apostila Cuidados — Como Cuidar de uma Tartaruga</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:     #1E293B;
+      --secondary:   #0EA5E9;
+      --accent:      #F59E0B;
+      --bg:          #FFFFFF;
+      --text:        #334155;
+      --muted:       #64748B;
+      --surface:     #F8FAFC;
+      --surface2:    #F1F5F9;
+      --border:      #E2E8F0;
+      --border-dark: #CBD5E1;
+      --success:     #10B981;
+      --danger:      #EF4444;
+      --code-bg:     #0F172A;
+      --code-text:   #E2E8F0;
+      --radius:      8px;
+      --radius-lg:   12px;
+      --shadow:      0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      --shadow-md:   0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15px; }
+    .page { display: block; }
+    main  { max-width: 820px; margin: 0 auto; padding: 3rem 3rem 4rem; }
+
+    .breadcrumb { display: flex; align-items: center; gap: .4rem; font-size: .78rem; color: var(--muted); font-family: 'Inter', sans-serif; margin-bottom: 2.5rem; }
+    .breadcrumb span { color: var(--secondary); font-weight: 600; }
+    .breadcrumb .sep { color: var(--border-dark); }
+
+    .hero { background: var(--primary); border-radius: var(--radius-lg); padding: 2.5rem 2.5rem 2rem; margin-bottom: 2.5rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; border-radius: 50%; background: rgba(14,165,233,.15); }
+    .hero::after  { content: ''; position: absolute; bottom: -40px; left: 40%; width: 160px; height: 160px; border-radius: 50%; background: rgba(245,158,11,.08); }
+    .hero .modulo-tag { display: inline-flex; align-items: center; gap: .4rem; background: rgba(14,165,233,.2); color: #7DD3FC; font-size: .72rem; font-weight: 700; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: .08em; padding: .3rem .75rem; border-radius: 20px; margin-bottom: 1.1rem; border: 1px solid rgba(14,165,233,.3); }
+    .hero h1 { font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 700; color: #fff; line-height: 1.25; margin-bottom: .6rem; }
+    .hero h1 em { color: var(--secondary); font-style: normal; }
+    .hero .hero-desc { color: #94A3B8; font-size: .9rem; max-width: 500px; }
+    .hero-meta { display: flex; gap: 1.5rem; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.08); }
+    .hero-meta .meta-item { font-size: .78rem; color: #64748B; font-family: 'Inter', sans-serif; }
+    .hero-meta .meta-item strong { display: block; color: #94A3B8; margin-bottom: .1rem; font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    .objetivos { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2.5rem; }
+    .objetivos h3 { font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; color: var(--secondary); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+    .objetivos ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .objetivos ul li { display: flex; align-items: flex-start; gap: .5rem; font-size: .85rem; color: var(--text); }
+    .objetivos ul li::before { content: '✓'; color: var(--success); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+
+    section { margin-bottom: 3rem; }
+    .section-header { display: flex; align-items: flex-start; gap: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem; }
+    .section-num { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--secondary); color: #fff; border-radius: var(--radius); font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; flex-shrink: 0; }
+    .section-title-wrap { flex: 1; }
+    .section-title-wrap h2 { font-family: 'Inter', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--primary); line-height: 1.3; }
+    .section-title-wrap .section-sub { font-size: .78rem; color: var(--muted); margin-top: .2rem; }
+    section h3 { font-family: 'Inter', sans-serif; font-size: .95rem; font-weight: 600; color: var(--primary); margin: 1.5rem 0 .6rem; }
+    section p  { color: var(--text); margin-bottom: .85rem; }
+    section ul, section ol { color: var(--text); padding-left: 1.5rem; margin-bottom: .85rem; }
+    section ul li, section ol li { margin-bottom: .4rem; }
+
+    .callout { border-left: 4px solid var(--secondary); background: #EFF6FF; border-radius: 0 var(--radius) var(--radius) 0; padding: 1rem 1.1rem; font-size: .875rem; color: var(--text); margin: 1.25rem 0; }
+    .callout strong { color: var(--primary); }
+    .callout-title { font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--secondary); margin-bottom: .35rem; }
+    .callout.warn { border-color: var(--accent); background: #FFFBEB; }
+    .callout.warn .callout-title { color: var(--accent); }
+    .callout.tip  { border-color: var(--success); background: #F0FDF4; }
+    .callout.tip .callout-title  { color: var(--success); }
+    .callout.key  { border-color: var(--primary); background: var(--surface); }
+    .callout.key .callout-title  { color: var(--primary); }
+
+    .table-wrap { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); margin: 1rem 0 1.5rem; box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    thead tr { background: var(--primary); }
+    thead th { padding: .75rem 1rem; text-align: left; font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #94A3B8; }
+    tbody tr:nth-child(even) { background: var(--surface); }
+    tbody tr:nth-child(odd)  { background: var(--bg); }
+    tbody td { padding: .7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text); }
+    tbody tr:last-child td { border-bottom: none; }
+
+    .steps { display: flex; gap: 0; margin: 1rem 0 1.5rem; }
+    .step { flex: 1; min-width: 90px; background: var(--surface); border: 1px solid var(--border); border-right: none; padding: 1rem .75rem; position: relative; text-align: center; }
+    .step:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+    .step:last-child  { border-right: 1px solid var(--border); border-radius: 0 var(--radius) var(--radius) 0; }
+    .step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--secondary); color: #fff; border-radius: 50%; font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 700; margin-bottom: .5rem; }
+    .step-title { font-size: .78rem; font-weight: 600; color: var(--primary); font-family: 'Inter', sans-serif; margin-bottom: .25rem; }
+    .step-desc  { font-size: .72rem; color: var(--muted); }
+    .step-arrow { position: absolute; right: -10px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; background: var(--secondary); clip-path: polygon(0 0, 100% 50%, 0 100%); z-index: 1; }
+    .step:last-child .step-arrow { display: none; }
+
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; position: relative; overflow: hidden; }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--secondary); border-radius: 4px 0 0 4px; }
+    .card.accent::before  { background: var(--accent); }
+    .card.success::before { background: var(--success); }
+    .card.danger::before  { background: var(--danger); }
+    .card h4 { font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; color: var(--primary); margin-bottom: .5rem; }
+    .card p  { font-size: .82rem; color: var(--muted); margin: 0; }
+
+    .passo { display: flex; gap: 1rem; margin-bottom: 1.25rem; align-items: flex-start; }
+    .passo .passo-num { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: var(--primary); color: #fff; border-radius: 50%; font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; flex-shrink: 0; margin-top: .1rem; }
+    .passo .passo-content h4 { font-family: 'Inter', sans-serif; font-size: .9rem; font-weight: 600; color: var(--primary); margin-bottom: .3rem; }
+    .passo .passo-content p { margin: 0; font-size: .875rem; color: var(--text); }
+
+    .quiz-wrap { margin-top: 1rem; }
+    .quiz { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; }
+    .quiz-q { font-family: 'Inter', sans-serif; font-size: .9rem; font-weight: 600; color: var(--primary); margin-bottom: .85rem; display: flex; gap: .6rem; align-items: flex-start; }
+    .quiz-q .q-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--secondary); color: #fff; border-radius: 50%; font-size: .72rem; font-weight: 700; flex-shrink: 0; margin-top: .1rem; }
+    .options { display: flex; flex-direction: column; gap: .4rem; margin-bottom: .75rem; }
+    .option { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius); padding: .55rem 1rem; font-size: .85rem; font-family: 'Roboto', sans-serif; color: var(--text); display: flex; align-items: center; gap: .6rem; }
+    .option .opt-letter { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border-dark); font-size: .7rem; font-weight: 700; font-family: 'Inter', sans-serif; color: var(--muted); flex-shrink: 0; }
+    .option.correct { border-color: var(--success); background: #F0FDF4; color: #166534; }
+    .option.correct .opt-letter { background: var(--success); border-color: var(--success); color: #fff; }
+    .quiz-answer { font-size: .8rem; color: #166534; background: #F0FDF4; border: 1px solid #86EFAC; border-radius: var(--radius); padding: .5rem .85rem; font-family: 'Inter', sans-serif; }
+
+    code { font-family: 'JetBrains Mono', monospace; font-size: .82em; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: .15em .45em; color: #0369A1; }
+
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 3rem; color: var(--muted); font-size: .78rem; display: flex; justify-content: space-between; align-items: center; font-family: 'Inter', sans-serif; }
+
+    @media (max-width: 768px) {
+      main { padding: 1.5rem 1.25rem; }
+      .objetivos ul, .cards { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.5rem; }
+      .steps { flex-direction: column; }
+      .step { border-right: 1px solid var(--border); border-radius: var(--radius) !important; margin-bottom: .5rem; }
+      footer { flex-direction: column; gap: .5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+<main>
+
+  <div class="breadcrumb">
+    Animais de Estimação <span class="sep">›</span> <span>Módulo 1</span> <span class="sep">›</span> Cuidados com Tartarugas
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="modulo-tag">🐢 Animais · Módulo 1</div>
+    <h1>Como Cuidar de uma <em>Tartaruga</em></h1>
+    <p class="hero-desc">Guia completo para criar tartarugas com saúde, bem-estar e segurança — do habitat ideal à alimentação correta, passando por cuidados veterinários e comportamento natural.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><strong>Duração</strong>~50 min</div>
+      <div class="meta-item"><strong>Nível</strong>Iniciante</div>
+      <div class="meta-item"><strong>Espécies</strong>Aquáticas e terrestres</div>
+      <div class="meta-item"><strong>Versão</strong>1.0 · Set 2026</div>
+    </div>
+  </div>
+
+  <!-- Objetivos -->
+  <div class="objetivos">
+    <h3>🎯 Objetivos de Aprendizagem</h3>
+    <ul>
+      <li>Diferenciar espécies aquáticas e terrestres</li>
+      <li>Montar um habitat adequado para cada tipo</li>
+      <li>Entender as necessidades nutricionais da tartaruga</li>
+      <li>Reconhecer sinais de doenças comuns</li>
+      <li>Saber como manter a higiene do recinto</li>
+      <li>Conhecer os direitos legais sobre criação em cativeiro</li>
+    </ul>
+  </div>
+
+  <!-- ════════
+       1. TIPOS
+  ════════ -->
+  <section id="tipos">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title-wrap">
+        <h2>Tipos de tartaruga</h2>
+        <div class="section-sub">Aquáticas, semi-aquáticas e terrestres — diferenças essenciais</div>
+      </div>
+    </div>
+
+    <p>Antes de qualquer coisa, é fundamental saber com qual tipo de tartaruga você está lidando. As necessidades de habitat, temperatura, alimentação e cuidados variam significativamente entre os grupos. Comprar o equipamento errado é um dos erros mais caros e perigosos para o animal.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tipo</th><th>Exemplos comuns</th><th>Habitat principal</th><th>Temperatura ideal</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Aquática</strong></td><td>Tartaruga-de-orelha-vermelha, Tartaruga-tigre</td><td>Aquário com água + área seca (basking)</td><td>Água 24–28°C / Basking 30–35°C</td></tr>
+          <tr><td><strong>Semi-aquática</strong></td><td>Cágado-de-pescoço-de-cobra, Cágado comum</td><td>Aquário com mais terra do que água</td><td>Água 22–26°C / Terra 28–32°C</td></tr>
+          <tr><td><strong>Terrestre (jabuti)</strong></td><td>Jabuti-piranga, Jabuti-tinga</td><td>Terrário seco com substrato e umidade controlada</td><td>Ambiente 25–32°C / Basking 35–40°C</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-title">⚠️ Atenção — Legalidade no Brasil</div>
+      No Brasil, a criação de tartarugas e jabutis em cativeiro é regulamentada pelo <strong>IBAMA</strong>. O Jabuti-piranga e o Jabuti-tinga são as espécies autorizadas para criação doméstica, desde que adquiridas de criadouros registrados. Nunca capture animais silvestres — é crime ambiental (Lei 9.605/98).
+    </div>
+  </section>
+
+  <!-- ════════
+       2. HABITAT
+  ════════ -->
+  <section id="habitat">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title-wrap">
+        <h2>Habitat e recinto</h2>
+        <div class="section-sub">Como montar o ambiente correto para cada espécie</div>
+      </div>
+    </div>
+
+    <p>O habitat é o fator mais crítico para a saúde de uma tartaruga. Um ambiente inadequado — temperatura errada, espaço insuficiente, iluminação incorreta — é responsável pela maioria das doenças e mortes em cativeiro. Ao contrário de mamíferos, tartarugas são <strong>ectotermas</strong> (animais de sangue frio): dependem do ambiente externo para regular a temperatura corporal e, consequentemente, todos os processos metabólicos.</p>
+
+    <h3>Para tartarugas aquáticas</h3>
+    <div class="cards">
+      <div class="card">
+        <h4>🪣 Aquário (tamanho mínimo)</h4>
+        <p>10 litros por centímetro de casco do animal. Uma tartaruga de 10 cm precisa de pelo menos 100 litros. Prefira sempre maior do que o mínimo.</p>
+      </div>
+      <div class="card accent">
+        <h4>🌡️ Área de basking</h4>
+        <p>Plataforma seca aquecida por lâmpada incandescente a 30–35°C. Essencial para digestão, síntese de vitamina D3 e regulação térmica.</p>
+      </div>
+      <div class="card success">
+        <h4>🔄 Filtro</h4>
+        <p>Filtro de aquário com capacidade 3–4x o volume do aquário. Tartarugas produzem muito resíduo — filtro subdimensionado leva a amônia alta e doenças.</p>
+      </div>
+      <div class="card">
+        <h4>☀️ Lâmpada UV-B</h4>
+        <p>Lâmpada UV-B 10.0 (ou tropical) por 10–12 horas diárias. Sem UV-B, a tartaruga desenvolve MOM (doença metabólica óssea) por falta de vitamina D3.</p>
+      </div>
+    </div>
+
+    <h3>Para jabutis (terrestres)</h3>
+    <p>Jabutis precisam de espaço para caminhar — um terrário de no mínimo <strong>4x o comprimento do casco</strong> em cada dimensão. Substrato ideal é mistura de terra + coco ralado (5–10 cm de profundidade) para permitir cavar levemente. Umidade relativa entre 50–70%. Área de basking com lâmpada a 35–40°C e zona fria a 22–25°C para o animal termoregular escolhendo a posição.</p>
+
+    <div class="callout tip">
+      <div class="callout-title">💡 Dica — Temperatura noturna</div>
+      À noite, as lâmpadas de aquecimento devem ser apagadas. A temperatura pode cair alguns graus — isso é natural e saudável. O que não pode ocorrer é queda abaixo de <strong>18°C</strong> para aquáticas ou <strong>15°C</strong> para jabutis, pois paralisa o metabolismo e o sistema imunológico.
+    </div>
+  </section>
+
+  <!-- ════════
+       3. ALIMENTAÇÃO
+  ════════ -->
+  <section id="alimentacao">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title-wrap">
+        <h2>Alimentação</h2>
+        <div class="section-sub">O que oferecer, com que frequência e o que nunca dar</div>
+      </div>
+    </div>
+
+    <p>A dieta de uma tartaruga varia radicalmente conforme a espécie. Tartarugas aquáticas jovens são predominantemente carnívoras e se tornam mais onívoras na fase adulta. Jabutis são quase exclusivamente herbívoros. Oferecer a dieta errada leva a deficiências nutricionais graves mesmo que o animal pareça estar comendo bem.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tipo</th><th>Base da dieta</th><th>Frequência</th><th>Suplementação</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Aquática jovem</strong></td><td>Ração específica para tartaruga aquática (70%), camarão seco, minhoca (30%)</td><td>1× ao dia</td><td>Cálcio em pó 3× por semana</td></tr>
+          <tr><td><strong>Aquática adulta</strong></td><td>Ração (50%), folhas aquáticas, alface, brócolis (50%)</td><td>1× ao dia ou dia sim dia não</td><td>Multivitamínico 1× por semana</td></tr>
+          <tr><td><strong>Jabuti filhote</strong></td><td>Folhas verdes escuras (couve, acelga, almeirão), flores, capim</td><td>1–2× ao dia à vontade</td><td>Cálcio em pó 3× por semana</td></tr>
+          <tr><td><strong>Jabuti adulto</strong></td><td>Folhas (70%), frutas com baixo açúcar (30%): mamão, melancia sem semente</td><td>1× ao dia à vontade</td><td>Cálcio + D3 2× por semana</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Alimentos proibidos</h3>
+    <div class="cards">
+      <div class="card danger">
+        <h4>🚫 Espinafre e oxalatos</h4>
+        <p>Espinafre, beterraba e ruibarbo contêm ácido oxálico que bloqueia a absorção de cálcio, acelerando MOM (doença óssea metabólica).</p>
+      </div>
+      <div class="card danger">
+        <h4>🚫 Alimentos processados</h4>
+        <p>Pão, arroz, feijão, comida humana em geral. O sal e os condimentos são tóxicos para répteis. Nunca ofereça sobras de refeição.</p>
+      </div>
+      <div class="card danger">
+        <h4>🚫 Frutas cítricas (jabutis)</h4>
+        <p>Laranja, limão e abacaxi são muito ácidos para o sistema digestivo de jabutis e podem causar diarreia severa e desidratação.</p>
+      </div>
+      <div class="card danger">
+        <h4>🚫 Proteína animal para jabutis</h4>
+        <p>Jabutis são herbívoros. Oferecer carne, ovo ou proteína animal sobrecarrega os rins e pode causar gota (depósito de ácido úrico).</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-title">⚠️ Atenção — Cálcio é fundamental</div>
+      A suplementação de cálcio não é opcional. Sem cálcio suficiente, o organismo da tartaruga retira o mineral dos próprios ossos e do casco — causando <strong>MOM (Doença Metabólica Óssea)</strong>, que deforma o casco de forma irreversível. Use cálcio em pó sem vitamina D3 se houver UV-B; com D3 se não houver iluminação UV.
+    </div>
+  </section>
+
+  <!-- ════════
+       4. HIGIENE
+  ════════ -->
+  <section id="higiene">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title-wrap">
+        <h2>Higiene e limpeza do recinto</h2>
+        <div class="section-sub">Rotina de manutenção para prevenir doenças</div>
+      </div>
+    </div>
+
+    <p>A qualidade da água (para aquáticas) e a limpeza do substrato (para jabutis) são fatores diretamente ligados à saúde do animal. Amônia acumulada na água, bactérias no substrato úmido e fungos no casco são consequências diretas de higiene negligenciada.</p>
+
+    <div class="passo">
+      <div class="passo-num">1</div>
+      <div class="passo-content">
+        <h4>Diário — Remova fezes e restos de comida</h4>
+        <p>Para aquáticos: use uma rede ou pipeta para remover fezes e sobras da água. Para jabutis: remova fezes e alimentos não consumidos do terrário com colher ou pinça. Restos orgânicos geram bactérias rapidamente.</p>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">2</div>
+      <div class="passo-content">
+        <h4>Semanal — Troca parcial de água (aquáticos)</h4>
+        <p>Substitua 30–40% da água do aquário semanalmente, mesmo com filtro funcionando. A troca parcial remove nitratos acumulados que o filtro não elimina. Use água desclorada (deixar 24h em repouso ou usar condicionador).</p>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">3</div>
+      <div class="passo-content">
+        <h4>Mensal — Limpeza profunda</h4>
+        <p>Esvazie e lave o aquário/terrário com água morna e vinagre branco diluído (nunca sabão ou detergente — o resíduo é tóxico). Substitua parte do substrato do terrário. Limpe as decorações e a plataforma de basking.</p>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">4</div>
+      <div class="passo-content">
+        <h4>Banho do jabuti — 2–3× por semana</h4>
+        <p>Coloque o jabuti em recipiente com água morna (28°C) até a altura do pescoço por 20–30 minutos. Estimula a hidratação, eliminação de fezes e limpeza do casco. Seque bem antes de retornar ao terrário.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">💡 Dica — Parâmetros de água (aquáticos)</div>
+      Invista em um kit de teste de aquário (pH, amônia, nitrito, nitrato). Parâmetros ideais: <strong>pH 6,8–7,5</strong> · <strong>Amônia 0 ppm</strong> · <strong>Nitrito 0 ppm</strong> · <strong>Nitrato abaixo de 20 ppm</strong>. Amônia acima de 0,25 ppm já causa danos às brânquias e pele do animal.
+    </div>
+  </section>
+
+  <!-- ════════
+       5. SAÚDE
+  ════════ -->
+  <section id="saude">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title-wrap">
+        <h2>Saúde e doenças comuns</h2>
+        <div class="section-sub">Reconhecer os sinais cedo pode salvar a vida do animal</div>
+      </div>
+    </div>
+
+    <p>Tartarugas são animais que escondem sinais de doença por instinto de sobrevivência — um comportamento evolutivo para não parecerem vulneráveis a predadores. Isso significa que quando o problema fica visível, geralmente já está avançado. Observação diária e visita semestral ao veterinário herpetólogo são essenciais.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Sinal / Sintoma</th><th>Possível causa</th><th>O que fazer</th></tr></thead>
+        <tbody>
+          <tr><td>Casco mole ou deformado</td><td>Deficiência de cálcio / UV-B insuficiente (MOM)</td><td>Veterinário urgente + revisar dieta e iluminação</td></tr>
+          <tr><td>Nada inclinada / boiando de lado</td><td>Pneumonia ou parasitas respiratórios</td><td>Veterinário urgente — pode ser fatal em 48h</td></tr>
+          <tr><td>Olhos fechados ou inchados</td><td>Hipovitaminose A (falta de vitamina A)</td><td>Veterinário + aumentar folhas verde-escuras na dieta</td></tr>
+          <tr><td>Manchas brancas no casco</td><td>Fungo (comum em água ruim) ou bactéria</td><td>Isolar, tratar com antifúngico específico, melhorar qualidade da água</td></tr>
+          <tr><td>Recusa de comida por mais de 2 semanas</td><td>Temperatura baixa, doença interna, estresse</td><td>Verificar temperatura; se persistir, veterinário</td></tr>
+          <tr><td>Fezes com sangue ou parasitas visíveis</td><td>Parasitose intestinal</td><td>Veterinário para vermifugação correta</td></tr>
+          <tr><td>Respiração com chiado / boca aberta</td><td>Infecção respiratória grave</td><td>Veterinário urgente</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">📌 Nota — Veterinário herpetólogo</div>
+      Não leve sua tartaruga a qualquer veterinário. Répteis têm fisiologia muito diferente de cães e gatos. Procure um <strong>veterinário herpetólogo</strong> (especialista em répteis) — ele terá o equipamento e o conhecimento adequado para diagnóstico e tratamento correto.
+    </div>
+  </section>
+
+  <!-- ════════
+       6. COMPORTAMENTO
+  ════════ -->
+  <section id="comportamento">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div class="section-title-wrap">
+        <h2>Comportamento e bem-estar</h2>
+        <div class="section-sub">Entendendo a linguagem corporal e as necessidades comportamentais</div>
+      </div>
+    </div>
+
+    <p>Tartarugas não são animais de colo, mas são muito mais expressivas do que parecem. Entender o comportamento normal e o anormal permite identificar estresse, doença ou necessidades não atendidas antes que se tornem problemas sérios.</p>
+
+    <div class="cards">
+      <div class="card success">
+        <h4>✅ Comportamentos normais</h4>
+        <p>Basking (tomar sol) por 2–4h · Nadar ativamente · Comer com apetite · Explorar o ambiente · Cavar o substrato (jabutis) · Recolher a cabeça ao ser aproximado</p>
+      </div>
+      <div class="card danger">
+        <h4>⚠️ Sinais de alerta</h4>
+        <p>Letargia constante · Ficar no basking por mais de 6h seguidas · Recusar comida por semanas · Nadar de lado · Respiração com esforço visível · Casco com textura estranha</p>
+      </div>
+      <div class="card accent">
+        <h4>🌿 Enriquecimento ambiental</h4>
+        <p>Esconderijos no terrário · Objetos para explorar · Variar os vegetais oferecidos · Banho de sol natural ocasionalmente · Para jabutis: área para cavar</p>
+      </div>
+      <div class="card">
+        <h4>❄️ Hibernação</h4>
+        <p>Espécies de clima temperado podem hibernar no inverno. Jabutis brasileiros geralmente não hibernam em cativeiro com temperatura controlada, mas podem reduzir a atividade no frio.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════
+       7. ROTINA
+  ════════ -->
+  <section id="rotina">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div class="section-title-wrap">
+        <h2>Rotina de cuidados</h2>
+        <div class="section-sub">O que fazer diariamente, semanalmente e mensalmente</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">📅</div>
+        <div class="step-title">Diário</div>
+        <div class="step-desc">Alimentar · Verificar temperatura · Remover fezes e restos · Observar comportamento</div>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">📆</div>
+        <div class="step-title">Semanal</div>
+        <div class="step-desc">Troca parcial da água (aquáticos) · Banho do jabuti · Testar parâmetros da água · Limpar o filtro</div>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">🗓️</div>
+        <div class="step-title">Mensal</div>
+        <div class="step-desc">Limpeza profunda do recinto · Substituir substrato parcialmente · Verificar estado do casco</div>
+      </div>
+      <div class="step">
+        <div class="step-num">🏥</div>
+        <div class="step-title">Semestral</div>
+        <div class="step-desc">Consulta com veterinário herpetólogo · Exame de fezes para parasitas · Pesagem</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════
+       8. EXERCÍCIO PRÁTICO
+  ════════ -->
+  <section id="pratica">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div class="section-title-wrap">
+        <h2>Exercício Prático</h2>
+        <div class="section-sub">Monte o habitat correto para cada situação</div>
+      </div>
+    </div>
+
+    <p>Analise os dois cenários abaixo e identifique <strong>todos os problemas</strong> em cada setup:</p>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:1.5rem; margin:1rem 0;">
+      <p style="font-family:'Inter',sans-serif; font-size:.8rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:.75rem;">🐢 Cenário A — Tartaruga aquática de orelha-vermelha</p>
+      <p style="font-size:.875rem; margin:0;"><em>"Aquário de 20 litros, sem filtro, água trocada uma vez por mês, sem lâmpada UV-B, alimentada com alface todos os dias, temperatura ambiente (20°C no inverno), sem área de basking."</em></p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">✅ Problemas no Cenário A — 6 erros</div>
+      <ol style="margin:.5rem 0 0 1.25rem; font-size:.85rem; line-height:1.9;">
+        <li><strong>Aquário muito pequeno</strong> — 20L é insuficiente; mínimo 10L por cm de casco</li>
+        <li><strong>Sem filtro</strong> — amônia acumula rapidamente causando doenças de pele e respiratórias</li>
+        <li><strong>Troca de água mensal</strong> — deve ser 30–40% semanalmente</li>
+        <li><strong>Sem lâmpada UV-B</strong> — causa MOM (doença óssea metabólica) por falta de vitamina D3</li>
+        <li><strong>Só alface na dieta</strong> — alface tem baixo valor nutricional; falta proteína e variedade</li>
+        <li><strong>Temperatura 20°C e sem basking</strong> — muito fria; paralisa o metabolismo e digestão</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ════════
+       9. RESUMO
+  ════════ -->
+  <section id="resumo">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div class="section-title-wrap">
+        <h2>Resumo</h2>
+        <div class="section-sub">Principais aprendizados e próximos passos</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h4>🌡️ Temperatura é tudo</h4>
+        <p>Tartarugas são ectotermas. Temperatura errada paralisa digestão, imunidade e metabolismo. Invista em termômetro e aquecedor confiáveis.</p>
+      </div>
+      <div class="card accent">
+        <h4>☀️ UV-B não é opcional</h4>
+        <p>Sem lâmpada UV-B, nenhuma quantidade de cálcio na dieta resolve. A vitamina D3 é sintetizada na pele pela luz UV — sem ela, o casco amolece.</p>
+      </div>
+      <div class="card success">
+        <h4>🥗 Dieta variada e calcificada</h4>
+        <p>Ofereça variedade de folhas, vegetais e (para aquáticas) proteína animal. Suplementar cálcio 2–3× por semana é imprescindível.</p>
+      </div>
+      <div class="card">
+        <h4>🏥 Prevenção sempre</h4>
+        <p>Consulta semestral com veterinário herpetólogo, mesmo sem sintomas. Doenças de répteis são silenciosas até ficarem graves.</p>
+      </div>
+    </div>
+
+    <div class="callout key">
+      <div class="callout-title">🚀 Próximos Passos</div>
+      Com os cuidados básicos dominados, aprofunde-se em: <strong>reprodução e incubação de ovos</strong>, <strong>identificação de espécies nativas brasileiras</strong>, e <strong>legislação IBAMA para criadouros</strong>. Comunidades como o <em>Grupo Jabuti Brasil</em> e fóruns de herpetologia são excelentes fontes de suporte e troca de experiências.
+    </div>
+  </section>
+
+  <!-- ════════
+       10. QUIZ
+  ════════ -->
+  <section id="quiz">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div class="section-title-wrap">
+        <h2>Quiz de Fixação</h2>
+        <div class="section-sub">Teste seus conhecimentos sobre cuidados com tartarugas</div>
+      </div>
+    </div>
+
+    <div class="quiz-wrap">
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">1</span>Por que a lâmpada UV-B é obrigatória para tartarugas em cativeiro?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Para iluminar o aquário e deixá-lo mais bonito</div>
+          <div class="option"><span class="opt-letter">B</span>Para aquecer a água até a temperatura ideal</div>
+          <div class="option correct"><span class="opt-letter">C</span>Para permitir a síntese de vitamina D3 na pele, essencial para absorção de cálcio</div>
+          <div class="option"><span class="opt-letter">D</span>Para matar bactérias na água do aquário</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — Sem UV-B, a tartaruga não sintetiza vitamina D3, que é necessária para absorver o cálcio da dieta. O resultado é MOM (Doença Metabólica Óssea), que amolece e deforma o casco irreversivelmente.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">2</span>O que significa dizer que tartarugas são animais "ectotermos"?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>São animais que vivem exclusivamente em ecossistemas terrestres</div>
+          <div class="option correct"><span class="opt-letter">B</span>Dependem do ambiente externo para regular a temperatura corporal</div>
+          <div class="option"><span class="opt-letter">C</span>Produzem calor interno como cães e gatos</div>
+          <div class="option"><span class="opt-letter">D</span>Precisam de temperatura ambiente sempre acima de 40°C</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: B — Ectotermos (antigamente chamados de "sangue frio") regulam a temperatura corporal por comportamento — se aquecem no basking e se resfriam na sombra ou na água. Por isso o habitat precisa oferecer gradiente de temperatura.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">3</span>Com que frequência deve ser feita a troca parcial de água de um aquário com tartaruga aquática?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Uma vez por mês, trocando toda a água</div>
+          <div class="option"><span class="opt-letter">B</span>Apenas quando a água ficar turva</div>
+          <div class="option correct"><span class="opt-letter">C</span>Semanalmente, trocando 30–40% do volume</div>
+          <div class="option"><span class="opt-letter">D</span>A cada dois meses, com limpeza completa</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — Trocas parciais semanais de 30–40% removem nitratos acumulados sem destruir as bactérias benéficas do filtro biológico. Trocar tudo de uma vez destrói o ciclo do nitrogênio e piora a qualidade da água.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">4</span>Qual alimento é PROIBIDO para jabutis e por quê?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Mamão — muito doce e causa obesidade</div>
+          <div class="option correct"><span class="opt-letter">B</span>Espinafre — contém ácido oxálico que bloqueia a absorção de cálcio</div>
+          <div class="option"><span class="opt-letter">C</span>Couve — tem muito cálcio e pode causar cálculo renal</div>
+          <div class="option"><span class="opt-letter">D</span>Capim — difícil de digerir e causa obstrução intestinal</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: B — O ácido oxálico do espinafre se liga ao cálcio no intestino formando oxalato de cálcio insolúvel, impedindo a absorção do mineral. Com o tempo, agrava ou desencadeia MOM mesmo com suplementação.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">5</span>Uma tartaruga aquática está nadando inclinada para um lado e parece ter dificuldade para mergulhar. Qual deve ser a sua atitude imediata?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Adicionar sal à água para tratar possível infecção</div>
+          <div class="option"><span class="opt-letter">B</span>Deixar em observação por uma semana antes de tomar qualquer atitude</div>
+          <div class="option"><span class="opt-letter">C</span>Fazer a troca total da água do aquário imediatamente</div>
+          <div class="option correct"><span class="opt-letter">D</span>Levar ao veterinário herpetólogo com urgência — pode ser pneumonia</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: D — Nadar inclinada ou boiar de lado são sintomas clássicos de pneumonia ou acúmulo de ar/líquido nos pulmões. Sem tratamento veterinário urgente (antibióticos, drenagem), o animal pode morrer em 24–48 horas.</div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+</div>
+
+<footer>
+  <span>Apostila Cuidados com Animais — Módulo 1: Como Cuidar de uma Tartaruga</span>
+  <span>LAB365 × SENAI · Workshop Kiro &amp; Agentes na AWS</span>
+</footer>
+
+</body>
+</html>
