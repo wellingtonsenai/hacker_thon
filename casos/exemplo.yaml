@@ -1,55 +1,112 @@
-# Caso de uso de exemplo — gerado pelo Dev Validador
-# Estrutura esperada pelo renderizador
+# Caso de uso de exemplo — Dev Validador
+# Schema: v2 — compatível com render.mjs e validador.js
+#
+# Para gerar o diagrama:
+#   node renderizador/render.mjs casos/exemplo.yaml saida/exemplo.png --icons icones
+#
+# Para validar os ícones:
+#   node validador.js casos/exemplo.yaml
 
+versao: 2
 nome: "Plataforma de E-learning com IA"
-descricao: >
-  Plataforma educacional que usa modelos de linguagem para gerar conteúdo
-  personalizado, avaliar respostas e sugerir trilhas de aprendizado.
+subtitulo: "Geração de conteúdo personalizado com Amazon Bedrock"
+regiao: us-east-1
+
+grupos:
+  - id: aws_cloud
+    nome: "AWS Cloud"
+    tipo: aws-cloud
+    servicos: [cognito, api_gateway, lambda, bedrock, dynamodb, s3, cloudfront]
 
 servicos:
   - id: cognito
-    nome: Amazon Cognito
+    nome: "Amazon Cognito"
+    tipo: aws-cognito
     descricao: Autenticação e gerenciamento de usuários
-    icone: cognito.svg
+    icone: Arch_Amazon-Cognito_64.svg
+    col: 0
+    row: 0
 
   - id: api_gateway
-    nome: Amazon API Gateway
+    nome: "Amazon API Gateway"
+    tipo: aws-api-gateway
     descricao: Entrada única para todas as requisições da aplicação
-    icone: api-gateway.svg
+    icone: Arch_Amazon-API-Gateway_64.svg
+    col: 1
+    row: 0
 
   - id: lambda
-    nome: AWS Lambda
+    nome: "AWS Lambda"
+    tipo: aws-lambda
     descricao: Processamento serverless de requisições
-    icone: lambda.svg
+    icone: Arch_AWS-Lambda_64.svg
+    col: 2
+    row: 0
 
   - id: bedrock
-    nome: Amazon Bedrock
+    nome: "Amazon Bedrock"
+    tipo: aws-bedrock
     descricao: Modelos de linguagem para geração de conteúdo e avaliação
-    icone: bedrock.svg
+    icone: Arch_Amazon-Bedrock_64.svg
+    col: 3
+    row: 0
 
   - id: dynamodb
-    nome: Amazon DynamoDB
+    nome: "Amazon DynamoDB"
+    tipo: aws-dynamodb
     descricao: Banco de dados NoSQL para progresso dos alunos
-    icone: dynamodb.svg
+    icone: Arch_Amazon-DynamoDB_64.svg
+    col: 1
+    row: 1
 
   - id: s3
-    nome: Amazon S3
+    nome: "Amazon S3"
+    tipo: aws-s3
     descricao: Armazenamento de materiais didáticos e mídias
-    icone: s3.svg
+    icone: Arch_Amazon-Simple-Storage-Service_64.svg
+    col: 2
+    row: 1
 
   - id: cloudfront
-    nome: Amazon CloudFront
+    nome: "Amazon CloudFront"
+    tipo: aws-cloudfront
     descricao: CDN para entrega rápida de conteúdo estático
-    icone: cloudfront.svg
+    icone: Arch_Amazon-CloudFront_64.svg
+    col: 3
+    row: 1
 
 fluxo:
   - passo: 1
+    de: cognito
+    para: api_gateway
+    rotulo: "token"
     descricao: "Aluno se autentica via Cognito"
+    estilo: requisicao
+
   - passo: 2
-    descricao: "Requisição chega ao API Gateway"
+    de: api_gateway
+    para: lambda
+    rotulo: "requisição"
+    descricao: "Requisição chega ao API Gateway e aciona o Lambda"
+    estilo: requisicao
+
   - passo: 3
-    descricao: "Lambda processa e chama o Bedrock"
+    de: lambda
+    para: bedrock
+    rotulo: "gera conteúdo"
+    descricao: "Lambda processa e chama o Bedrock para gerar conteúdo"
+    estilo: requisicao
+
   - passo: 4
+    de: lambda
+    para: dynamodb
+    rotulo: "salva progresso"
     descricao: "Resposta personalizada é salva no DynamoDB"
+    estilo: requisicao
+
   - passo: 5
+    de: cloudfront
+    para: s3
+    rotulo: "busca material"
     descricao: "Material complementar é servido via S3 + CloudFront"
+    estilo: requisicao
