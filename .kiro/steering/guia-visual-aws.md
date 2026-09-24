@@ -97,6 +97,33 @@ servicos:
     conexoes: []
 ```
 
+## Disponibilidade regional
+
+> Todos os serviços abaixo foram verificados em **us-east-1 (N. Virginia)** — fonte: [AWS Regional Services](https://aws.amazon.com/about-aws/globalinfrastructure/regional-product-services/) e [Amazon Bedrock endpoints](https://docs.aws.amazon.com/bedrock/latest/userguide/endpoints-region-availability.html).
+
+| Serviço | us-east-1 | Observação |
+|---|---|---|
+| Lambda | ✅ | |
+| S3 | ✅ | |
+| EC2 | ✅ | |
+| RDS | ✅ | |
+| DynamoDB | ✅ | |
+| SQS | ✅ | |
+| SNS | ✅ | |
+| CloudFront | ✅ | Global, endpoint de controle em us-east-1 |
+| API Gateway | ✅ | |
+| Cognito | ✅ | |
+| IAM | ✅ | Global |
+| VPC | ✅ | |
+| ALB | ✅ | |
+| ECS | ✅ | |
+| Fargate | ✅ | |
+| EventBridge | ✅ | |
+| Step Functions | ✅ | |
+| Bedrock | ✅ | `bedrock-runtime` e `bedrock-mantle` disponíveis |
+
+**Região padrão do projeto: `us-east-1`**
+
 ## O que o validador verifica
 1. Todos os `tipo` existem na lista de ícones disponíveis
 2. Todos os `destino` referenciam um `id` existente no mesmo arquivo
