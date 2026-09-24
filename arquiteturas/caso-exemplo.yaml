@@ -1,0 +1,57 @@
+nome: caso-exemplo
+descricao: API REST serverless com autenticação, banco NoSQL e fila de eventos
+
+servicos:
+  - id: cloudfront
+    tipo: aws-cloudfront
+    nome: CloudFront CDN
+    conexoes:
+      - destino: api-gateway
+        tipo: sincrona
+
+  - id: api-gateway
+    tipo: aws-api-gateway
+    nome: API Gateway
+    conexoes:
+      - destino: cognito
+        tipo: sincrona
+      - destino: lambda-handler
+        tipo: sincrona
+
+  - id: cognito
+    tipo: aws-cognito
+    nome: Cognito (Auth)
+    conexoes: []
+
+  - id: lambda-handler
+    tipo: aws-lambda
+    nome: Lambda Handler
+    conexoes:
+      - destino: dynamodb
+        tipo: bidirecional
+      - destino: sqs-eventos
+        tipo: assincrona
+
+  - id: dynamodb
+    tipo: aws-dynamodb
+    nome: DynamoDB
+    conexoes: []
+
+  - id: sqs-eventos
+    tipo: aws-sqs
+    nome: SQS Fila de Eventos
+    conexoes:
+      - destino: lambda-processador
+        tipo: assincrona
+
+  - id: lambda-processador
+    tipo: aws-lambda
+    nome: Lambda Processador
+    conexoes:
+      - destino: s3-storage
+        tipo: sincrona
+
+  - id: s3-storage
+    tipo: aws-s3
+    nome: S3 Storage
+    conexoes: []
