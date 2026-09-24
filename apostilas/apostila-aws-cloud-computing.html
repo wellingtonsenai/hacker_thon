@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apostila AWS — Computação em Nuvem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:     #1E293B;
+      --secondary:   #0EA5E9;
+      --accent:      #F59E0B;
+      --bg:          #FFFFFF;
+      --text:        #334155;
+      --muted:       #64748B;
+      --surface:     #F8FAFC;
+      --surface2:    #F1F5F9;
+      --border:      #E2E8F0;
+      --border-dark: #CBD5E1;
+      --success:     #10B981;
+      --danger:      #EF4444;
+      --code-bg:     #0F172A;
+      --code-text:   #E2E8F0;
+      --radius:      8px;
+      --radius-lg:   12px;
+      --shadow:      0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      --shadow-md:   0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15px; }
+    .page { display: block; }
+    main { max-width: 820px; margin: 0 auto; padding: 3rem 3rem 4rem; }
+
+    /* Breadcrumb */
+    .breadcrumb { display: flex; align-items: center; gap: .4rem; font-size: .78rem; color: var(--muted); font-family: 'Inter', sans-serif; margin-bottom: 2.5rem; }
+    .breadcrumb span { color: var(--secondary); font-weight: 600; }
+    .breadcrumb .sep { color: var(--border-dark); }
+
+    /* Hero */
+    .hero { background: var(--primary); border-radius: var(--radius-lg); padding: 2.5rem 2.5rem 2rem; margin-bottom: 2.5rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; border-radius: 50%; background: rgba(14,165,233,.15); }
+    .hero::after  { content: ''; position: absolute; bottom: -40px; left: 40%; width: 160px; height: 160px; border-radius: 50%; background: rgba(245,158,11,.08); }
+    .hero .modulo-tag { display: inline-flex; align-items: center; gap: .4rem; background: rgba(14,165,233,.2); color: #7DD3FC; font-size: .72rem; font-weight: 700; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: .08em; padding: .3rem .75rem; border-radius: 20px; margin-bottom: 1.1rem; border: 1px solid rgba(14,165,233,.3); }
+    .hero h1 { font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 700; color: #fff; line-height: 1.25; margin-bottom: .6rem; }
+    .hero h1 em { color: var(--secondary); font-style: normal; }
+    .hero .hero-desc { color: #94A3B8; font-size: .9rem; max-width: 520px; }
+    .hero-meta { display: flex; gap: 1.5rem; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.08); }
+    .hero-meta .meta-item { font-size: .78rem; color: #64748B; font-family: 'Inter', sans-serif; }
+    .hero-meta .meta-item strong { display: block; color: #94A3B8; margin-bottom: .1rem; font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    /* Objetivos */
+    .objetivos { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2.5rem; }
+    .objetivos h3 { font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; color: var(--secondary); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+    .objetivos ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .objetivos ul li { display: flex; align-items: flex-start; gap: .5rem; font-size: .85rem; color: var(--text); }
+    .objetivos ul li::before { content: '✓'; color: var(--success); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+
+    /* Seções */
+    section { margin-bottom: 3rem; }
+    .section-header { display: flex; align-items: flex-start; gap: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem; }
+    .section-num { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--secondary); color: #fff; border-radius: var(--radius); font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; flex-shrink: 0; }
+    .section-title-wrap { flex: 1; }
+    .section-title-wrap h2 { font-family: 'Inter', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--primary); line-height: 1.3; }
+    .section-title-wrap .section-sub { font-size: .78rem; color: var(--muted); margin-top: .2rem; }
+    section h3 { font-family: 'Inter', sans-serif; font-size: .95rem; font-weight: 600; color: var(--primary); margin: 1.5rem 0 .6rem; }
+    section p { color: var(--text); margin-bottom: .85rem; }
+    section ul, section ol { color: var(--text); padding-left: 1.5rem; margin-bottom: .85rem; }
+    section ul li, section ol li { margin-bottom: .35rem; }
+
+    /* Callouts */
+    .callout { border-left: 4px solid var(--secondary); background: #EFF6FF; border-radius: 0 var(--radius) var(--radius) 0; padding: 1rem 1.1rem; font-size: .875rem; color: var(--text); margin: 1.25rem 0; }
+    .callout strong { color: var(--primary); }
+    .callout-title { font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--secondary); margin-bottom: .35rem; }
+    .callout.warn { border-color: var(--accent); background: #FFFBEB; }
+    .callout.warn .callout-title { color: var(--accent); }
+    .callout.tip  { border-color: var(--success); background: #F0FDF4; }
+    .callout.tip .callout-title  { color: var(--success); }
+    .callout.key  { border-color: var(--primary); background: var(--surface); }
+    .callout.key .callout-title  { color: var(--primary); }
+
+    /* Código */
+    pre { background: var(--code-bg); border-radius: var(--radius-lg); padding: 0; overflow: hidden; font-size: .82rem; line-height: 1.65; margin: 1rem 0 1.5rem; box-shadow: var(--shadow-md); }
+    .code-header { background: rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.07); padding: .5rem 1rem; display: flex; align-items: center; justify-content: space-between; }
+    .code-dots { display: flex; gap: .35rem; }
+    .code-dots span { width: 10px; height: 10px; border-radius: 50%; }
+    .code-dots .d1 { background: #FF5F57; } .code-dots .d2 { background: #FFBD2E; } .code-dots .d3 { background: #28C940; }
+    .code-lang { font-family: 'JetBrains Mono', monospace; font-size: .65rem; color: #64748B; text-transform: uppercase; letter-spacing: .08em; }
+    .code-body { padding: 1.1rem 1.25rem; overflow-x: auto; }
+    .code-body code { font-family: 'JetBrains Mono', monospace; color: var(--code-text); background: none; border: none; padding: 0; font-size: inherit; }
+    .kw { color: #C792EA; } .prop { color: #82AAFF; } .val { color: #C3E88D; } .str { color: #F78C6C; } .com { color: #546E7A; font-style: italic; } .sel { color: #FFCB6B; }
+    code { font-family: 'JetBrains Mono', monospace; font-size: .82em; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: .15em .45em; color: #0369A1; }
+
+    /* Tabela */
+    .table-wrap { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); margin: 1rem 0 1.5rem; box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    thead tr { background: var(--primary); }
+    thead th { padding: .75rem 1rem; text-align: left; font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #94A3B8; }
+    tbody tr:nth-child(even) { background: var(--surface); }
+    tbody tr:nth-child(odd)  { background: var(--bg); }
+    tbody td { padding: .7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text); }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* Steps */
+    .steps { display: flex; gap: 0; margin: 1rem 0 1.5rem; }
+    .step { flex: 1; min-width: 100px; background: var(--surface); border: 1px solid var(--border); border-right: none; padding: 1rem; position: relative; text-align: center; }
+    .step:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+    .step:last-child  { border-right: 1px solid var(--border); border-radius: 0 var(--radius) var(--radius) 0; }
+    .step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--secondary); color: #fff; border-radius: 50%; font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 700; margin-bottom: .5rem; }
+    .step-title { font-size: .8rem; font-weight: 600; color: var(--primary); font-family: 'Inter', sans-serif; margin-bottom: .3rem; }
+    .step-desc  { font-size: .75rem; color: var(--muted); }
+    .step-arrow { position: absolute; right: -10px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; background: var(--secondary); clip-path: polygon(0 0, 100% 50%, 0 100%); z-index: 1; }
+    .step:last-child .step-arrow { display: none; }
+
+    /* Cards */
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; position: relative; overflow: hidden; }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--secondary); border-radius: 4px 0 0 4px; }
+    .card.accent::before  { background: var(--accent); }
+    .card.success::before { background: var(--success); }
+    .card.danger::before  { background: #8B5CF6; }
+    .card h4 { font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; color: var(--primary); margin-bottom: .5rem; }
+    .card p  { font-size: .82rem; color: var(--muted); margin: 0; }
+
+    /* Modelo de implantação — bloco visual */
+    .deploy-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
+    .deploy-card { border-radius: var(--radius-lg); padding: 1.25rem; border: 1px solid var(--border); text-align: center; }
+    .deploy-card .deploy-icon { font-size: 2rem; margin-bottom: .5rem; }
+    .deploy-card h4 { font-family: 'Inter', sans-serif; font-size: .9rem; font-weight: 700; margin-bottom: .4rem; }
+    .deploy-card p  { font-size: .78rem; color: var(--muted); margin: 0; }
+    .deploy-cloud    { background: #EFF6FF; border-color: #BFDBFE; }
+    .deploy-cloud h4 { color: #1D4ED8; }
+    .deploy-onprem   { background: #F0FDF4; border-color: #BBF7D0; }
+    .deploy-onprem h4{ color: #15803D; }
+    .deploy-hybrid   { background: #FFFBEB; border-color: #FDE68A; }
+    .deploy-hybrid h4{ color: #B45309; }
+
+    /* Pirâmide de responsabilidade IaaS/PaaS/SaaS */
+    .service-models { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
+    .sm-card { border-radius: var(--radius-lg); padding: 1.25rem; border: 2px solid; }
+    .sm-card h4 { font-family: 'Inter', sans-serif; font-size: .9rem; font-weight: 700; margin-bottom: .5rem; }
+    .sm-card ul { list-style: none; padding: 0; margin: 0; }
+    .sm-card ul li { font-size: .78rem; padding: .25rem 0; border-bottom: 1px solid rgba(0,0,0,.06); color: var(--text); display: flex; align-items: center; gap: .4rem; }
+    .sm-card ul li:last-child { border-bottom: none; }
+    .sm-card ul li .badge { font-size: .6rem; font-weight: 700; padding: .1rem .35rem; border-radius: 4px; font-family: 'Inter', sans-serif; white-space: nowrap; }
+    .sm-iaas { border-color: #BFDBFE; background: #EFF6FF; }
+    .sm-iaas h4 { color: #1D4ED8; }
+    .sm-iaas .badge-voce { background: #DBEAFE; color: #1D4ED8; }
+    .sm-iaas .badge-aws  { background: #E0F2FE; color: #0369A1; }
+    .sm-paas { border-color: #A7F3D0; background: #F0FDF4; }
+    .sm-paas h4 { color: #15803D; }
+    .sm-paas .badge-voce { background: #D1FAE5; color: #15803D; }
+    .sm-paas .badge-aws  { background: #ECFDF5; color: #059669; }
+    .sm-saas { border-color: #FDE68A; background: #FFFBEB; }
+    .sm-saas h4 { color: #92400E; }
+    .sm-saas .badge-voce { background: #FEF3C7; color: #92400E; }
+    .sm-saas .badge-aws  { background: #FFFBEB; color: #B45309; }
+
+    /* Quiz */
+    .quiz-wrap { margin-top: 1rem; }
+    .quiz { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; }
+    .quiz-q { font-family: 'Inter', sans-serif; font-size: .9rem; font-weight: 600; color: var(--primary); margin-bottom: .85rem; display: flex; gap: .6rem; align-items: flex-start; }
+    .quiz-q .q-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--secondary); color: #fff; border-radius: 50%; font-size: .72rem; font-weight: 700; flex-shrink: 0; margin-top: .1rem; }
+    .options { display: flex; flex-direction: column; gap: .4rem; margin-bottom: .75rem; }
+    .option { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius); padding: .55rem 1rem; font-size: .85rem; font-family: 'Roboto', sans-serif; color: var(--text); display: flex; align-items: center; gap: .6rem; }
+    .option .opt-letter { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border-dark); font-size: .7rem; font-weight: 700; font-family: 'Inter', sans-serif; color: var(--muted); flex-shrink: 0; }
+    .option.correct { border-color: var(--success); background: #F0FDF4; color: #166534; }
+    .option.correct .opt-letter { background: var(--success); border-color: var(--success); color: #fff; }
+    .quiz-answer { font-size: .8rem; color: #166534; background: #F0FDF4; border: 1px solid #86EFAC; border-radius: var(--radius); padding: .5rem .85rem; font-family: 'Inter', sans-serif; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 3rem; color: var(--muted); font-size: .78rem; display: flex; justify-content: space-between; align-items: center; font-family: 'Inter', sans-serif; }
+    footer a { color: var(--secondary); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      main { padding: 1.5rem 1.25rem; }
+      .objetivos ul, .cards, .deploy-grid, .service-models { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.5rem; }
+      .steps { flex-direction: column; }
+      .step { border-right: 1px solid var(--border); border-radius: var(--radius) !important; margin-bottom: .5rem; }
+      footer { flex-direction: column; gap: .5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+<main>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    AWS Cloud Practitioner <span class="sep">›</span> <span>Módulo 1</span> <span class="sep">›</span> Computação em Nuvem
+  </div>
+
+  <!-- ══════════ HERO ══════════ -->
+  <div class="hero">
+    <div class="modulo-tag">☁ AWS Módulo 1</div>
+    <h1>Computação em <em>Nuvem</em></h1>
+    <p class="hero-desc">Entenda o que é cloud computing, como funciona o modelo cliente-servidor, os três modelos de implantação e os modelos de serviço IaaS, PaaS e SaaS — base para qualquer jornada na AWS.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><strong>Duração</strong>~45 min</div>
+      <div class="meta-item"><strong>Nível</strong>Iniciante</div>
+      <div class="meta-item"><strong>Módulo</strong>1 de 12</div>
+      <div class="meta-item"><strong>Versão</strong>1.0 · Set 2026</div>
+    </div>
+  </div>
+
+  <!-- Objetivos -->
+  <div class="objetivos">
+    <h3>🎯 Objetivos de Aprendizagem</h3>
+    <ul>
+      <li>Definir computação em nuvem com precisão</li>
+      <li>Compreender o modelo cliente-servidor</li>
+      <li>Diferenciar os 3 modelos de implantação</li>
+      <li>Entender IaaS, PaaS e SaaS na AWS</li>
+      <li>Identificar os 6 benefícios da nuvem</li>
+      <li>Relacionar serviços AWS aos modelos de serviço</li>
+    </ul>
+  </div>
+
+  <!-- ════════════════════════
+       1. O QUE É COMPUTAÇÃO EM NUVEM?
+  ════════════════════════ -->
+  <section id="intro">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title-wrap">
+        <h2>O que é Computação em Nuvem?</h2>
+        <div class="section-sub">Definição, conceito e modelo de precificação</div>
+      </div>
+    </div>
+
+    <p>Computação em nuvem é a <strong>entrega sob demanda de recursos de TI pela internet com precificação pay-as-you-go</strong> — ou seja, você paga somente pelo que usa, quando usa. Em vez de comprar, instalar e manter servidores físicos em um data center próprio, você aluga capacidade computacional de provedores como a AWS e acessa tudo via internet.</p>
+
+    <p>Antes da nuvem, uma empresa precisava estimar sua capacidade de processamento com meses de antecedência, investir capital em hardware e esperar semanas pela entrega e configuração dos equipamentos. Com a nuvem, o mesmo processo leva minutos — e você pode escalar para cima ou para baixo conforme a demanda muda.</p>
+
+    <div class="callout key">
+      <div class="callout-title">🔑 Definição Oficial AWS</div>
+      <em>"Computação em nuvem é a entrega sob demanda de recursos de TI pela internet com modelo de preços pay-as-you-go."</em> — Amazon Web Services
+    </div>
+
+    <h3>O modelo cliente-servidor</h3>
+    <p>A nuvem é construída sobre o modelo cliente-servidor. O <strong>cliente</strong> (seu navegador, app ou serviço) envia uma requisição pela internet. O <strong>servidor</strong> (uma máquina em um data center da AWS) processa essa requisição e devolve a resposta. A AWS opera dezenas de data centers ao redor do mundo para garantir baixa latência e alta disponibilidade.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">1</div>
+        <div class="step-title">Cliente</div>
+        <div class="step-desc">Envia requisição via internet</div>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">2</div>
+        <div class="step-title">Internet</div>
+        <div class="step-desc">Transmite a requisição</div>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">3</div>
+        <div class="step-title">Servidor AWS</div>
+        <div class="step-desc">Processa e responde</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Cliente</div>
+        <div class="step-desc">Recebe o resultado</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       2. MODELOS DE IMPLANTAÇÃO
+  ════════════════════════ -->
+  <section id="deployment">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title-wrap">
+        <h2>Modelos de Implantação</h2>
+        <div class="section-sub">Cloud-based, On-premises e Hybrid</div>
+      </div>
+    </div>
+
+    <p>Um modelo de implantação descreve <strong>onde os recursos computacionais ficam hospedados</strong> e como são acessados. A AWS reconhece três modelos principais, cada um adequado a diferentes necessidades de negócio, regulamentação e custo.</p>
+
+    <div class="deploy-grid">
+      <div class="deploy-card deploy-cloud">
+        <div class="deploy-icon">☁️</div>
+        <h4>Cloud-based</h4>
+        <p>Tudo na nuvem. Você pode construir novas aplicações ou migrar as existentes, escolhendo entre servidores virtuais gerenciados por você ou serviços totalmente administrados pela AWS.</p>
+      </div>
+      <div class="deploy-card deploy-onprem">
+        <div class="deploy-icon">🏢</div>
+        <h4>On-Premises</h4>
+        <p>Recursos rodam no seu próprio data center usando virtualização e ferramentas de gerenciamento. Também chamado de <em>nuvem privada</em>. Oferece controle total, mas exige investimento em hardware.</p>
+      </div>
+      <div class="deploy-card deploy-hybrid">
+        <div class="deploy-icon">🔀</div>
+        <h4>Híbrido</h4>
+        <p>Conecta recursos da nuvem à infraestrutura local. Ideal quando há dados sensíveis, requisitos regulatórios específicos ou sistemas legados que não podem ser migrados completamente.</p>
+      </div>
+    </div>
+
+    <h3>Quando usar cada modelo?</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Modelo</th><th>Melhor para</th><th>Exemplo real</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Cloud-based</strong></td><td>Startups, aplicações novas, escala rápida</td><td>Startup que lança um SaaS 100% na AWS</td></tr>
+          <tr><td><strong>On-Premises</strong></td><td>Bancos, governo, dados altamente sensíveis</td><td>Sistema bancário core que não pode sair do data center</td></tr>
+          <tr><td><strong>Híbrido</strong></td><td>Empresas em transição ou com regulamentação mista</td><td>Hospital com prontuários locais e analytics na nuvem</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-title">⚠️ Atenção</div>
+      O modelo híbrido exige ferramentas de integração como <strong>AWS Outposts</strong> (infraestrutura AWS dentro do seu data center) e <strong>AWS Direct Connect</strong> (conexão de rede dedicada entre seu data center e a AWS).
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       3. BENEFÍCIOS DA NUVEM
+  ════════════════════════ -->
+  <section id="beneficios">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title-wrap">
+        <h2>Benefícios da Computação em Nuvem</h2>
+        <div class="section-sub">Os 6 pilares que justificam a adoção da AWS</div>
+      </div>
+    </div>
+
+    <p>A AWS identifica seis vantagens fundamentais da computação em nuvem em relação ao modelo tradicional de infraestrutura física. Esses benefícios são a base do exame <strong>AWS Certified Cloud Practitioner</strong> e refletem a proposta de valor central da nuvem.</p>
+
+    <div class="cards">
+      <div class="card">
+        <h4>💸 Troque despesa fixa por variável</h4>
+        <p>Em vez de investir em data centers e servidores antes de saber como usá-los, pague apenas pelos recursos que consumir — e somente quando consumir.</p>
+      </div>
+      <div class="card accent">
+        <h4>📉 Economias de escala</h4>
+        <p>A AWS agrega o uso de centenas de milhares de clientes, alcançando economias de escala que se traduzem em preços pay-as-you-go mais baixos.</p>
+      </div>
+      <div class="card success">
+        <h4>📐 Pare de adivinhar capacidade</h4>
+        <p>Elimine suposições sobre sua necessidade de capacidade de infraestrutura. Escale para cima ou para baixo em minutos conforme a demanda real.</p>
+      </div>
+      <div class="card">
+        <h4>⚡ Agilidade e velocidade</h4>
+        <p>Novos recursos de TI ficam disponíveis a um clique de distância, reduzindo o tempo de disponibilização de recursos de semanas para minutos.</p>
+      </div>
+      <div class="card accent">
+        <h4>🌍 Alcance global em minutos</h4>
+        <p>Implante sua aplicação em múltiplas regiões do mundo com poucos cliques, entregando menor latência e melhor experiência a usuários globais.</p>
+      </div>
+      <div class="card success">
+        <h4>🎯 Foco no negócio</h4>
+        <p>Pare de gastar dinheiro executando e mantendo data centers. Foque em projetos que diferenciam sua empresa, não em infraestrutura genérica.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       4. MODELOS DE SERVIÇO
+  ════════════════════════ -->
+  <section id="service-models">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title-wrap">
+        <h2>Modelos de Serviço</h2>
+        <div class="section-sub">IaaS, PaaS e SaaS — quem gerencia o quê</div>
+      </div>
+    </div>
+
+    <p>Os modelos de serviço definem <strong>quanto da pilha tecnológica é gerenciado pela AWS</strong> e quanto permanece sob sua responsabilidade. Quanto mais alto o modelo, mais a AWS gerencia — e mais você pode focar exclusivamente na sua aplicação.</p>
+
+    <div class="service-models">
+      <div class="sm-card sm-iaas">
+        <h4>🖥️ IaaS</h4>
+        <p style="font-size:.75rem; color:var(--muted); margin-bottom:.75rem;">Infrastructure as a Service</p>
+        <ul>
+          <li><span class="badge badge-voce sm-iaas">Você</span> App, dados, runtime, SO</li>
+          <li><span class="badge badge-aws sm-iaas">AWS</span> Virtualização</li>
+          <li><span class="badge badge-aws sm-iaas">AWS</span> Servidores físicos</li>
+          <li><span class="badge badge-aws sm-iaas">AWS</span> Armazenamento e rede</li>
+        </ul>
+        <p style="font-size:.72rem; color:var(--muted); margin-top:.75rem;">Ex: Amazon EC2</p>
+      </div>
+      <div class="sm-card sm-paas">
+        <h4>🧱 PaaS</h4>
+        <p style="font-size:.75rem; color:var(--muted); margin-bottom:.75rem;">Platform as a Service</p>
+        <ul>
+          <li><span class="badge badge-voce sm-paas">Você</span> App e dados</li>
+          <li><span class="badge badge-aws sm-paas">AWS</span> Runtime e SO</li>
+          <li><span class="badge badge-aws sm-paas">AWS</span> Virtualização</li>
+          <li><span class="badge badge-aws sm-paas">AWS</span> Toda a infraestrutura</li>
+        </ul>
+        <p style="font-size:.72rem; color:var(--muted); margin-top:.75rem;">Ex: AWS Elastic Beanstalk</p>
+      </div>
+      <div class="sm-card sm-saas">
+        <h4>☁️ SaaS</h4>
+        <p style="font-size:.75rem; color:var(--muted); margin-bottom:.75rem;">Software as a Service</p>
+        <ul>
+          <li><span class="badge badge-voce sm-saas">Você</span> Apenas usa o software</li>
+          <li><span class="badge badge-aws sm-saas">AWS</span> App completo</li>
+          <li><span class="badge badge-aws sm-saas">AWS</span> Dados e runtime</li>
+          <li><span class="badge badge-aws sm-saas">AWS</span> Toda a infraestrutura</li>
+        </ul>
+        <p style="font-size:.72rem; color:var(--muted); margin-top:.75rem;">Ex: Amazon WorkMail</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Modelo</th><th>Controle</th><th>Flexibilidade</th><th>Serviços AWS</th></tr></thead>
+        <tbody>
+          <tr><td><strong>IaaS</strong></td><td>Alto — você gerencia SO e acima</td><td>Máxima</td><td>EC2, VPC, EBS, S3</td></tr>
+          <tr><td><strong>PaaS</strong></td><td>Médio — você gerencia app e dados</td><td>Moderada</td><td>Elastic Beanstalk, RDS, Lambda</td></tr>
+          <tr><td><strong>SaaS</strong></td><td>Baixo — só usa a aplicação</td><td>Mínima</td><td>Amazon WorkMail, Chime, QuickSight</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">💡 Dica para o exame</div>
+      O AWS Lambda é frequentemente citado como exemplo de <strong>PaaS sem servidor (serverless)</strong>: você gerencia apenas o código (função), e a AWS cuida de toda a infraestrutura, incluindo escalabilidade automática e disponibilidade.
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       5. INFRAESTRUTURA GLOBAL AWS
+  ════════════════════════ -->
+  <section id="global">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title-wrap">
+        <h2>Infraestrutura Global da AWS</h2>
+        <div class="section-sub">Regiões, Zonas de Disponibilidade e Edge Locations</div>
+      </div>
+    </div>
+
+    <p>A AWS opera uma das maiores infraestruturas de nuvem do mundo, distribuída globalmente para garantir baixa latência, alta disponibilidade e conformidade com regulamentações locais. Essa infraestrutura é organizada em três níveis hierárquicos.</p>
+
+    <div class="cards">
+      <div class="card">
+        <h4>🌎 Regiões (Regions)</h4>
+        <p>Áreas geográficas isoladas, cada uma contendo múltiplas Zonas de Disponibilidade. Ex: <code>us-east-1</code> (N. Virginia), <code>sa-east-1</code> (São Paulo). Dados em uma região não saem dela sem autorização explícita.</p>
+      </div>
+      <div class="card accent">
+        <h4>🏗️ Zonas de Disponibilidade (AZs)</h4>
+        <p>Data centers fisicamente separados dentro de uma Região, conectados por redes de alta velocidade e baixa latência. Distribuir sua aplicação em múltiplas AZs garante tolerância a falhas.</p>
+      </div>
+      <div class="card success">
+        <h4>⚡ Edge Locations</h4>
+        <p>Pontos de presença distribuídos globalmente, usados pelo <strong>Amazon CloudFront</strong> (CDN) para entregar conteúdo com mínima latência ao usuário final — independente da distância até a Região.</p>
+      </div>
+      <div class="card danger">
+        <h4>🔗 Zonas Locais (Local Zones)</h4>
+        <p>Extensões de Regiões AWS posicionadas próximas a grandes centros urbanos, para aplicações que exigem latência de milissegundos em single-digit — como games e streaming ao vivo.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">📌 Nota — Região Brasil</div>
+      A região <strong>sa-east-1 (São Paulo)</strong> é a única Região AWS na América do Sul. Possui 3 Zonas de Disponibilidade e suporta os principais serviços AWS, incluindo EC2, RDS, S3, Lambda e Bedrock.
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       6. PAY-AS-YOU-GO
+  ════════════════════════ -->
+  <section id="pricing">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div class="section-title-wrap">
+        <h2>Modelo de Preços Pay-as-you-go</h2>
+        <div class="section-sub">Como a AWS cobra e como otimizar custos</div>
+      </div>
+    </div>
+
+    <p>O modelo pay-as-you-go é uma das principais vantagens competitivas da nuvem. Em vez de pagar por capacidade reservada que pode ficar ociosa, você paga apenas pelo que realmente consome — sem contratos de longo prazo obrigatórios ou taxas de cancelamento na maioria dos serviços.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dimensão</th><th>Como é cobrado</th><th>Exemplo AWS</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Computação</strong></td><td>Por hora ou segundo de uso</td><td>EC2 cobrado por segundo (mín. 60s)</td></tr>
+          <tr><td><strong>Armazenamento</strong></td><td>Por GB armazenado por mês</td><td>S3: a partir de $0,023/GB-mês</td></tr>
+          <tr><td><strong>Transferência</strong></td><td>Por GB transferido para fora</td><td>Entrada de dados: grátis na maioria dos casos</td></tr>
+          <tr><td><strong>Requisições</strong></td><td>Por número de chamadas</td><td>Lambda: primeiros 1M requests/mês grátis</td></tr>
+          <tr><td><strong>Banco de dados</strong></td><td>Por instância/hora + I/O</td><td>RDS Multi-AZ: por hora de instância</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Opções de compra para EC2</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tipo</th><th>Desconto vs On-Demand</th><th>Compromisso</th><th>Melhor para</th></tr></thead>
+        <tbody>
+          <tr><td><strong>On-Demand</strong></td><td>—</td><td>Nenhum</td><td>Cargas de trabalho imprevisíveis</td></tr>
+          <tr><td><strong>Savings Plans</strong></td><td>Até 72%</td><td>1 ou 3 anos ($ por hora)</td><td>Uso constante e previsível</td></tr>
+          <tr><td><strong>Reserved Instances</strong></td><td>Até 75%</td><td>1 ou 3 anos (tipo de instância)</td><td>Apps de produção estáveis</td></tr>
+          <tr><td><strong>Spot Instances</strong></td><td>Até 90%</td><td>Nenhum (interruptível)</td><td>Processamento em batch, ML, CI/CD</td></tr>
+          <tr><td><strong>Dedicated Hosts</strong></td><td>Variável</td><td>On-Demand ou Reserved</td><td>Licenças por socket/núcleo</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">💡 Dica de Otimização</div>
+      Use o <strong>AWS Cost Explorer</strong> para analisar padrões de uso e identificar oportunidades de economia. O <strong>AWS Trusted Advisor</strong> também verifica automaticamente se você está superprovisionado e sugere instâncias menores ou Spot.
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       7. RESPONSABILIDADE COMPARTILHADA
+  ════════════════════════ -->
+  <section id="shared">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div class="section-title-wrap">
+        <h2>Modelo de Responsabilidade Compartilhada</h2>
+        <div class="section-sub">O que a AWS protege e o que é sua responsabilidade</div>
+      </div>
+    </div>
+
+    <p>A segurança na AWS é uma <strong>responsabilidade compartilhada</strong>: a AWS é responsável pela segurança <em>da</em> nuvem (a infraestrutura física), enquanto o cliente é responsável pela segurança <em>na</em> nuvem (o que roda nessa infraestrutura).</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Responsabilidade</th><th>AWS</th><th>Cliente</th></tr></thead>
+        <tbody>
+          <tr><td>Hardware físico e data centers</td><td>✅</td><td>—</td></tr>
+          <tr><td>Hypervisor e infraestrutura de rede</td><td>✅</td><td>—</td></tr>
+          <tr><td>Sistema operacional do host</td><td>✅</td><td>—</td></tr>
+          <tr><td>Sistema operacional da instância (EC2)</td><td>—</td><td>✅</td></tr>
+          <tr><td>Configuração de firewall (Security Groups)</td><td>—</td><td>✅</td></tr>
+          <tr><td>Dados do cliente e criptografia</td><td>—</td><td>✅</td></tr>
+          <tr><td>Gerenciamento de identidade (IAM)</td><td>—</td><td>✅</td></tr>
+          <tr><td>Conformidade e auditoria de aplicações</td><td>—</td><td>✅</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout key">
+      <div class="callout-title">🔑 Regra de ouro</div>
+      Para serviços <strong>gerenciados</strong> (como RDS, Lambda, S3), a AWS assume mais responsabilidade — você cuida dos dados e das permissões de acesso. Para serviços de infraestrutura (como EC2), você gerencia a camada do SO para cima.
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       8. EXERCÍCIO PRÁTICO
+  ════════════════════════ -->
+  <section id="pratica">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div class="section-title-wrap">
+        <h2>Exercício Prático</h2>
+        <div class="section-sub">Classifique os cenários nos modelos corretos</div>
+      </div>
+    </div>
+
+    <p>Para cada cenário abaixo, identifique o <strong>modelo de implantação</strong> e o <strong>modelo de serviço</strong> mais adequados:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Cenário</th><th>Modelo de Implantação</th><th>Modelo de Serviço</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Startup lança app mobile com backend em Lambda e banco DynamoDB, sem nenhum servidor físico próprio</td>
+            <td style="color:#1D4ED8; font-weight:600;">Cloud-based</td>
+            <td style="color:#15803D; font-weight:600;">PaaS / Serverless</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Banco central mantém sistema core em data center próprio e usa AWS para analytics e BI</td>
+            <td style="color:#B45309; font-weight:600;">Híbrido</td>
+            <td style="color:#1D4ED8; font-weight:600;">IaaS + SaaS</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Empresa usa Amazon WorkMail para e-mail corporativo sem configurar nenhum servidor</td>
+            <td style="color:#1D4ED8; font-weight:600;">Cloud-based</td>
+            <td style="color:#92400E; font-weight:600;">SaaS</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Time de ML roda treinamento de modelos em instâncias EC2 spot com GPUs por algumas horas</td>
+            <td style="color:#1D4ED8; font-weight:600;">Cloud-based</td>
+            <td style="color:#1D4ED8; font-weight:600;">IaaS</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">✅ Gabarito comentado</div>
+      O cenário 2 é clássico de <strong>nuvem híbrida</strong>: dados sensíveis ficam on-premises (regulamentação do Banco Central) enquanto workloads analíticos migram para a nuvem aproveitando elasticidade e custo variável. O cenário 4 é um excelente caso de uso para <strong>Spot Instances</strong> — treinamento de ML é interruptível e pode economizar até 90%.
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       9. RESUMO
+  ════════════════════════ -->
+  <section id="resumo">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div class="section-title-wrap">
+        <h2>Resumo</h2>
+        <div class="section-sub">Principais aprendizados e próximos passos</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h4>☁️ Cloud = IT sob demanda</h4>
+        <p>Entrega de recursos de TI pela internet com pagamento pelo uso real — sem investimento antecipado em hardware.</p>
+      </div>
+      <div class="card accent">
+        <h4>🔀 3 Modelos de Implantação</h4>
+        <p>Cloud-based (tudo na nuvem), On-Premises (data center próprio) e Híbrido (os dois conectados).</p>
+      </div>
+      <div class="card success">
+        <h4>📐 IaaS → PaaS → SaaS</h4>
+        <p>Quanto mais alto o modelo, mais a AWS gerencia e menos você precisa se preocupar com infraestrutura.</p>
+      </div>
+      <div class="card">
+        <h4>🔒 Responsabilidade Compartilhada</h4>
+        <p>AWS protege a infraestrutura física. Você protege seus dados, configurações de acesso e aplicações.</p>
+      </div>
+    </div>
+
+    <div class="callout key">
+      <div class="callout-title">🚀 Próximos Passos</div>
+      Explore: <strong>AWS EC2</strong> (computação IaaS), <strong>AWS S3</strong> (armazenamento de objetos), <strong>AWS IAM</strong> (gerenciamento de identidade e acesso) e o <strong>AWS Well-Architected Framework</strong> — os 6 pilares para construir workloads seguros, eficientes e resilientes na nuvem.
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       10. QUIZ DE FIXAÇÃO
+  ════════════════════════ -->
+  <section id="quiz">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div class="section-title-wrap">
+        <h2>Quiz de Fixação</h2>
+        <div class="section-sub">Questões no estilo AWS Cloud Practitioner</div>
+      </div>
+    </div>
+
+    <p>As questões abaixo seguem o formato e o nível de dificuldade do exame <strong>AWS Certified Cloud Practitioner (CLF-C02)</strong>.</p>
+
+    <div class="quiz-wrap">
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">1</span>Qual das alternativas melhor define computação em nuvem segundo a AWS?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Armazenamento de arquivos em servidores remotos acessados via FTP</div>
+          <div class="option correct"><span class="opt-letter">B</span>Entrega sob demanda de recursos de TI pela internet com modelo pay-as-you-go</div>
+          <div class="option"><span class="opt-letter">C</span>Virtualização de servidores físicos dentro de um data center corporativo</div>
+          <div class="option"><span class="opt-letter">D</span>Contratação de serviços de hospedagem web com plano mensal fixo</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: B — É a definição oficial da AWS, combinando três elementos: sob demanda, internet e pay-as-you-go.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">2</span>Uma empresa precisa manter dados regulados em seu data center, mas quer usar a AWS para workloads de analytics. Qual modelo de implantação é mais adequado?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Cloud-based</div>
+          <div class="option"><span class="opt-letter">B</span>On-Premises</div>
+          <div class="option correct"><span class="opt-letter">C</span>Híbrido</div>
+          <div class="option"><span class="opt-letter">D</span>Multi-cloud</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — O modelo híbrido conecta o data center local à AWS, permitindo manter dados sensíveis on-premises e usar a nuvem para workloads flexíveis.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">3</span>No modelo de responsabilidade compartilhada, qual item é responsabilidade do CLIENTE ao usar Amazon EC2?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Segurança física do data center</div>
+          <div class="option"><span class="opt-letter">B</span>Manutenção do hypervisor</div>
+          <div class="option correct"><span class="opt-letter">C</span>Aplicação de patches no sistema operacional da instância</div>
+          <div class="option"><span class="opt-letter">D</span>Disponibilidade da rede física entre AZs</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — Em IaaS (EC2), o cliente gerencia o SO da instância, incluindo atualizações e patches de segurança. A AWS gerencia a camada de hardware e hypervisor.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">4</span>Um desenvolvedor quer executar código sem provisionar ou gerenciar servidores. Qual modelo de serviço o AWS Lambda representa?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>IaaS</div>
+          <div class="option correct"><span class="opt-letter">B</span>PaaS / Serverless</div>
+          <div class="option"><span class="opt-letter">C</span>SaaS</div>
+          <div class="option"><span class="opt-letter">D</span>On-Premises</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: B — Lambda é PaaS serverless: você fornece apenas o código (função), e a AWS gerencia toda a infraestrutura, escalabilidade e disponibilidade automaticamente.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">5</span>Qual opção de compra do EC2 oferece o maior desconto e é mais adequada para cargas de trabalho tolerantes a interrupções, como processamento em batch?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>On-Demand Instances</div>
+          <div class="option"><span class="opt-letter">B</span>Reserved Instances</div>
+          <div class="option"><span class="opt-letter">C</span>Dedicated Hosts</div>
+          <div class="option correct"><span class="opt-letter">D</span>Spot Instances</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: D — Spot Instances oferecem descontos de até 90% em relação ao On-Demand, sendo ideais para workloads que podem ser interrompidos e retomados, como batch processing e treinamento de ML.</div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+</div>
+
+<footer>
+  <span>Apostila AWS — Módulo 1: Computação em Nuvem · Conteúdo baseado em <a href="https://www.w3schools.com/aws/aws_cloudessentials_cloudcomputing.php" target="_blank">W3Schools AWS Cloud Essentials</a></span>
+  <span>LAB365 × SENAI · Workshop Kiro &amp; Agentes na AWS</span>
+</footer>
+
+</body>
+</html>

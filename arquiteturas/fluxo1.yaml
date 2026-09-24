@@ -1,0 +1,75 @@
+nome: fluxo1
+descricao: Hospedagem web estática e dinâmica na AWS
+regiao: us-east-1
+
+servicos:
+  - id: usuario
+    tipo: aws-cloudfront
+    nome: Usuário / Browser
+    icone: aws-cloudfront.svg
+    conexoes:
+      - destino: cloudfront
+        rotulo: HTTPS
+        passo: 1
+
+  - id: cloudfront
+    tipo: aws-cloudfront
+    nome: CloudFront CDN
+    icone: aws-cloudfront.svg
+    conexoes:
+      - destino: s3-static
+        rotulo: Arquivos estáticos
+        passo: 2
+      - destino: api-gateway
+        rotulo: /api/*
+        passo: 3
+
+  - id: s3-static
+    tipo: aws-s3
+    nome: S3 (Static Assets)
+    icone: aws-s3.svg
+    conexoes: []
+
+  - id: api-gateway
+    tipo: aws-api-gateway
+    nome: API Gateway
+    icone: aws-api-gateway.svg
+    conexoes:
+      - destino: cognito
+        rotulo: Autenticação
+        passo: 4
+      - destino: lambda-api
+        rotulo: Handler
+        passo: 5
+
+  - id: cognito
+    tipo: aws-cognito
+    nome: Cognito (Auth)
+    icone: aws-cognito.svg
+    conexoes: []
+
+  - id: lambda-api
+    tipo: aws-lambda
+    nome: Lambda API
+    icone: aws-lambda.svg
+    conexoes:
+      - destino: dynamodb
+        rotulo: Leitura/Escrita
+        passo: 6
+        estilo: tracejado
+      - destino: s3-uploads
+        rotulo: Upload
+        passo: 7
+        estilo: tracejado
+
+  - id: dynamodb
+    tipo: aws-dynamodb
+    nome: DynamoDB
+    icone: aws-dynamodb.svg
+    conexoes: []
+
+  - id: s3-uploads
+    tipo: aws-s3
+    nome: S3 (Uploads)
+    icone: aws-s3.svg
+    conexoes: []
