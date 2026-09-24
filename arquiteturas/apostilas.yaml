@@ -1,96 +1,143 @@
 # Caso 1 — Assistente das apostilas
 # Padrão: Agente com recuperação (RAG)
-# Grupo: G1 · Workshop Kiro e Agentes na AWS
+# Schema: v2
 
+versao: 2
 nome: "Assistente das Apostilas"
-descricao: >
-  Agente RAG que responde dúvidas dos alunos usando as apostilas do SENAI
-  como base de conhecimento. O aluno faz uma pergunta em linguagem natural
-  e o agente busca os trechos relevantes nas apostilas, gerando uma resposta
-  contextualizada com Amazon Bedrock.
+subtitulo: "Arquitetura RAG · SENAI"
 regiao: us-east-1
-padrao: retrieval-augmented-generation
 
 grupos:
   - id: aws_cloud
-    nome: "AWS Cloud (us-east-1)"
+    nome: "AWS Cloud"
     tipo: aws-cloud
-    servicos: [api_gateway, cognito, agentcore, s3, opensearch, bedrock]
+    servicos: [api_gateway, cognito, agentcore, bedrock]
+    filhos: [region_useast1]
 
-  - id: knowledge_bases
+  - id: region_useast1
+    nome: "us-east-1"
+    tipo: aws-region
+    servicos: [api_gateway, cognito, agentcore, bedrock]
+    filhos: [knowledge_base]
+
+  - id: knowledge_base
     nome: "Bedrock Knowledge Bases"
-    tipo: grupo-logico
-    pai: aws_cloud
+    tipo: generico
     servicos: [s3, opensearch]
 
 servicos:
+  # Fora da AWS Cloud — representa os usuários finais
   - id: alunos
     nome: "Alunos"
     tipo: usuarios
     descricao: Alunos do SENAI que fazem perguntas sobre o conteúdo das apostilas
-    icone: usuarios.svg
-    conexoes:
-      - destino: api_gateway
-        rotulo: "pergunta"
-        passo: 1
+    icone: Arch_General-Users_64.svg
+    col: 0
+    row: 1
+
+  # Dentro da AWS Cloud
+  - id: cognito
+    nome: "Amazon Cognito"
+    tipo: aws-cognito
+    descricao: Autenticação e autorização dos alunos
+    icone: Arch_Amazon-Cognito_64.svg
+    col: 1
+    row: 0
 
   - id: api_gateway
     nome: "Amazon API Gateway"
     tipo: aws-api-gateway
     descricao: Ponto de entrada único para todas as requisições dos alunos
-    icone: api-gateway.svg
-    conexoes:
-      - destino: cognito
-        rotulo: "login"
-        passo: 2
-      - destino: agentcore
-        rotulo: "chama o agente"
-        passo: 3
-
-  - id: cognito
-    nome: "Amazon Cognito"
-    tipo: aws-cognito
-    descricao: Autenticação e autorização dos alunos
-    icone: cognito.svg
-    conexoes: []
+    icone: Arch_Amazon-API-Gateway_64.svg
+    col: 1
+    row: 1
 
   - id: agentcore
     nome: "AgentCore Runtime"
     tipo: aws-agentcore-runtime
-    descricao: >
-      Executa o agente RAG com isolamento. Recebe a pergunta,
-      busca contexto nas apostilas e gera a resposta com Bedrock.
-    icone: agentcore-runtime.svg
-    conexoes:
-      - destino: s3
-        rotulo: "busca trechos"
-        passo: 4
-      - destino: bedrock
-        rotulo: "gera resposta"
-        passo: 5
+    descricao: Executa o agente RAG com isolamento. Recebe a pergunta, busca contexto e gera resposta.
+    icone: Arch_Amazon-Bedrock_64.svg
+    sublabel: "agente RAG"
+    col: 1
+    row: 2
 
   - id: s3
-    nome: "Apostilas no Amazon S3"
+    nome: "Apostilas no S3"
     tipo: aws-s3
     descricao: Armazenamento das apostilas em PDF para ingestão no Knowledge Base
-    icone: s3.svg
-    conexoes:
-      - destino: opensearch
-        rotulo: "ingestão"
-        estilo: tracejado
+    icone: Arch_Amazon-Simple-Storage-Service_64.svg
+    col: 2
+    row: 2
 
   - id: opensearch
-    nome: "Vetores no OpenSearch"
+    nome: "Vetores OpenSearch"
     tipo: aws-opensearch
     descricao: Índice vetorial das apostilas para busca semântica
-    icone: opensearch.svg
-    conexoes: []
+    icone: Arch_Amazon-OpenSearch-Service_64.svg
+    col: 3
+    row: 2
 
   - id: bedrock
     nome: "Amazon Bedrock"
     tipo: aws-bedrock
-    descricao: >
-      Modelo de linguagem para geração das respostas contextualizadas.
-      Utiliza os trechos recuperados pelo Knowledge Base como contexto.
-    icone: bedrock.svg
-    conexoes: []
+    descricao: Modelo de linguagem para geração das respostas contextualizadas
+    icone: Arch_Amazon-Bedrock_64.svg
+    sublabel: "modelo LLM"
+    col: 2
+    row: 0
+
+fluxo:
+  - passo: 1
+    de: alunos
+    para: cognito
+    rotulo: "login"
+    descricao: "Aluno se autentica via Cognito"
+    estilo: requisicao
+
+  - passo: 2
+    de: alunos
+    para: api_gateway
+    rotulo: "pergunta + token"
+    descricao: "Aluno envia pergunta com token de autenticação"
+    estilo: requisicao
+
+  - passo: 3
+    de: api_gateway
+    para: cognito
+    rotulo: "valida token"
+    descricao: "API Gateway valida o token no Cognito"
+    estilo: requisicao
+
+  - passo: 4
+    de: api_gateway
+    para: agentcore
+    rotulo: "chama o agente"
+    descricao: "API Gateway aciona o AgentCore Runtime"
+    estilo: requisicao
+
+  - passo: 5
+    de: agentcore
+    para: knowledge_base
+    rotulo: "busca trechos"
+    descricao: "AgentCore busca trechos relevantes no Knowledge Base"
+    estilo: requisicao
+
+  - passo: 6
+    de: agentcore
+    para: bedrock
+    rotulo: "gera resposta"
+    descricao: "AgentCore envia contexto ao Bedrock para gerar resposta"
+    estilo: requisicao
+
+  - passo: 7
+    de: agentcore
+    para: api_gateway
+    rotulo: "resposta"
+    descricao: "Resposta retorna ao aluno via API Gateway"
+    estilo: resposta
+
+  - de: s3
+    para: opensearch
+    rotulo: "ingestão + embeddings"
+    descricao: "Apostilas são ingeridas no OpenSearch como vetores (processo offline)"
+    estilo: assincrono
