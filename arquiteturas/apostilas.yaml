@@ -1,0 +1,96 @@
+# Caso 1 — Assistente das apostilas
+# Padrão: Agente com recuperação (RAG)
+# Grupo: G1 · Workshop Kiro e Agentes na AWS
+
+nome: "Assistente das Apostilas"
+descricao: >
+  Agente RAG que responde dúvidas dos alunos usando as apostilas do SENAI
+  como base de conhecimento. O aluno faz uma pergunta em linguagem natural
+  e o agente busca os trechos relevantes nas apostilas, gerando uma resposta
+  contextualizada com Amazon Bedrock.
+regiao: us-east-1
+padrao: retrieval-augmented-generation
+
+grupos:
+  - id: aws_cloud
+    nome: "AWS Cloud (us-east-1)"
+    tipo: aws-cloud
+    servicos: [api_gateway, cognito, agentcore, s3, opensearch, bedrock]
+
+  - id: knowledge_bases
+    nome: "Bedrock Knowledge Bases"
+    tipo: grupo-logico
+    pai: aws_cloud
+    servicos: [s3, opensearch]
+
+servicos:
+  - id: alunos
+    nome: "Alunos"
+    tipo: usuarios
+    descricao: Alunos do SENAI que fazem perguntas sobre o conteúdo das apostilas
+    icone: usuarios.svg
+    conexoes:
+      - destino: api_gateway
+        rotulo: "pergunta"
+        passo: 1
+
+  - id: api_gateway
+    nome: "Amazon API Gateway"
+    tipo: aws-api-gateway
+    descricao: Ponto de entrada único para todas as requisições dos alunos
+    icone: api-gateway.svg
+    conexoes:
+      - destino: cognito
+        rotulo: "login"
+        passo: 2
+      - destino: agentcore
+        rotulo: "chama o agente"
+        passo: 3
+
+  - id: cognito
+    nome: "Amazon Cognito"
+    tipo: aws-cognito
+    descricao: Autenticação e autorização dos alunos
+    icone: cognito.svg
+    conexoes: []
+
+  - id: agentcore
+    nome: "AgentCore Runtime"
+    tipo: aws-agentcore-runtime
+    descricao: >
+      Executa o agente RAG com isolamento. Recebe a pergunta,
+      busca contexto nas apostilas e gera a resposta com Bedrock.
+    icone: agentcore-runtime.svg
+    conexoes:
+      - destino: s3
+        rotulo: "busca trechos"
+        passo: 4
+      - destino: bedrock
+        rotulo: "gera resposta"
+        passo: 5
+
+  - id: s3
+    nome: "Apostilas no Amazon S3"
+    tipo: aws-s3
+    descricao: Armazenamento das apostilas em PDF para ingestão no Knowledge Base
+    icone: s3.svg
+    conexoes:
+      - destino: opensearch
+        rotulo: "ingestão"
+        estilo: tracejado
+
+  - id: opensearch
+    nome: "Vetores no OpenSearch"
+    tipo: aws-opensearch
+    descricao: Índice vetorial das apostilas para busca semântica
+    icone: opensearch.svg
+    conexoes: []
+
+  - id: bedrock
+    nome: "Amazon Bedrock"
+    tipo: aws-bedrock
+    descricao: >
+      Modelo de linguagem para geração das respostas contextualizadas.
+      Utiliza os trechos recuperados pelo Knowledge Base como contexto.
+    icone: bedrock.svg
+    conexoes: []
