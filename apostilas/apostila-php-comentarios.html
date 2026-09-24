@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apostila PHP — Comentários</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Design Tokens ─────────────────────────────────────────────── */
+    :root {
+      --primary:     #1E293B;
+      --secondary:   #0EA5E9;
+      --accent:      #F59E0B;
+      --bg:          #FFFFFF;
+      --text:        #334155;
+      --muted:       #64748B;
+      --surface:     #F8FAFC;
+      --surface2:    #F1F5F9;
+      --border:      #E2E8F0;
+      --border-dark: #CBD5E1;
+      --success:     #10B981;
+      --danger:      #EF4444;
+      --code-bg:     #0F172A;
+      --code-text:   #E2E8F0;
+      --radius:      8px;
+      --radius-lg:   12px;
+      --shadow:      0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      --shadow-md:   0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    .page { display: block; }
+    main { max-width: 820px; margin: 0 auto; padding: 3rem 3rem 4rem; }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .78rem; color: var(--muted);
+      font-family: 'Inter', sans-serif; margin-bottom: 2.5rem;
+    }
+    .breadcrumb span { color: var(--secondary); font-weight: 600; }
+    .breadcrumb .sep { color: var(--border-dark); }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--primary); border-radius: var(--radius-lg);
+      padding: 2.5rem 2.5rem 2rem; margin-bottom: 2.5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 220px; height: 220px; border-radius: 50%;
+      background: rgba(14,165,233,.15);
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: -40px; left: 40%;
+      width: 160px; height: 160px; border-radius: 50%;
+      background: rgba(245,158,11,.08);
+    }
+    .hero .modulo-tag {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: rgba(14,165,233,.2); color: #7DD3FC;
+      font-size: .72rem; font-weight: 700; font-family: 'Inter', sans-serif;
+      text-transform: uppercase; letter-spacing: .08em;
+      padding: .3rem .75rem; border-radius: 20px; margin-bottom: 1.1rem;
+      border: 1px solid rgba(14,165,233,.3);
+    }
+    .hero h1 {
+      font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 700;
+      color: #fff; line-height: 1.25; margin-bottom: .6rem;
+    }
+    .hero h1 em { color: var(--secondary); font-style: normal; }
+    .hero .hero-desc { color: #94A3B8; font-size: .9rem; max-width: 480px; }
+    .hero-meta {
+      display: flex; gap: 1.5rem; margin-top: 1.75rem;
+      padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .hero-meta .meta-item { font-size: .78rem; color: #64748B; font-family: 'Inter', sans-serif; }
+    .hero-meta .meta-item strong { display: block; color: #94A3B8; margin-bottom: .1rem; font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    /* ── Objetivos ── */
+    .objetivos {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2.5rem;
+    }
+    .objetivos h3 {
+      font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700;
+      color: var(--secondary); text-transform: uppercase; letter-spacing: .07em;
+      margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem;
+    }
+    .objetivos ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .objetivos ul li { display: flex; align-items: flex-start; gap: .5rem; font-size: .85rem; color: var(--text); }
+    .objetivos ul li::before { content: '✓'; color: var(--success); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+
+    /* ── Seções ── */
+    section { margin-bottom: 3rem; }
+    .section-header { display: flex; align-items: flex-start; gap: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem; }
+    .section-num {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; background: var(--secondary); color: #fff;
+      border-radius: var(--radius); font-family: 'Inter', sans-serif;
+      font-size: .85rem; font-weight: 700; flex-shrink: 0;
+    }
+    .section-title-wrap { flex: 1; }
+    .section-title-wrap h2 { font-family: 'Inter', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--primary); line-height: 1.3; }
+    .section-title-wrap .section-sub { font-size: .78rem; color: var(--muted); margin-top: .2rem; }
+    section h3 { font-family: 'Inter', sans-serif; font-size: .95rem; font-weight: 600; color: var(--primary); margin: 1.5rem 0 .6rem; }
+    section p { color: var(--text); margin-bottom: .85rem; }
+    section ul, section ol { color: var(--text); padding-left: 1.5rem; margin-bottom: .85rem; }
+    section ul li, section ol li { margin-bottom: .35rem; }
+
+    /* ── Callouts ── */
+    .callout {
+      border-left: 4px solid var(--secondary); background: #EFF6FF;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1rem 1.1rem; font-size: .875rem; color: var(--text); margin: 1.25rem 0;
+    }
+    .callout strong { color: var(--primary); }
+    .callout-title { font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--secondary); margin-bottom: .35rem; }
+    .callout.warn { border-color: var(--accent); background: #FFFBEB; }
+    .callout.warn .callout-title { color: var(--accent); }
+    .callout.tip  { border-color: var(--success); background: #F0FDF4; }
+    .callout.tip .callout-title { color: var(--success); }
+    .callout.key  { border-color: var(--primary); background: var(--surface); }
+    .callout.key .callout-title { color: var(--primary); }
+
+    /* ── Código ── */
+    pre {
+      background: var(--code-bg); border-radius: var(--radius-lg);
+      padding: 0; overflow: hidden; font-size: .82rem; line-height: 1.65;
+      margin: 1rem 0 1.5rem; box-shadow: var(--shadow-md);
+    }
+    .code-header {
+      background: rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.07);
+      padding: .5rem 1rem; display: flex; align-items: center; justify-content: space-between;
+    }
+    .code-dots { display: flex; gap: .35rem; }
+    .code-dots span { width: 10px; height: 10px; border-radius: 50%; }
+    .code-dots .d1 { background: #FF5F57; }
+    .code-dots .d2 { background: #FFBD2E; }
+    .code-dots .d3 { background: #28C940; }
+    .code-lang { font-family: 'JetBrains Mono', monospace; font-size: .65rem; color: #64748B; text-transform: uppercase; letter-spacing: .08em; }
+    .code-body { padding: 1.1rem 1.25rem; overflow-x: auto; }
+    .code-body code { font-family: 'JetBrains Mono', monospace; color: var(--code-text); background: none; border: none; padding: 0; font-size: inherit; }
+    .kw   { color: #C792EA; }
+    .prop { color: #82AAFF; }
+    .val  { color: #C3E88D; }
+    .str  { color: #F78C6C; }
+    .com  { color: #546E7A; font-style: italic; }
+    .sel  { color: #FFCB6B; }
+    .tag  { color: #F07178; }
+    code {
+      font-family: 'JetBrains Mono', monospace; font-size: .82em;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 4px; padding: .15em .45em; color: #0369A1;
+    }
+
+    /* ── Tabela ── */
+    .table-wrap { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); margin: 1rem 0 1.5rem; box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    thead tr { background: var(--primary); }
+    thead th { padding: .75rem 1rem; text-align: left; font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #94A3B8; }
+    tbody tr:nth-child(even) { background: var(--surface); }
+    tbody tr:nth-child(odd)  { background: var(--bg); }
+    tbody td { padding: .7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text); }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* ── Steps ── */
+    .steps { display: flex; gap: 0; margin: 1rem 0 1.5rem; }
+    .step { flex: 1; min-width: 110px; background: var(--surface); border: 1px solid var(--border); border-right: none; padding: 1rem; position: relative; text-align: center; }
+    .step:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+    .step:last-child  { border-right: 1px solid var(--border); border-radius: 0 var(--radius) var(--radius) 0; }
+    .step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--secondary); color: #fff; border-radius: 50%; font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 700; margin-bottom: .5rem; }
+    .step-title { font-size: .8rem; font-weight: 600; color: var(--primary); font-family: 'Inter', sans-serif; margin-bottom: .3rem; }
+    .step-desc  { font-size: .75rem; color: var(--muted); }
+    .step-arrow { position: absolute; right: -10px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; background: var(--secondary); clip-path: polygon(0 0, 100% 50%, 0 100%); z-index: 1; }
+    .step:last-child .step-arrow { display: none; }
+
+    /* ── Cards ── */
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; position: relative; overflow: hidden; }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--secondary); border-radius: 4px 0 0 4px; }
+    .card.accent::before  { background: var(--accent); }
+    .card.success::before { background: var(--success); }
+    .card h4 { font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; color: var(--primary); margin-bottom: .5rem; }
+    .card p  { font-size: .82rem; color: var(--muted); margin: 0; }
+
+    /* ── Quiz estático ── */
+    .quiz-wrap { margin-top: 1rem; }
+    .quiz { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; }
+    .quiz-q { font-family: 'Inter', sans-serif; font-size: .9rem; font-weight: 600; color: var(--primary); margin-bottom: .85rem; display: flex; gap: .6rem; align-items: flex-start; }
+    .quiz-q .q-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--secondary); color: #fff; border-radius: 50%; font-size: .72rem; font-weight: 700; flex-shrink: 0; margin-top: .1rem; }
+    .options { display: flex; flex-direction: column; gap: .4rem; margin-bottom: .75rem; }
+    .option { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius); padding: .55rem 1rem; font-size: .85rem; font-family: 'Roboto', sans-serif; color: var(--text); display: flex; align-items: center; gap: .6rem; }
+    .option .opt-letter { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border-dark); font-size: .7rem; font-weight: 700; font-family: 'Inter', sans-serif; color: var(--muted); flex-shrink: 0; }
+    .option.correct { border-color: var(--success); background: #F0FDF4; color: #166534; }
+    .option.correct .opt-letter { background: var(--success); border-color: var(--success); color: #fff; }
+    .quiz-answer { font-size: .8rem; color: #166534; background: #F0FDF4; border: 1px solid #86EFAC; border-radius: var(--radius); padding: .5rem .85rem; font-family: 'Inter', sans-serif; }
+
+    /* ── Footer ── */
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 3rem; color: var(--muted); font-size: .78rem; display: flex; justify-content: space-between; align-items: center; font-family: 'Inter', sans-serif; }
+    footer a { color: var(--secondary); text-decoration: none; }
+
+    /* ── Comparação lado a lado ── */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
+    .compare-label { font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: .5rem; }
+
+    @media (max-width: 768px) {
+      main { padding: 1.5rem 1.25rem; }
+      .objetivos ul, .cards, .compare { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.5rem; }
+      footer { flex-direction: column; gap: .5rem; text-align: center; }
+      .steps { flex-direction: column; }
+      .step { border-right: 1px solid var(--border); border-bottom: none; border-radius: var(--radius) !important; margin-bottom: .5rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+<main>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    PHP Fundamentals <span class="sep">›</span> <span>Módulo 2</span> <span class="sep">›</span> Comentários
+  </div>
+
+  <!-- ══════════ HERO ══════════ -->
+  <div class="hero">
+    <div class="modulo-tag">⬡ PHP Módulo 2</div>
+    <h1>Comentários em <em>PHP</em></h1>
+    <p class="hero-desc">Aprenda a documentar seu código com comentários de linha única e multilinha — boas práticas que tornam o PHP mais legível, manutenível e profissional.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><strong>Duração</strong>~30 min</div>
+      <div class="meta-item"><strong>Nível</strong>Iniciante</div>
+      <div class="meta-item"><strong>Módulo</strong>2 de 10</div>
+      <div class="meta-item"><strong>Versão</strong>1.0 · Set 2026</div>
+    </div>
+  </div>
+
+  <!-- Objetivos -->
+  <div class="objetivos">
+    <h3>🎯 Objetivos de Aprendizagem</h3>
+    <ul>
+      <li>Entender o que são comentários e para que servem</li>
+      <li>Usar comentários de linha única com <code>//</code> e <code>#</code></li>
+      <li>Escrever comentários multilinha com <code>/* */</code></li>
+      <li>Comentar código para depuração temporária</li>
+      <li>Aplicar boas práticas de documentação</li>
+      <li>Diferenciar quando usar cada tipo de comentário</li>
+    </ul>
+  </div>
+
+  <!-- ════════════════════════
+       1. O QUE SÃO COMENTÁRIOS?
+  ════════════════════════ -->
+  <section id="intro">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title-wrap">
+        <h2>O que são comentários?</h2>
+        <div class="section-sub">Conceito, propósito e tipos disponíveis no PHP</div>
+      </div>
+    </div>
+
+    <p>Comentários são trechos de texto dentro do código-fonte que o interpretador PHP <strong>ignora completamente durante a execução</strong>. Eles existem exclusivamente para os desenvolvedores — seja para explicar a lógica de um algoritmo, marcar pontos de atenção, ou desativar temporariamente um trecho de código durante testes.</p>
+
+    <p>Em PHP, ao contrário de variáveis e funções, comentários não afetam o desempenho da aplicação. O interpretador os lê, identifica como comentário, e passa para a próxima instrução. Isso significa que você pode e deve usar comentários sem preocupação com impacto no tempo de resposta.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">1</div>
+        <div class="step-title">// ou #</div>
+        <div class="step-desc">Linha única</div>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">2</div>
+        <div class="step-title">/* */</div>
+        <div class="step-desc">Multilinha</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">/** */</div>
+        <div class="step-desc">DocBlock (PHPDoc)</div>
+      </div>
+    </div>
+
+    <div class="callout key">
+      <div class="callout-title">🔑 Conceito-Chave</div>
+      Comentários <strong>não são executados</strong>. O PHP os descarta antes de processar qualquer instrução. Eles vivem apenas no código-fonte — nunca chegam ao navegador ou ao cliente.
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       2. POR QUE COMENTAR?
+  ════════════════════════ -->
+  <section id="porque">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title-wrap">
+        <h2>Por que comentar o código?</h2>
+        <div class="section-sub">Os três pilares da documentação inline</div>
+      </div>
+    </div>
+
+    <p>Há três razões principais para usar comentários, e todas giram em torno de uma ideia central: <strong>código é lido muito mais vezes do que é escrito</strong>. Um projeto PHP real pode ter dezenas de colaboradores e durar anos — o comentário de hoje economiza horas de debugação amanhã.</p>
+
+    <div class="cards">
+      <div class="card">
+        <h4>📖 Explicar para outros</h4>
+        <p>Colegas de equipe, revisores de código e contribuidores open source precisam entender rapidamente o que cada trecho faz — sem precisar executar o código mentalmente.</p>
+      </div>
+      <div class="card accent">
+        <h4>🕐 Lembrar a si mesmo</h4>
+        <p>Todo desenvolvedor já voltou ao próprio código meses depois e se perguntou "por que fiz assim?". Um comentário curto poupa essa reconstituição.</p>
+      </div>
+      <div class="card success">
+        <h4>🔇 Desativar código</h4>
+        <p>Durante testes e depuração, é comum comentar linhas para isolar comportamentos sem deletar código que pode ser necessário novamente.</p>
+      </div>
+      <div class="card">
+        <h4>📝 Documentar APIs</h4>
+        <p>Com PHPDoc (<code>/** */</code>), os comentários alimentam ferramentas automáticas de documentação como phpDocumentor e IDEs.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       3. SINTAXE BÁSICA DO PHP
+  ════════════════════════ -->
+  <section id="sintaxe">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title-wrap">
+        <h2>Sintaxe básica do PHP</h2>
+        <div class="section-sub">Estrutura de um arquivo .php antes de comentar</div>
+      </div>
+    </div>
+
+    <p>Antes de mergulhar nos comentários, é importante entender onde eles podem aparecer. Todo código PHP fica dentro das tags <code>&lt;?php</code> e <code>?&gt;</code>. Comentários podem ser colocados em qualquer ponto dentro dessas tags — antes, depois ou no meio das instruções.</p>
+
+    <pre>
+      <div class="code-header"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="code-lang">PHP</span></div>
+      <div class="code-body"><code><span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+
+<span class="tag">&lt;?php</span>
+<span class="com">// Todo código PHP fica aqui dentro</span>
+<span class="kw">echo</span> <span class="str">'Hello World!'</span>;
+<span class="tag">?&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></code></div>
+    </pre>
+
+    <div class="callout warn">
+      <div class="callout-title">⚠️ Atenção</div>
+      A extensão padrão de arquivos PHP é <code>.php</code>. O servidor web (Apache, Nginx) precisa estar configurado para interpretar arquivos com essa extensão — caso contrário, o código PHP será enviado como texto puro ao navegador.
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       4. COMENTÁRIO DE LINHA ÚNICA — //
+  ════════════════════════ -->
+  <section id="linha-unica-barra">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title-wrap">
+        <h2>Comentário de linha única — <code>//</code></h2>
+        <div class="section-sub">A forma mais comum de comentar em PHP moderno</div>
+      </div>
+    </div>
+
+    <p>O comentário com <code>//</code> ignora tudo que vem após ele <strong>até o fim da linha</strong>. É o estilo mais usado em PHP moderno, herdado do C++ e adotado também em JavaScript, Java e outras linguagens — facilitando a transição entre tecnologias.</p>
+
+    <p>Pode ser usado de duas formas: antes de uma linha de código, explicando o que ela faz; ou no final da linha, como anotação inline. Para comentários longos, prefira colocá-los antes da instrução.</p>
+
+    <pre>
+      <div class="code-header"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="code-lang">PHP</span></div>
+      <div class="code-body"><code><span class="tag">&lt;?php</span>
+<span class="com">// Exibe mensagem de boas-vindas ao usuário</span>
+<span class="kw">echo</span> <span class="str">'Bem-vindo!'</span>;
+
+<span class="kw">echo</span> <span class="str">'Olá, mundo!'</span>; <span class="com">// Comentário inline no fim da linha</span>
+
+<span class="com">// Esta linha está desativada temporariamente para teste:</span>
+<span class="com">// echo 'Linha desativada';</span>
+<span class="tag">?&gt;</span></code></div>
+    </pre>
+
+    <h3>Boas práticas com <code>//</code></h3>
+    <ul>
+      <li>Use para explicar o <em>porquê</em> de uma decisão, não apenas o <em>o quê</em> — o código já mostra o que faz.</li>
+      <li>Mantenha os comentários atualizados: um comentário desatualizado é pior do que nenhum comentário.</li>
+      <li>Evite o óbvio: <code>// incrementa x</code> antes de <code>$x++</code> não agrega valor.</li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-title">💡 Dica</div>
+      Na maioria dos editores (VS Code, PHPStorm), o atalho <strong>Ctrl+/</strong> (ou Cmd+/ no Mac) comenta e descomenta a linha atual automaticamente — muito útil durante depuração.
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       5. COMENTÁRIO DE LINHA ÚNICA — #
+  ════════════════════════ -->
+  <section id="linha-unica-hash">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title-wrap">
+        <h2>Comentário de linha única — <code>#</code></h2>
+        <div class="section-sub">Sintaxe alternativa herdada do Shell/Perl</div>
+      </div>
+    </div>
+
+    <p>O caractere <code>#</code> tem o mesmo comportamento de <code>//</code> — ignora tudo até o fim da linha. É uma herança das linguagens de script Unix (Bash, Perl, Python) e foi incluída no PHP para facilitar a migração de desenvolvedores vindas dessas tecnologias.</p>
+
+    <p>Na prática, <code>#</code> e <code>//</code> são <strong>intercambiáveis</strong> em PHP. A preferência da comunidade moderna (e do guia de estilo PSR-2) é pelo <code>//</code>, mas você encontrará <code>#</code> em projetos legados e scripts CLI.</p>
+
+    <pre>
+      <div class="code-header"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="code-lang">PHP</span></div>
+      <div class="code-body"><code><span class="tag">&lt;?php</span>
+<span class="com"># Estilo herdado do Shell — funciona igual ao //</span>
+<span class="kw">echo</span> <span class="str">'Olá!'</span>;
+
+<span class="kw">echo</span> <span class="str">'Mundo!'</span>; <span class="com"># Comentário inline com #</span>
+<span class="tag">?&gt;</span></code></div>
+    </pre>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Característica</th><th><code>//</code></th><th><code>#</code></th></tr></thead>
+        <tbody>
+          <tr><td>Escopo</td><td>Até o fim da linha</td><td>Até o fim da linha</td></tr>
+          <tr><td>Origem</td><td>C++, Java, JS</td><td>Shell, Perl, Python</td></tr>
+          <tr><td>Uso moderno</td><td>✅ Recomendado (PSR)</td><td>⚠️ Legado / CLI</td></tr>
+          <tr><td>Suporte PHP</td><td>Todas as versões</td><td>Todas as versões</td></tr>
+          <tr><td>IDEs reconhecem</td><td>✅ Sim</td><td>✅ Sim</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       6. COMENTÁRIO MULTILINHA
+  ════════════════════════ -->
+  <section id="multilinha">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div class="section-title-wrap">
+        <h2>Comentário multilinha — <code>/* */</code></h2>
+        <div class="section-sub">Para blocos longos de documentação e desativação de código</div>
+      </div>
+    </div>
+
+    <p>O bloco <code>/* ... */</code> permite comentar múltiplas linhas de uma vez. Tudo entre o abridor <code>/*</code> e o fechador <code>*/</code> é ignorado pelo PHP — inclusive quebras de linha e outras marcações de comentário dentro do bloco.</p>
+
+    <p>É especialmente útil para: descrever o propósito de uma função antes da sua declaração, desativar um bloco extenso de código durante depuração, e escrever cabeçalhos de arquivo com informações de licença, versão e autor.</p>
+
+    <pre>
+      <div class="code-header"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="code-lang">PHP</span></div>
+      <div class="code-body"><code><span class="tag">&lt;?php</span>
+<span class="com">/*
+  Este arquivo gerencia o cadastro de usuários.
+  Autor: Maria Silva
+  Versão: 2.1
+  Última modificação: Setembro de 2026
+*/</span>
+
+<span class="com">/* Comentário
+   em várias
+   linhas */</span>
+<span class="kw">echo</span> <span class="str">'Continuação normal do código'</span>;
+<span class="tag">?&gt;</span></code></div>
+    </pre>
+
+    <h3>Desativar blocos de código</h3>
+    <p>Um caso de uso muito prático do <code>/* */</code> é envolver um trecho inteiro de código para desativá-lo temporariamente durante testes, sem precisar deletar e re-escrever:</p>
+
+    <pre>
+      <div class="code-header"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="code-lang">PHP</span></div>
+      <div class="code-body"><code><span class="tag">&lt;?php</span>
+<span class="kw">echo</span> <span class="str">'Esta linha é executada'</span>;
+
+<span class="com">/*
+echo 'Esta linha está desativada';
+echo 'E esta também';
+$resultado = calcularTotal($itens);
+*/</span>
+
+<span class="kw">echo</span> <span class="str">'Voltou a executar normalmente'</span>;
+<span class="tag">?&gt;</span></code></div>
+    </pre>
+
+    <div class="callout warn">
+      <div class="callout-title">⚠️ Atenção — Aninhamento</div>
+      Comentários <code>/* */</code> <strong>não podem ser aninhados</strong>. O PHP encontra o primeiro <code>*/</code> e encerra o comentário, independente de quantos <code>/*</code> foram abertos. Isso pode causar erros de sintaxe inesperados.
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       7. PHPDOC — /** */
+  ════════════════════════ -->
+  <section id="phpdoc">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div class="section-title-wrap">
+        <h2>PHPDoc — <code>/** */</code></h2>
+        <div class="section-sub">Documentação estruturada para IDEs e geradores automáticos</div>
+      </div>
+    </div>
+
+    <p>O PHPDoc é uma convenção de comentário multilinha que começa com <code>/**</code> (duas asteriscos) em vez de apenas um. Ferramentas como <strong>phpDocumentor</strong>, IDEs (PHPStorm, VS Code com extensões) e analisadores estáticos (PHPStan) leem esses blocos para gerar documentação automática e fornecer autocomplete inteligente.</p>
+
+    <pre>
+      <div class="code-header"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="code-lang">PHP</span></div>
+      <div class="code-body"><code><span class="tag">&lt;?php</span>
+<span class="com">/**
+ * Calcula o preço total com desconto aplicado.
+ *
+ * @param float $preco    Preço original do produto
+ * @param float $desconto Percentual de desconto (0 a 100)
+ * @return float          Preço final após desconto
+ */</span>
+<span class="kw">function</span> <span class="prop">calcularPreco</span>(<span class="sel">float</span> <span class="val">$preco</span>, <span class="sel">float</span> <span class="val">$desconto</span>): <span class="sel">float</span> {
+    <span class="kw">return</span> <span class="val">$preco</span> * (<span class="num">1</span> - <span class="val">$desconto</span> / <span class="num">100</span>);
+}
+<span class="tag">?&gt;</span></code></div>
+    </pre>
+
+    <h3>Tags PHPDoc mais comuns</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tag</th><th>Uso</th><th>Exemplo</th></tr></thead>
+        <tbody>
+          <tr><td><code>@param</code></td><td>Descreve um parâmetro</td><td><code>@param string $nome Nome do usuário</code></td></tr>
+          <tr><td><code>@return</code></td><td>Tipo e descrição do retorno</td><td><code>@return bool true se válido</code></td></tr>
+          <tr><td><code>@throws</code></td><td>Exceções que podem ser lançadas</td><td><code>@throws InvalidArgumentException</code></td></tr>
+          <tr><td><code>@var</code></td><td>Tipo de uma propriedade/variável</td><td><code>@var int</code></td></tr>
+          <tr><td><code>@author</code></td><td>Autor do código</td><td><code>@author Maria Silva</code></td></tr>
+          <tr><td><code>@version</code></td><td>Versão do arquivo ou função</td><td><code>@version 2.1.0</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">💡 Dica Profissional</div>
+      Em projetos com times maiores, adote PHPDoc em todas as funções e classes públicas. Além de gerar documentação automaticamente, o PHPStorm e o VS Code usam essas anotações para oferecer <strong>autocomplete com tipos corretos</strong> — reduzindo bugs antes mesmo de executar o código.
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       8. COMPARAÇÃO DOS TIPOS
+  ════════════════════════ -->
+  <section id="comparacao">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div class="section-title-wrap">
+        <h2>Comparação dos tipos</h2>
+        <div class="section-sub">Quando usar cada estilo de comentário</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tipo</th><th>Sintaxe</th><th>Escopo</th><th>Quando usar</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Linha única</strong></td><td><code>//</code></td><td>Até fim da linha</td><td>Anotações rápidas, explicações inline, desativar 1 linha</td></tr>
+          <tr><td><strong>Linha única alt.</strong></td><td><code>#</code></td><td>Até fim da linha</td><td>Scripts CLI, código legado, herança de Shell/Perl</td></tr>
+          <tr><td><strong>Multilinha</strong></td><td><code>/* */</code></td><td>Qualquer bloco</td><td>Descrições longas, desativar blocos, cabeçalhos de arquivo</td></tr>
+          <tr><td><strong>PHPDoc</strong></td><td><code>/** */</code></td><td>Bloco acima de função/classe</td><td>Documentação de API, parâmetros, retornos, tipos</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="compare">
+      <div>
+        <div class="compare-label">✅ Bom comentário</div>
+        <pre style="margin:0;font-size:.78rem;">
+          <div class="code-header"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="code-lang">PHP</span></div>
+          <div class="code-body"><code><span class="com">// Usa MD5 pois a API legada
+// ainda não suporta bcrypt</span>
+<span class="val">$hash</span> = <span class="prop">md5</span>(<span class="val">$senha</span>);</code></div>
+        </pre>
+      </div>
+      <div>
+        <div class="compare-label">❌ Comentário desnecessário</div>
+        <pre style="margin:0;font-size:.78rem;">
+          <div class="code-header"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="code-lang">PHP</span></div>
+          <div class="code-body"><code><span class="com">// Calcula o hash da senha</span>
+<span class="val">$hash</span> = <span class="prop">md5</span>(<span class="val">$senha</span>);</code></div>
+        </pre>
+      </div>
+    </div>
+    <p style="font-size:.82rem; color:var(--muted);">O comentário bom explica o <em>porquê</em> (decisão de design). O ruim apenas repete o que o código já diz.</p>
+  </section>
+
+  <!-- ════════════════════════
+       9. EXERCÍCIO PRÁTICO
+  ════════════════════════ -->
+  <section id="pratica">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div class="section-title-wrap">
+        <h2>Exercício Prático</h2>
+        <div class="section-sub">Adicione os comentários corretos ao código</div>
+      </div>
+    </div>
+
+    <p>O código abaixo está funcional, mas sem documentação. Adicione os tipos de comentário indicados em cada ponto:</p>
+
+    <div class="compare">
+      <div>
+        <div class="compare-label">📋 Código sem comentários</div>
+        <pre style="margin:0;font-size:.78rem;">
+          <div class="code-header"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="code-lang">PHP</span></div>
+          <div class="code-body"><code><span class="tag">&lt;?php</span>
+
+<span class="com">/* ① Adicione um PHPDoc aqui */</span>
+<span class="kw">function</span> <span class="prop">somar</span>(<span class="val">$a</span>, <span class="val">$b</span>) {
+    <span class="com">// ② Explique por que retorna int</span>
+    <span class="kw">return</span> (<span class="sel">int</span>) (<span class="val">$a</span> + <span class="val">$b</span>);
+}
+
+<span class="val">$resultado</span> = <span class="prop">somar</span>(<span class="num">5</span>, <span class="num">3</span>);
+<span class="kw">echo</span> <span class="val">$resultado</span>; <span class="com">// ③ Adicione comentário inline</span>
+<span class="tag">?&gt;</span></code></div>
+        </pre>
+      </div>
+      <div>
+        <div class="compare-label">✅ Solução comentada</div>
+        <pre style="margin:0;font-size:.78rem;">
+          <div class="code-header"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="code-lang">PHP</span></div>
+          <div class="code-body"><code><span class="tag">&lt;?php</span>
+
+<span class="com">/**
+ * Soma dois números e retorna inteiro.
+ * @param mixed $a Primeiro valor
+ * @param mixed $b Segundo valor
+ * @return int Soma truncada
+ */</span>
+<span class="kw">function</span> <span class="prop">somar</span>(<span class="val">$a</span>, <span class="val">$b</span>) {
+    <span class="com">// Cast para int evita retorno float</span>
+    <span class="kw">return</span> (<span class="sel">int</span>) (<span class="val">$a</span> + <span class="val">$b</span>);
+}
+
+<span class="val">$resultado</span> = <span class="prop">somar</span>(<span class="num">5</span>, <span class="num">3</span>);
+<span class="kw">echo</span> <span class="val">$resultado</span>; <span class="com">// Saída: 8</span>
+<span class="tag">?&gt;</span></code></div>
+        </pre>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">✅ Gabarito</div>
+      ① PHPDoc com <code>@param</code> e <code>@return</code> · ② Comentário <code>//</code> explicando o cast para <code>int</code> · ③ Comentário inline mostrando o valor esperado de saída
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       10. RESUMO
+  ════════════════════════ -->
+  <section id="resumo">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div class="section-title-wrap">
+        <h2>Resumo</h2>
+        <div class="section-sub">Principais aprendizados e próximos passos</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h4>💬 3 Tipos de Comentário</h4>
+        <p><code>//</code> e <code>#</code> para linha única; <code>/* */</code> para blocos; <code>/** */</code> para documentação PHPDoc.</p>
+      </div>
+      <div class="card accent">
+        <h4>🚫 Nunca executados</h4>
+        <p>O PHP ignora completamente os comentários — eles não afetam desempenho, lógica ou saída do programa.</p>
+      </div>
+      <div class="card success">
+        <h4>📌 Prefira <code>//</code></h4>
+        <p>O estilo <code>//</code> é o recomendado pelo guia PSR para PHP moderno. Use <code>#</code> apenas em código legado ou scripts de linha de comando.</p>
+      </div>
+      <div class="card">
+        <h4>🔬 PHPDoc para APIs</h4>
+        <p>Use <code>/** */</code> em funções e classes públicas para habilitar autocomplete nas IDEs e geração automática de documentação.</p>
+      </div>
+    </div>
+
+    <div class="callout key">
+      <div class="callout-title">🚀 Próximos Passos</div>
+      Agora que você domina comentários PHP, explore: <strong>Variáveis e tipos de dados</strong>, <strong>funções com tipagem estrita</strong> (PHP 8+), e ferramentas de análise estática como <strong>PHPStan</strong> e <strong>Psalm</strong> que usam os comentários PHPDoc para encontrar bugs antes da execução.
+    </div>
+  </section>
+
+  <!-- ════════════════════════
+       11. QUIZ DE FIXAÇÃO
+  ════════════════════════ -->
+  <section id="quiz">
+    <div class="section-header">
+      <div class="section-num">11</div>
+      <div class="section-title-wrap">
+        <h2>Quiz de Fixação</h2>
+        <div class="section-sub">Teste seus conhecimentos sobre comentários em PHP</div>
+      </div>
+    </div>
+
+    <p>Responda as perguntas abaixo para consolidar o aprendizado.</p>
+
+    <div class="quiz-wrap">
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">1</span>Qual das opções a seguir é um comentário de linha única válido em PHP?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span><code>&lt;!-- comentário --&gt;</code></div>
+          <div class="option correct"><span class="opt-letter">B</span><code>// comentário</code></div>
+          <div class="option"><span class="opt-letter">C</span><code>** comentário **</code></div>
+          <div class="option"><span class="opt-letter">D</span><code>-- comentário</code></div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: B — <code>//</code> é o marcador de comentário de linha única padrão em PHP. <code>&lt;!-- --&gt;</code> é HTML, não PHP.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">2</span>O que acontece com um bloco de código envolto em <code>/* */</code>?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>É executado com prioridade máxima</div>
+          <div class="option"><span class="opt-letter">B</span>Gera um aviso no log do servidor</div>
+          <div class="option correct"><span class="opt-letter">C</span>É completamente ignorado pelo interpretador PHP</div>
+          <div class="option"><span class="opt-letter">D</span>É enviado como HTML ao navegador</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — Comentários não são executados. O PHP os descarta durante a análise do código.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">3</span>Qual estilo de comentário é recomendado pelo guia PSR para PHP moderno?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span><code>#</code></div>
+          <div class="option correct"><span class="opt-letter">B</span><code>//</code></div>
+          <div class="option"><span class="opt-letter">C</span><code>/* */</code></div>
+          <div class="option"><span class="opt-letter">D</span><code>/** */</code></div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: B — O PSR (PHP Standard Recommendations) recomenda <code>//</code> para comentários inline. <code>#</code> é legado, <code>/** */</code> é para PHPDoc.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">4</span>Qual tag PHPDoc descreve o valor de retorno de uma função?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span><code>@param</code></div>
+          <div class="option"><span class="opt-letter">B</span><code>@author</code></div>
+          <div class="option correct"><span class="opt-letter">C</span><code>@return</code></div>
+          <div class="option"><span class="opt-letter">D</span><code>@throws</code></div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — <code>@return</code> descreve o tipo e o significado do valor retornado pela função.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">5</span>É possível aninhar comentários <code>/* */</code> dentro de outro <code>/* */</code> em PHP?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Sim, sem restrições</div>
+          <div class="option"><span class="opt-letter">B</span>Sim, mas apenas dois níveis</div>
+          <div class="option correct"><span class="opt-letter">C</span>Não — o primeiro <code>*/</code> encerra o bloco</div>
+          <div class="option"><span class="opt-letter">D</span>Depende da versão do PHP</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — Comentários de bloco não suportam aninhamento. O PHP fecha no primeiro <code>*/</code> encontrado, causando erro de sintaxe se houver outro <code>/*</code> interno.</div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+</div>
+
+<footer>
+  <span>Apostila PHP — Módulo 2: Comentários · Conteúdo baseado em <a href="https://www.w3schools.com/php/php_comments.asp" target="_blank">W3Schools PHP Comments</a></span>
+  <span>LAB365 × SENAI · Workshop Kiro &amp; Agentes na AWS</span>
+</footer>
+
+</body>
+</html>

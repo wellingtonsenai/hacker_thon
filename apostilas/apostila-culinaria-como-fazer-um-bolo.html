@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apostila Culinária — Como Fazer um Bolo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:     #1E293B;
+      --secondary:   #0EA5E9;
+      --accent:      #F59E0B;
+      --bg:          #FFFFFF;
+      --text:        #334155;
+      --muted:       #64748B;
+      --surface:     #F8FAFC;
+      --surface2:    #F1F5F9;
+      --border:      #E2E8F0;
+      --border-dark: #CBD5E1;
+      --success:     #10B981;
+      --danger:      #EF4444;
+      --code-bg:     #0F172A;
+      --code-text:   #E2E8F0;
+      --radius:      8px;
+      --radius-lg:   12px;
+      --shadow:      0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      --shadow-md:   0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15px; }
+    .page { display: block; }
+    main  { max-width: 820px; margin: 0 auto; padding: 3rem 3rem 4rem; }
+
+    .breadcrumb { display: flex; align-items: center; gap: .4rem; font-size: .78rem; color: var(--muted); font-family: 'Inter', sans-serif; margin-bottom: 2.5rem; }
+    .breadcrumb span { color: var(--secondary); font-weight: 600; }
+    .breadcrumb .sep { color: var(--border-dark); }
+
+    .hero { background: var(--primary); border-radius: var(--radius-lg); padding: 2.5rem 2.5rem 2rem; margin-bottom: 2.5rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; border-radius: 50%; background: rgba(14,165,233,.15); }
+    .hero::after  { content: ''; position: absolute; bottom: -40px; left: 40%; width: 160px; height: 160px; border-radius: 50%; background: rgba(245,158,11,.08); }
+    .hero .modulo-tag { display: inline-flex; align-items: center; gap: .4rem; background: rgba(14,165,233,.2); color: #7DD3FC; font-size: .72rem; font-weight: 700; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: .08em; padding: .3rem .75rem; border-radius: 20px; margin-bottom: 1.1rem; border: 1px solid rgba(14,165,233,.3); }
+    .hero h1 { font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 700; color: #fff; line-height: 1.25; margin-bottom: .6rem; }
+    .hero h1 em { color: var(--secondary); font-style: normal; }
+    .hero .hero-desc { color: #94A3B8; font-size: .9rem; max-width: 480px; }
+    .hero-meta { display: flex; gap: 1.5rem; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.08); }
+    .hero-meta .meta-item { font-size: .78rem; color: #64748B; font-family: 'Inter', sans-serif; }
+    .hero-meta .meta-item strong { display: block; color: #94A3B8; margin-bottom: .1rem; font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    .objetivos { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2.5rem; }
+    .objetivos h3 { font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; color: var(--secondary); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+    .objetivos ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .objetivos ul li { display: flex; align-items: flex-start; gap: .5rem; font-size: .85rem; color: var(--text); }
+    .objetivos ul li::before { content: '✓'; color: var(--success); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+
+    section { margin-bottom: 3rem; }
+    .section-header { display: flex; align-items: flex-start; gap: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem; }
+    .section-num { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--secondary); color: #fff; border-radius: var(--radius); font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; flex-shrink: 0; }
+    .section-title-wrap { flex: 1; }
+    .section-title-wrap h2 { font-family: 'Inter', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--primary); line-height: 1.3; }
+    .section-title-wrap .section-sub { font-size: .78rem; color: var(--muted); margin-top: .2rem; }
+    section h3 { font-family: 'Inter', sans-serif; font-size: .95rem; font-weight: 600; color: var(--primary); margin: 1.5rem 0 .6rem; }
+    section p  { color: var(--text); margin-bottom: .85rem; }
+    section ul, section ol { color: var(--text); padding-left: 1.5rem; margin-bottom: .85rem; }
+    section ul li, section ol li { margin-bottom: .4rem; }
+
+    .callout { border-left: 4px solid var(--secondary); background: #EFF6FF; border-radius: 0 var(--radius) var(--radius) 0; padding: 1rem 1.1rem; font-size: .875rem; color: var(--text); margin: 1.25rem 0; }
+    .callout strong { color: var(--primary); }
+    .callout-title { font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--secondary); margin-bottom: .35rem; }
+    .callout.warn { border-color: var(--accent); background: #FFFBEB; }
+    .callout.warn .callout-title { color: var(--accent); }
+    .callout.tip  { border-color: var(--success); background: #F0FDF4; }
+    .callout.tip .callout-title  { color: var(--success); }
+    .callout.key  { border-color: var(--primary); background: var(--surface); }
+    .callout.key .callout-title  { color: var(--primary); }
+
+    pre { background: var(--code-bg); border-radius: var(--radius-lg); padding: 0; overflow: hidden; font-size: .82rem; line-height: 1.65; margin: 1rem 0 1.5rem; box-shadow: var(--shadow-md); }
+    .code-header { background: rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.07); padding: .5rem 1rem; display: flex; align-items: center; justify-content: space-between; }
+    .code-dots { display: flex; gap: .35rem; }
+    .code-dots span { width: 10px; height: 10px; border-radius: 50%; }
+    .code-dots .d1 { background: #FF5F57; } .code-dots .d2 { background: #FFBD2E; } .code-dots .d3 { background: #28C940; }
+    .code-lang { font-family: 'JetBrains Mono', monospace; font-size: .65rem; color: #64748B; text-transform: uppercase; letter-spacing: .08em; }
+    .code-body { padding: 1.1rem 1.25rem; overflow-x: auto; }
+    .code-body code { font-family: 'JetBrains Mono', monospace; color: var(--code-text); background: none; border: none; padding: 0; font-size: inherit; white-space: pre; }
+    code { font-family: 'JetBrains Mono', monospace; font-size: .82em; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: .15em .45em; color: #0369A1; }
+
+    .table-wrap { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); margin: 1rem 0 1.5rem; box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    thead tr { background: var(--primary); }
+    thead th { padding: .75rem 1rem; text-align: left; font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #94A3B8; }
+    tbody tr:nth-child(even) { background: var(--surface); }
+    tbody tr:nth-child(odd)  { background: var(--bg); }
+    tbody td { padding: .7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text); }
+    tbody tr:last-child td { border-bottom: none; }
+
+    .steps { display: flex; gap: 0; margin: 1rem 0 1.5rem; }
+    .step { flex: 1; min-width: 90px; background: var(--surface); border: 1px solid var(--border); border-right: none; padding: 1rem .75rem; position: relative; text-align: center; }
+    .step:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+    .step:last-child  { border-right: 1px solid var(--border); border-radius: 0 var(--radius) var(--radius) 0; }
+    .step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--secondary); color: #fff; border-radius: 50%; font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 700; margin-bottom: .5rem; }
+    .step-title { font-size: .78rem; font-weight: 600; color: var(--primary); font-family: 'Inter', sans-serif; margin-bottom: .25rem; }
+    .step-desc  { font-size: .72rem; color: var(--muted); }
+    .step-arrow { position: absolute; right: -10px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; background: var(--secondary); clip-path: polygon(0 0, 100% 50%, 0 100%); z-index: 1; }
+    .step:last-child .step-arrow { display: none; }
+
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; position: relative; overflow: hidden; }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--secondary); border-radius: 4px 0 0 4px; }
+    .card.accent::before  { background: var(--accent); }
+    .card.success::before { background: var(--success); }
+    .card h4 { font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; color: var(--primary); margin-bottom: .5rem; }
+    .card p  { font-size: .82rem; color: var(--muted); margin: 0; }
+
+    /* Receita — lista de ingredientes */
+    .ingredientes { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin: 1rem 0 1.5rem; }
+    .ingredientes h4 { font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; color: var(--secondary); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 1rem; }
+    .ingredientes ul { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; }
+    .ingredientes ul li { display: flex; align-items: center; gap: .5rem; font-size: .875rem; padding: .35rem 0; border-bottom: 1px solid var(--border); }
+    .ingredientes ul li:last-child, .ingredientes ul li:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .ingredientes ul li::before { content: '●'; color: var(--accent); font-size: .5rem; flex-shrink: 0; }
+    .ingredientes .qtd { font-family: 'JetBrains Mono', monospace; font-size: .78rem; color: var(--secondary); font-weight: 600; min-width: 70px; }
+
+    /* Passo numerado de receita */
+    .passo { display: flex; gap: 1rem; margin-bottom: 1.25rem; align-items: flex-start; }
+    .passo .passo-num { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: var(--primary); color: #fff; border-radius: 50%; font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 700; flex-shrink: 0; margin-top: .1rem; }
+    .passo .passo-content h4 { font-family: 'Inter', sans-serif; font-size: .9rem; font-weight: 600; color: var(--primary); margin-bottom: .3rem; }
+    .passo .passo-content p { margin: 0; font-size: .875rem; color: var(--text); }
+
+    /* Quiz */
+    .quiz-wrap { margin-top: 1rem; }
+    .quiz { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; }
+    .quiz-q { font-family: 'Inter', sans-serif; font-size: .9rem; font-weight: 600; color: var(--primary); margin-bottom: .85rem; display: flex; gap: .6rem; align-items: flex-start; }
+    .quiz-q .q-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--secondary); color: #fff; border-radius: 50%; font-size: .72rem; font-weight: 700; flex-shrink: 0; margin-top: .1rem; }
+    .options { display: flex; flex-direction: column; gap: .4rem; margin-bottom: .75rem; }
+    .option { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius); padding: .55rem 1rem; font-size: .85rem; font-family: 'Roboto', sans-serif; color: var(--text); display: flex; align-items: center; gap: .6rem; }
+    .option .opt-letter { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border-dark); font-size: .7rem; font-weight: 700; font-family: 'Inter', sans-serif; color: var(--muted); flex-shrink: 0; }
+    .option.correct { border-color: var(--success); background: #F0FDF4; color: #166534; }
+    .option.correct .opt-letter { background: var(--success); border-color: var(--success); color: #fff; }
+    .quiz-answer { font-size: .8rem; color: #166534; background: #F0FDF4; border: 1px solid #86EFAC; border-radius: var(--radius); padding: .5rem .85rem; font-family: 'Inter', sans-serif; }
+
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 3rem; color: var(--muted); font-size: .78rem; display: flex; justify-content: space-between; align-items: center; font-family: 'Inter', sans-serif; }
+
+    @media (max-width: 768px) {
+      main { padding: 1.5rem 1.25rem; }
+      .objetivos ul, .cards, .ingredientes ul { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.5rem; }
+      .steps { flex-direction: column; }
+      .step { border-right: 1px solid var(--border); border-radius: var(--radius) !important; margin-bottom: .5rem; }
+      footer { flex-direction: column; gap: .5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+<main>
+
+  <div class="breadcrumb">
+    Culinária Básica <span class="sep">›</span> <span>Módulo 1</span> <span class="sep">›</span> Como Fazer um Bolo
+  </div>
+
+  <!-- ══════════ HERO ══════════ -->
+  <div class="hero">
+    <div class="modulo-tag">🎂 Culinária Módulo 1</div>
+    <h1>Como Fazer um <em>Bolo</em></h1>
+    <p class="hero-desc">Do mise en place à decoração final — aprenda a técnica completa para preparar um bolo fofinho, úmido e bem assado, entendendo o papel de cada ingrediente e cada etapa do processo.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><strong>Tempo Total</strong>~90 min</div>
+      <div class="meta-item"><strong>Nível</strong>Iniciante</div>
+      <div class="meta-item"><strong>Rendimento</strong>10–12 fatias</div>
+      <div class="meta-item"><strong>Versão</strong>1.0 · Set 2026</div>
+    </div>
+  </div>
+
+  <!-- Objetivos -->
+  <div class="objetivos">
+    <h3>🎯 Objetivos de Aprendizagem</h3>
+    <ul>
+      <li>Entender o papel de cada ingrediente na massa</li>
+      <li>Dominar a técnica de mistura sem endurecer o bolo</li>
+      <li>Preparar a forma corretamente para não grudar</li>
+      <li>Identificar o ponto certo de forno</li>
+      <li>Saber quando e como desenformar com segurança</li>
+      <li>Aplicar coberturas e variações de sabor</li>
+    </ul>
+  </div>
+
+  <!-- ════════════════════
+       1. A CIÊNCIA DO BOLO
+  ════════════════════ -->
+  <section id="ciencia">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title-wrap">
+        <h2>A ciência por trás do bolo</h2>
+        <div class="section-sub">Por que cada ingrediente existe e o que acontece no forno</div>
+      </div>
+    </div>
+
+    <p>Fazer um bolo não é apenas seguir uma lista de ingredientes — é química aplicada à culinária. Cada componente tem uma função precisa: a farinha fornece estrutura (glúten), os ovos emulsificam e coagulam para dar firmeza, o açúcar retém umidade e carameliza para criar a crosta dourada, a gordura (manteiga ou óleo) encurta as cadeias de glúten deixando a massa macia, e o fermento libera CO₂ para fazer a massa crescer.</p>
+
+    <p>Quando você coloca a massa no forno aquecido, ocorrem três fases simultâneas: a expansão do CO₂ do fermento faz a massa crescer, as proteínas dos ovos e do glúten coagulam criando estrutura sólida, e os açúcares caramelizam na superfície formando a crosta. Por isso a temperatura e o tempo de forno são críticos — calor demais coagula as proteínas antes da massa crescer; calor de menos e o bolo não assa por dentro.</p>
+
+    <div class="callout key">
+      <div class="callout-title">🔑 Conceito-Chave</div>
+      O <strong>glúten</strong> é a proteína que dá estrutura à massa. Misturar demais ativa o glúten em excesso, resultando em bolo duro e borrachento. Misture apenas até incorporar os ingredientes — grumos pequenos são aceitáveis.
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h4>🌾 Farinha — Estrutura</h4>
+        <p>Forma glúten ao hidratar. Use farinha de trigo comum (tipo 1) para bolos macios. Farinha de trigo especial tem mais proteína e deixa o bolo mais firme.</p>
+      </div>
+      <div class="card accent">
+        <h4>🥚 Ovos — Liga e leveza</h4>
+        <p>As gemas emulsificam a gordura com a água. As claras, ao serem batidas ou misturadas, incorporam ar e ajudam o bolo a crescer.</p>
+      </div>
+      <div class="card success">
+        <h4>🧈 Gordura — Maciez</h4>
+        <p>Manteiga dá sabor e maciez. Óleo vegetal deixa o bolo mais úmido por mais tempo. Margarina funciona, mas com menos sabor.</p>
+      </div>
+      <div class="card">
+        <h4>🫧 Fermento — Volume</h4>
+        <p>Fermento químico (pó royal) reage com líquido e calor liberando CO₂. Validade importa — fermento vencido não faz o bolo crescer.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════
+       2. EQUIPAMENTOS
+  ════════════════════ -->
+  <section id="equipamentos">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title-wrap">
+        <h2>Equipamentos necessários</h2>
+        <div class="section-sub">O que você precisa ter antes de começar</div>
+      </div>
+    </div>
+
+    <p>Antes de separar os ingredientes, organize seu espaço e confirme que tem todos os utensílios disponíveis. Improvisar no meio do preparo causa distrações e erros — principalmente com o forno já ligado.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Utensílio</th><th>Para que serve</th><th>Substituto possível</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tigela grande</strong></td><td>Misturar os ingredientes da massa</td><td>Panela limpa e seca</td></tr>
+          <tr><td><strong>Batedeira ou fouet</strong></td><td>Bater manteiga + açúcar, incorporar ovos</td><td>Garfo (mais trabalhoso)</td></tr>
+          <tr><td><strong>Peneira</strong></td><td>Peneirar farinha e fermento (evita grumos)</td><td>Colher + paciência</td></tr>
+          <tr><td><strong>Forma redonda 22–24cm</strong></td><td>Assar o bolo com altura adequada</td><td>Forma retangular média</td></tr>
+          <tr><td><strong>Espátula de silicone</strong></td><td>Raspar a tigela sem desperdiçar massa</td><td>Colher de pau</td></tr>
+          <tr><td><strong>Palito de dente ou faca fina</strong></td><td>Testar se o bolo está assado por dentro</td><td>Espeto de churrasco fino</td></tr>
+          <tr><td><strong>Grade de resfriamento</strong></td><td>Resfriar o bolo sem suar embaixo</td><td>Grelha do fogão (limpa)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-title">⚠️ Atenção — Temperatura dos ingredientes</div>
+      Manteiga, ovos e leite devem estar em <strong>temperatura ambiente</strong> antes de usar. Ingredientes frios dificultam a emulsificação e podem fazer a massa talhar (separar gordura da água).
+    </div>
+  </section>
+
+  <!-- ════════════════════
+       3. RECEITA BASE
+  ════════════════════ -->
+  <section id="receita">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title-wrap">
+        <h2>Receita base — Bolo de Baunilha</h2>
+        <div class="section-sub">A receita fundamental para dominar antes de qualquer variação</div>
+      </div>
+    </div>
+
+    <p>O bolo de baunilha é a base da confeitaria. Dominar essa receita significa entender as proporções e as técnicas que se aplicam a quase qualquer outro bolo. A partir dela, você pode adicionar cacau, frutas, especiarias ou coberturas diferentes.</p>
+
+    <div class="ingredientes">
+      <h4>📋 Ingredientes — Forma 22cm / 10–12 fatias</h4>
+      <ul>
+        <li><span class="qtd">2 xícaras</span> Farinha de trigo (peneirada)</li>
+        <li><span class="qtd">1½ xícara</span> Açúcar refinado</li>
+        <li><span class="qtd">3 unid.</span> Ovos inteiros (temp. ambiente)</li>
+        <li><span class="qtd">½ xícara</span> Manteiga sem sal (amolecida)</li>
+        <li><span class="qtd">1 xícara</span> Leite integral (temp. ambiente)</li>
+        <li><span class="qtd">1 colher sopa</span> Fermento químico em pó</li>
+        <li><span class="qtd">1 colher chá</span> Extrato de baunilha</li>
+        <li><span class="qtd">1 pitada</span> Sal (realça o doce)</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">📌 Nota — Medidas</div>
+      <strong>1 xícara = 240 ml</strong>. Use sempre a mesma xícara para medir todos os ingredientes — a proporção entre eles é o que importa.
+    </div>
+  </section>
+
+  <!-- ════════════════════
+       4. MISE EN PLACE
+  ════════════════════ -->
+  <section id="mep">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title-wrap">
+        <h2>Mise en place</h2>
+        <div class="section-sub">Preparar tudo antes de começar — o segredo dos cozinheiros profissionais</div>
+      </div>
+    </div>
+
+    <p><em>Mise en place</em> é um termo francês que significa "tudo no lugar". Consiste em medir, separar e preparar todos os ingredientes antes de iniciar o preparo propriamente dito. Essa prática elimina pressa, reduz erros e garante que você não esqueça nenhum ingrediente.</p>
+
+    <div class="passo">
+      <div class="passo-num">1</div>
+      <div class="passo-content">
+        <h4>Tire os ingredientes da geladeira</h4>
+        <p>Retire manteiga, ovos e leite da geladeira pelo menos 30 minutos antes. Ingredientes em temperatura ambiente incorporam melhor.</p>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">2</div>
+      <div class="passo-content">
+        <h4>Meça e separe tudo</h4>
+        <p>Coloque cada ingrediente já medido em tigelas separadas. Farinha peneirada, açúcar separado, ovos quebrados em tigela à parte.</p>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">3</div>
+      <div class="passo-content">
+        <h4>Prepare a forma</h4>
+        <p>Unte a forma com manteiga (inclusive as laterais), polvilhe com farinha e bata para retirar o excesso. Ou forre o fundo com papel manteiga cortado no tamanho da forma.</p>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">4</div>
+      <div class="passo-content">
+        <h4>Preaqueça o forno</h4>
+        <p>Ligue o forno a <strong>180°C</strong> com pelo menos 15 minutos de antecedência. Um forno frio ao colocar a massa impede que o bolo cresça corretamente.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">💡 Dica</div>
+      Nunca abra o forno nos primeiros <strong>20 minutos</strong> de assamento. A variação de temperatura colapsa as bolhas de CO₂ ainda não solidificadas e o bolo murcha no centro — o famoso "bolo afundado".
+    </div>
+  </section>
+
+  <!-- ════════════════════
+       5. PREPARO DA MASSA
+  ════════════════════ -->
+  <section id="massa">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title-wrap">
+        <h2>Preparo da massa</h2>
+        <div class="section-sub">Técnica de cremagem e incorporação dos ingredientes</div>
+      </div>
+    </div>
+
+    <p>A ordem de adição dos ingredientes importa muito. O método mais comum para bolos caseiros é a <strong>cremagem</strong>: bater a manteiga com o açúcar até obter um creme claro e aerado, depois adicionar os ovos um a um, e por último alternar os ingredientes secos com o leite. Essa ordem garante emulsificação adequada e máxima incorporação de ar.</p>
+
+    <div class="passo">
+      <div class="passo-num">1</div>
+      <div class="passo-content">
+        <h4>Creme manteiga + açúcar</h4>
+        <p>Bata a manteiga amolecida com o açúcar por 3–5 minutos em velocidade média-alta até obter um creme bem claro e fofo. Este passo incorpora ar e é responsável por grande parte da leveza do bolo.</p>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">2</div>
+      <div class="passo-content">
+        <h4>Adicione os ovos um a um</h4>
+        <p>Com a batedeira em velocidade baixa, adicione um ovo de cada vez, esperando incorporar completamente antes do próximo. Adicionar todos de uma vez pode talhar a mistura.</p>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">3</div>
+      <div class="passo-content">
+        <h4>Adicione a baunilha e o sal</h4>
+        <p>Acrescente o extrato de baunilha e a pitada de sal. O sal equilibra o doce e realça os sabores — não pule este passo mesmo que pareça irrelevante.</p>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">4</div>
+      <div class="passo-content">
+        <h4>Alterne farinha e leite</h4>
+        <p>Com a batedeira no mínimo (ou à mão com espátula), adicione ⅓ da farinha → ½ do leite → ⅓ da farinha → ½ do leite → ⅓ da farinha. Termine sempre com farinha. Misture apenas até incorporar.</p>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">5</div>
+      <div class="passo-content">
+        <h4>Adicione o fermento por último</h4>
+        <p>Peneirar o fermento sobre a massa e incorpore com movimentos suaves de baixo para cima (não bata). O fermento começa a agir ao contato com líquido — trabalhe com rapidez a partir deste ponto.</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-title">⚠️ Atenção — Não misture demais</div>
+      Após adicionar a farinha, cada movimento extra desenvolve mais glúten. Pare assim que não houver mais farinha seca visível. Uma massa ligeiramente irregular é muito melhor do que uma massa supermisturada.
+    </div>
+  </section>
+
+  <!-- ════════════════════
+       6. ASSAMENTO
+  ════════════════════ -->
+  <section id="assamento">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div class="section-title-wrap">
+        <h2>Assamento</h2>
+        <div class="section-sub">Temperatura, tempo e como saber o ponto certo</div>
+      </div>
+    </div>
+
+    <p>Despeje a massa na forma preparada e alise a superfície com uma espátula. Leve ao forno a <strong>180°C</strong> na grade do meio (nunca na de baixo — queima o fundo, nem na de cima — seca a superfície antes de assar por dentro).</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Forma / Tamanho</th><th>Temperatura</th><th>Tempo estimado</th></tr></thead>
+        <tbody>
+          <tr><td>Redonda 22cm</td><td>180°C</td><td>35–45 minutos</td></tr>
+          <tr><td>Redonda 24cm</td><td>175°C</td><td>30–40 minutos</td></tr>
+          <tr><td>Retangular média</td><td>180°C</td><td>40–50 minutos</td></tr>
+          <tr><td>Cupcakes (forminhas)</td><td>190°C</td><td>18–22 minutos</td></tr>
+          <tr><td>Bolo de fubá / massa densa</td><td>180°C</td><td>45–55 minutos</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Como testar o ponto</h3>
+    <ol>
+      <li><strong>Teste do palito:</strong> insira um palito de dente no centro do bolo. Se sair limpo ou com migalhas secas, está pronto. Se sair com massa úmida, asse por mais 5 minutos e teste novamente.</li>
+      <li><strong>Teste visual:</strong> o bolo deve estar dourado e começar a se desprender levemente das laterais da forma.</li>
+      <li><strong>Teste de pressão:</strong> pressione levemente o centro com o dedo — se voltar à posição, está assado. Se ficar afundado, precisa de mais tempo.</li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="callout-title">💡 Dica — Fornos diferentes</div>
+      Cada forno tem suas particularidades. Fornos com resistência de baixo tendem a queimar mais rápido. Se o seu bolo dourar muito rápido por cima mas ainda estiver cru, cubra com papel alumínio e continue assando.
+    </div>
+  </section>
+
+  <!-- ════════════════════
+       7. DESENFORMAR E RESFRIAR
+  ════════════════════ -->
+  <section id="desenformar">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div class="section-title-wrap">
+        <h2>Desenformar e resfriar</h2>
+        <div class="section-sub">Etapa crítica que a maioria das pessoas apressa — e estraga o bolo</div>
+      </div>
+    </div>
+
+    <p>Retirar o bolo do forno não significa que ele está pronto para ser cortado. O bolo continua cozinhando internamente com o calor residual por alguns minutos, e a estrutura do glúten ainda está frágil. Respeitar o tempo de resfriamento é fundamental para obter fatias bonitas e uniformes.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">1</div>
+        <div class="step-title">Forno apagado</div>
+        <div class="step-desc">Retire o bolo do forno imediatamente ao atingir o ponto</div>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">2</div>
+        <div class="step-title">10 min na forma</div>
+        <div class="step-desc">Deixe descansar sobre uma grade — não no balcão frio</div>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-num">3</div>
+        <div class="step-title">Desenforme</div>
+        <div class="step-desc">Passe uma faca nas bordas, vire sobre grade e retire a forma</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">30–60 min na grade</div>
+        <div class="step-desc">Resfrie completamente antes de cortar ou colocar cobertura</div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-title">⚠️ Atenção</div>
+      Nunca coloque cobertura (chantilly, ganache, glacê) em bolo quente. O calor derrete e escorrega a cobertura. O bolo deve estar completamente frio — idealmente resfriado por 1 hora ou mais.
+    </div>
+  </section>
+
+  <!-- ════════════════════
+       8. COBERTURAS E VARIAÇÕES
+  ════════════════════ -->
+  <section id="coberturas">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div class="section-title-wrap">
+        <h2>Coberturas e variações</h2>
+        <div class="section-sub">Como personalizar a receita base com diferentes sabores e acabamentos</div>
+      </div>
+    </div>
+
+    <p>Com a receita base dominada, as variações são infinitas. O princípio é sempre o mesmo: ajustar 1–2 ingredientes mantendo as proporções da estrutura (farinha, ovos, gordura, fermento). Abaixo, as variações mais populares e suas modificações em relação à receita base.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Variação</th><th>Modificação na receita base</th><th>Cobertura sugerida</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Bolo de Chocolate</strong></td><td>Substituir ½ xícara de farinha por ½ xícara de cacau em pó + 2 colheres de água quente</td><td>Ganache ou brigadeiro</td></tr>
+          <tr><td><strong>Bolo de Limão</strong></td><td>Trocar baunilha por raspas de 2 limões + 3 colheres de suco de limão</td><td>Glacê de limão (açúcar + suco)</td></tr>
+          <tr><td><strong>Bolo de Cenoura</strong></td><td>Bater 3 cenouras médias com o óleo e os ovos no liquidificador antes de misturar à farinha</td><td>Cobertura de chocolate</td></tr>
+          <tr><td><strong>Bolo de Coco</strong></td><td>Adicionar 1 xícara de coco ralado à massa + substituir ½ xícara de leite por leite de coco</td><td>Creme de leite condensado + coco</td></tr>
+          <tr><td><strong>Bolo Red Velvet</strong></td><td>Cacau + corante vermelho + 1 colher de vinagre branco + buttermilk no lugar do leite</td><td>Cream cheese frosting</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Cobertura básica — Calda de açúcar</h3>
+    <p>A cobertura mais simples e versátil: misture <strong>1 xícara de açúcar de confeiteiro</strong> com <strong>2–3 colheres de leite</strong> até obter uma pasta lisa. Adicione algumas gotas de baunilha. Despeje sobre o bolo frio e deixe escorrer naturalmente pelas laterais.</p>
+  </section>
+
+  <!-- ════════════════════
+       9. ERROS COMUNS
+  ════════════════════ -->
+  <section id="erros">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div class="section-title-wrap">
+        <h2>Erros comuns e como evitá-los</h2>
+        <div class="section-sub">Os problemas mais frequentes e suas causas raiz</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Problema</th><th>Causa provável</th><th>Como evitar</th></tr></thead>
+        <tbody>
+          <tr><td>Bolo afundou no centro</td><td>Forno aberto cedo, fermento vencido ou temperatura baixa demais</td><td>Não abrir o forno nos primeiros 20 min; verificar validade do fermento</td></tr>
+          <tr><td>Bolo duro e borrachento</td><td>Excesso de mistura após adicionar a farinha</td><td>Misturar apenas até incorporar; usar espátula, não batedeira</td></tr>
+          <tr><td>Bolo grudou na forma</td><td>Forma mal untada ou papel manteiga não usado</td><td>Untar + enfarinhar ou usar papel manteiga no fundo</td></tr>
+          <tr><td>Bolo cru no centro</td><td>Temperatura muito alta (crosta forma antes de assar por dentro)</td><td>Reduzir para 170°C e assar mais tempo</td></tr>
+          <tr><td>Massa talhada (separando)</td><td>Ingredientes frios ou ovos adicionados rápido demais</td><td>Usar ingredientes em temperatura ambiente; adicionar ovos um a um</td></tr>
+          <tr><td>Bolo seco</td><td>Tempo excessivo no forno ou excesso de farinha</td><td>Testar com palito antes do tempo máximo; medir farinha com colher nivelada</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ════════════════════
+       10. EXERCÍCIO PRÁTICO
+  ════════════════════ -->
+  <section id="pratica">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div class="section-title-wrap">
+        <h2>Exercício Prático</h2>
+        <div class="section-sub">Identifique o erro na receita abaixo</div>
+      </div>
+    </div>
+
+    <p>Leia o relato abaixo e identifique <strong>todos os erros</strong> cometidos durante o preparo:</p>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:1.5rem; margin: 1rem 0; font-size:.875rem; line-height:1.9;">
+      <p style="margin:0;"><em>"Tirei os ovos e a manteiga da geladeira 5 minutos antes. Bati a manteiga com o açúcar por 30 segundos, joguei os 3 ovos de uma vez e bati por 1 minuto. Misturei toda a farinha de uma vez com todo o leite de uma vez e bati por 5 minutos até ficar bem liso. Adicionei o fermento e bati mais 2 minutos. Coloquei no forno frio e liguei a 200°C. Aos 15 minutos abri o forno para ver como estava. O bolo ficou duro, afundou no centro e a massa estava um pouco crua. Decorei logo após tirar do forno."</em></p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">✅ Gabarito — 7 erros identificados</div>
+      <ol style="margin:.5rem 0 0 1.25rem; font-size:.85rem; line-height:1.8;">
+        <li><strong>Ingredientes frios</strong> — manteiga e ovos precisam de 30+ min fora da geladeira</li>
+        <li><strong>Cremagem insuficiente</strong> — 30 segundos é pouco; precisa de 3–5 minutos para incorporar ar</li>
+        <li><strong>Ovos adicionados todos de uma vez</strong> — deve ser um a um para não talhar</li>
+        <li><strong>Farinha e leite adicionados de uma vez</strong> — deve ser alternado em 3 partes de farinha e 2 de leite</li>
+        <li><strong>Mistura excessiva</strong> — 5 minutos com farinha ativa demais o glúten (bolo duro)</li>
+        <li><strong>Fermento batido por 2 minutos</strong> — deve ser incorporado suavemente, não batido</li>
+        <li><strong>Forno frio</strong> — deve ser preaquecido a 180°C por 15 minutos antes</li>
+        <li><strong>Forno aberto aos 15 minutos</strong> — não abrir nos primeiros 20 min (bolo afundou)</li>
+        <li><strong>Decoração com bolo quente</strong> — cobertura só após resfriamento completo</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ════════════════════
+       11. RESUMO
+  ════════════════════ -->
+  <section id="resumo">
+    <div class="section-header">
+      <div class="section-num">11</div>
+      <div class="section-title-wrap">
+        <h2>Resumo</h2>
+        <div class="section-sub">Principais aprendizados e próximos passos</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h4>🧪 Química antes de culinária</h4>
+        <p>Cada ingrediente tem função técnica. Entender o porquê evita erros e permite improviso com confiança.</p>
+      </div>
+      <div class="card accent">
+        <h4>⚖️ Ordem e temperatura importam</h4>
+        <p>Ingredientes em temperatura ambiente, cremagem adequada e adição alternada dos secos/líquidos fazem toda a diferença.</p>
+      </div>
+      <div class="card success">
+        <h4>🚫 Nunca misture demais</h4>
+        <p>Após a farinha entrar, cada movimento extra endurece o bolo. Misture apenas até incorporar.</p>
+      </div>
+      <div class="card">
+        <h4>⏱️ Paciência é um ingrediente</h4>
+        <p>Não abrir o forno antes do tempo, deixar resfriar completamente e só decorar quando frio — cada espera tem um motivo.</p>
+      </div>
+    </div>
+
+    <div class="callout key">
+      <div class="callout-title">🚀 Próximos Passos</div>
+      Com o bolo de baunilha dominado, experimente: <strong>bolo de cenoura com cobertura de chocolate</strong> (técnica de liquidificador), <strong>pão de ló</strong> (sem gordura, estrutura só de ovos) e <strong>chiffon cake</strong> (usa óleo + claras em neve separadas). Cada técnica aprofunda o entendimento da química da confeitaria.
+    </div>
+  </section>
+
+  <!-- ════════════════════
+       12. QUIZ
+  ════════════════════ -->
+  <section id="quiz">
+    <div class="section-header">
+      <div class="section-num">12</div>
+      <div class="section-title-wrap">
+        <h2>Quiz de Fixação</h2>
+        <div class="section-sub">Teste seus conhecimentos sobre a técnica do bolo</div>
+      </div>
+    </div>
+
+    <div class="quiz-wrap">
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">1</span>Qual é a principal função da gordura (manteiga ou óleo) em uma receita de bolo?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Fazer o bolo crescer</div>
+          <div class="option correct"><span class="opt-letter">B</span>Encurtar as cadeias de glúten, tornando a massa macia</div>
+          <div class="option"><span class="opt-letter">C</span>Dar cor dourada à crosta</div>
+          <div class="option"><span class="opt-letter">D</span>Ligar os ingredientes secos entre si</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: B — A gordura interfere na formação do glúten, deixando a textura macia. O crescimento é função do fermento; a cor dourada vem dos açúcares.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">2</span>Por que não se deve abrir o forno nos primeiros 20 minutos de assamento?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>O forno pode se apagar com a entrada de ar frio</div>
+          <div class="option"><span class="opt-letter">B</span>A luz do forno atrapalha o assamento</div>
+          <div class="option correct"><span class="opt-letter">C</span>A queda de temperatura colapsa as bolhas de CO₂ antes da estrutura solidificar</div>
+          <div class="option"><span class="opt-letter">D</span>O bolo perde umidade excessiva nesse período</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — Nessa fase inicial o bolo ainda está crescendo. A entrada de ar frio colapsa as bolhas de gás e a estrutura de glúten ainda não firmou — causando o famoso "afundamento".</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">3</span>Qual o método correto para adicionar os ovos ao creme de manteiga e açúcar?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Todos de uma vez, batendo em velocidade máxima</div>
+          <div class="option"><span class="opt-letter">B</span>Apenas as gemas, descartando as claras</div>
+          <div class="option correct"><span class="opt-letter">C</span>Um a um, aguardando incorporar completamente antes de adicionar o próximo</div>
+          <div class="option"><span class="opt-letter">D</span>Batidos previamente com o leite, antes de unir à manteiga</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — Adicionar ovos um a um garante emulsificação gradual. Todos de uma vez podem quebrar a emulsão (talhar), separando água e gordura.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">4</span>O bolo ficou duro e com textura borrachenta. Qual é a causa mais provável?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Excesso de fermento na receita</div>
+          <div class="option"><span class="opt-letter">B</span>Temperatura do forno muito alta</div>
+          <div class="option correct"><span class="opt-letter">C</span>Excesso de mistura após adicionar a farinha, desenvolvendo glúten demais</div>
+          <div class="option"><span class="opt-letter">D</span>Pouca quantidade de açúcar</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: C — Misturar demais após a farinha desenvolve as cadeias de glúten, tornando a massa elástica e dura após assar. Misture apenas até a farinha desaparecer.</div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-q"><span class="q-num">5</span>Qual é o momento correto para aplicar cobertura em um bolo?</div>
+        <div class="options">
+          <div class="option"><span class="opt-letter">A</span>Imediatamente após tirar do forno, para a cobertura derreter e penetrar</div>
+          <div class="option"><span class="opt-letter">B</span>Após 5 minutos, quando a superfície ainda está morna</div>
+          <div class="option"><span class="opt-letter">C</span>Após 15 minutos na grade de resfriamento</div>
+          <div class="option correct"><span class="opt-letter">D</span>Somente após o bolo estar completamente frio (30–60 minutos na grade)</div>
+        </div>
+        <div class="quiz-answer">✅ Resposta: D — Bolo quente derrete coberturas cremosas e gordurosas. O resfriamento completo garante que chantilly, ganache e glacê mantenham a forma e a textura desejada.</div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+</div>
+
+<footer>
+  <span>Apostila Culinária — Módulo 1: Como Fazer um Bolo</span>
+  <span>LAB365 × SENAI · Workshop Kiro &amp; Agentes na AWS</span>
+</footer>
+
+</body>
+</html>

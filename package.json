@@ -8,7 +8,8 @@
     "validar:yaml": "node validador.js --yaml"
   },
   "dependencies": {
-    "js-yaml": "4.3.2",
+    "js-yaml": "^4.3.2",
+    "puppeteer": "^25.12.0",
     "sharp": "^0.33.5"
   },
   "allowScripts": {
