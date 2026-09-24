@@ -1,0 +1,250 @@
+titulo: "Percevejo"
+eyebrow: "ENTOMOLOGIA  ·  LAB365"
+autor: "Grupo 1  ·  LAB365 × SENAI"
+slides:
+
+  - tipo: capa
+    titulo: Percevejo
+    subtitulo: O inseto que cheira mal, mas tem muito a ensinar
+    autor: Grupo 1  ·  LAB365 × SENAI
+    notas: >
+      Boas-vindas. Este deck explora tudo sobre o percevejo: biologia, impacto na
+      agricultura, curiosidades e estratégias de controle.
+
+  - tipo: secao
+    titulo: O que é o percevejo?
+    subtitulo: Taxonomia, anatomia e por que ele fede
+    icone: bug
+    notas: >
+      Vamos começar pela identidade do inseto — o que ele é e por que chama atenção.
+
+  - tipo: cards
+    titulo: Identidade do percevejo
+    itens:
+      - icone: bug
+        rotulo: Classificação
+        titulo: Ordem Hemiptera
+        texto: Pertence à família dos hemípteros, insetos com asas parcialmente rígidas.
+      - icone: shield
+        rotulo: Defesa
+        titulo: Glândulas de odor
+        texto: Libera substância fétida por glândulas torácicas quando se sente ameaçado.
+      - icone: globe
+        rotulo: Distribuição
+        titulo: Presença mundial
+        texto: Mais de 40.000 espécies descritas em todos os continentes, exceto Antártida.
+      - icone: leaf
+        rotulo: Alimentação
+        titulo: Sugador de seiva
+        texto: Perfura tecidos vegetais ou animais com o rostro e suga líquidos nutritivos.
+    nota: "Destaque: o nome popular vem do cheiro intenso liberado como mecanismo de defesa."
+    notas: >
+      Quatro cards cobrem os traços mais marcantes do inseto de forma direta.
+
+  - tipo: diagrama
+    titulo: Anatomia do percevejo
+    imagem: saida/percevejo-anatomia.png
+    passos:
+      - titulo: Cabeça
+        texto: Olhos compostos e rostro sugador
+      - titulo: Tórax
+        texto: Pronoto, escutelo e 3 pares de patas
+      - titulo: Hemélitros
+        texto: Asas parcialmente rígidas — marca dos hemípteros
+      - titulo: Abdômen
+        texto: Glândula de odor libera cheiro de defesa
+      - titulo: Antenas
+        texto: 4 segmentos, usadas para detectar plantas
+    nota: "Destaque: o rostro perfura tecidos e suga seiva sem mastigar."
+    notas: >
+      Diagrama com a anatomia completa. Os passos ao lado guiam o olhar do público
+      pelas partes mais relevantes do inseto.
+
+  - tipo: numeros
+    titulo: Percevejo em números
+    itens:
+      - valor: "40k+"
+        rotulo: espécies de hemípteros descritas no mundo
+        fonte: Catalog of Life, 2023
+      - valor: "500+"
+        rotulo: espécies de percevejo registradas no Brasil
+        fonte: EMBRAPA, 2022
+      - valor: "40%"
+        rotulo: de perda na soja causada pelo percevejo-marrom sem controle
+        fonte: EMBRAPA Soja, 2021
+      - valor: "3mm"
+        rotulo: tamanho mínimo — a menor espécie mede apenas 3 mm
+        fonte: Entomologia Agrícola, 2020
+    nota: "Impacto: o percevejo-marrom é a principal praga da soja no Brasil."
+    notas: >
+      Números concretos mostram escala e relevância econômica do inseto.
+
+  - tipo: secao
+    titulo: Biologia e ciclo de vida
+    subtitulo: Do ovo ao adulto em cinco estágios
+    icone: activity
+    notas: >
+      Agora vamos entender como o percevejo se desenvolve e se reproduz.
+
+  - tipo: diagrama
+    titulo: Ciclo de vida completo
+    imagem: saida/percevejo-ciclo.png
+    passos:
+      - titulo: Ovo
+        texto: Postura em grupo de 20 a 30 ovos
+      - titulo: Ninfa 1
+        texto: Eclode em ~5 dias, sem asas
+      - titulo: Ninfas 2–4
+        texto: Quatro mudas ao longo de 30 dias
+      - titulo: Adulto
+        texto: Asas funcionais, reprodução ativa
+      - titulo: Postura
+        texto: Fêmea põe até 400 ovos na vida
+    nota: "Velocidade: ciclo completo em apenas 45 dias em clima quente."
+    notas: >
+      Diagrama circular mostra a metamorfose incompleta. O centro destaca os 45 dias
+      de ciclo total em condições favoráveis.
+
+  - tipo: processo
+    titulo: Ciclo de vida completo
+    etapas:
+      - icone: circle
+        titulo: Ovo
+        texto: Postura em grupos de 20 a 30 ovos em folhas
+      - icone: sprout
+        titulo: Ninfa 1
+        texto: Eclode em 5 dias, ainda sem asas funcionais
+      - icone: sprout
+        titulo: Ninfas 2–4
+        texto: Quatro mudas até adquirir forma adulta
+      - icone: bug
+        titulo: Adulto
+        texto: Asa funcional e reprodução ativa por até 8 meses
+      - icone: egg
+        titulo: Próx. geração
+        texto: Fêmea põe até 400 ovos ao longo da vida
+    nota: "Velocidade: em clima quente, uma geração completa ocorre em apenas 45 dias."
+    notas: >
+      Cinco etapas do ovo ao próximo ciclo, destacando a velocidade de reprodução.
+
+  - tipo: comparacao
+    titulo: Percevejo-marrom x Percevejo-verde
+    separador: x
+    esquerda:
+      icone: bug
+      rotulo: Praga principal
+      titulo: Percevejo-marrom
+      itens:
+        - chave: Nome
+          valor: Euschistus heros
+        - chave: Cor
+          valor: marrom-acinzentado
+        - chave: Tamanho
+          valor: 11 a 13 mm
+        - chave: Hospedeiro
+          valor: soja, milho, sorgo
+        - chave: Dano
+          valor: sucção de grãos em formação
+    direita:
+      icone: leaf
+      rotulo: Espécie nativa
+      titulo: Percevejo-verde
+      itens:
+        - chave: Nome
+          valor: Nezara viridula
+        - chave: Cor
+          valor: verde uniforme
+        - chave: Tamanho
+          valor: 13 a 17 mm
+        - chave: Hospedeiro
+          valor: soja, feijão, algodão
+        - chave: Dano
+          valor: grãos chochos e manchados
+    nota: "Ambos: são as espécies de maior impacto econômico na agricultura brasileira."
+    notas: >
+      Comparação direta entre as duas espécies mais relevantes para a agricultura.
+
+  - tipo: secao
+    titulo: Impacto na agricultura
+    subtitulo: Prejuízos bilionários e estratégias de controle
+    icone: trending-down
+    notas: >
+      Aqui entramos no impacto econômico e nas formas de combate ao inseto.
+
+  - tipo: citacao
+    titulo: O custo do descuido
+    frase: "O percevejo-marrom causa perdas superiores a R$ 1 bilhão por safra na soja brasileira quando não há manejo adequado."
+    fonte: EMBRAPA Soja, Relatório Técnico 2022
+    cards:
+      - icone: wheat
+        titulo: Grão choco
+        texto: Sucção no período de enchimento causa grãos vazios e sem valor comercial.
+      - icone: flask-conical
+        titulo: Transmissão
+        texto: Vetor de fungos e bactérias que reduzem ainda mais a qualidade do produto.
+      - icone: trending-down
+        titulo: Queda de preço
+        texto: Lotes infestados têm desconto de até 15% no preço final pago ao produtor.
+    notas: >
+      Citação forte com dado real da EMBRAPA ancora o bloco de impacto.
+
+  - tipo: processo
+    titulo: Manejo integrado de pragas
+    etapas:
+      - icone: eye
+        titulo: Monitorar
+        texto: Amostragem semanal com pano-de-batida
+      - icone: calculator
+        titulo: Nível de dano
+        texto: Acima de 2 percevejos por metro decide o controle
+      - icone: shield-check
+        titulo: Controle bio
+        texto: Trissolcus basalis parasita ovos naturalmente
+      - icone: flask-conical
+        titulo: Inseticida
+        texto: Uso seletivo preserva inimigos naturais no campo
+      - icone: rotate-ccw
+        titulo: Rotação
+        texto: Alternância de culturas reduz população residente
+    nota: "MIP: o manejo integrado reduz uso de inseticidas em até 60% por safra."
+    notas: >
+      Cinco etapas do manejo integrado, da detecção ao controle sustentável.
+
+  - tipo: cards
+    titulo: Curiosidades sobre o percevejo
+    itens:
+      - icone: home
+        rotulo: Invasor urbano
+        titulo: Entra em casas no inverno
+        texto: Em regiões frias busca abrigo interno e pode infestarcômodos inteiros.
+      - icone: music
+        rotulo: Comunicação
+        titulo: Vibração no substrato
+        texto: Se comunica por vibrações no caule da planta, invisíveis a olho nu.
+      - icone: shield
+        rotulo: Química
+        titulo: Defesa por aldeídos
+        texto: O cheiro vem de trans-2-decenal, composto similar ao coentro oxidado.
+      - icone: microscope
+        rotulo: Ciência
+        titulo: Modelo de pesquisa
+        texto: Estudado como modelo para novos repelentes naturais e bioinseticidas.
+    nota: "Curiosidade: o cheiro do percevejo e do coentro têm o mesmo composto químico."
+    notas: >
+      Quatro curiosidades que surpreendem e tornam a apresentação memorável.
+
+  - tipo: fechamento
+    titulo: Pequeno, mas de grande impacto
+    subtitulo: Entender o percevejo é o primeiro passo para conviver com ele de forma inteligente.
+    numeros:
+      - valor: "40k+"
+        rotulo: espécies no mundo
+      - valor: "40%"
+        rotulo: perda na soja sem controle
+      - valor: "60%"
+        rotulo: menos inseticida com MIP
+    notas: >
+      Fechamento com os três números mais impactantes do deck.
+
+  - tipo: encerramento
+    notas: Slide final com os logos LAB365 e SENAI.

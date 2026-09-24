@@ -1,0 +1,86 @@
+titulo: Energia solar
+eyebrow: ENERGIA SOLAR  ·  LAB365
+slides:
+- tipo: capa
+  titulo: Energia solar no Brasil
+  subtitulo: Como o sol virou a fonte que mais cresce no país
+  autor: Grupo 1  ·  LAB365 × SENAI
+- tipo: secao
+  titulo: 'Bloco 1: o recurso'
+  subtitulo: Por que o sol é a fonte mais abundante
+  icone: sun
+- tipo: cards
+  titulo: Os três pilares
+  itens:
+  - icone: sun
+    rotulo: Fonte
+    titulo: Radiação solar
+    texto: Energia abundante e gratuita todos os dias.
+  - icone: zap
+    rotulo: Conversão
+    titulo: Painel fotovoltaico
+    texto: Transforma luz em eletricidade.
+  - icone: battery-charging
+    rotulo: Uso
+    titulo: Armazenamento
+    texto: Baterias guardam o excedente.
+  nota: 'Resumo: fonte, conversão e uso formam o sistema.'
+- tipo: processo
+  titulo: Da luz à tomada
+  etapas:
+  - icone: sun
+    titulo: Captação
+    texto: Painéis recebem a luz
+  - icone: zap
+    titulo: Conversão
+    texto: Inversor gera corrente alternada
+  - icone: plug
+    titulo: Consumo
+    texto: Energia chega à casa
+- tipo: numeros
+  titulo: O que os números dizem
+  itens:
+  - valor: 90%
+    rotulo: queda no custo dos painéis desde 2010
+    fonte: IRENA, 2023
+  - valor: '25'
+    rotulo: anos de vida útil de um painel
+- tipo: comparacao
+  titulo: Fotovoltaica x térmica
+  separador: x
+  esquerda:
+    icone: zap
+    rotulo: Eletricidade
+    titulo: Fotovoltaica
+    itens:
+    - chave: Gera
+      valor: energia elétrica
+    - chave: Eficiência
+      valor: 15 a 23%
+  direita:
+    icone: thermometer-sun
+    rotulo: Calor
+    titulo: Térmica
+    itens:
+    - chave: Gera
+      valor: água quente
+    - chave: Custo
+      valor: mais baixo
+- tipo: citacao
+  titulo: Por que isso importa
+  frase: A energia solar é a eletricidade mais barata da história.
+  fonte: IEA, World Energy Outlook 2020
+- tipo: conteudo
+  titulo: Por que energia solar?
+  bullets:
+  - Fonte renovável e inesgotável
+  - Emissão zero na operação
+  - Custo caiu 90% desde 2010
+  icone: circle-check
+- tipo: fechamento
+  titulo: Obrigado!
+  subtitulo: Perguntas?
+  numeros:
+  - valor: 90%
+    rotulo: queda de custo desde 2010
+- tipo: encerramento

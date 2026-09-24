@@ -1,0 +1,163 @@
+titulo: "Assistente das apostilas"
+eyebrow: "CASO 1  ·  ASSISTENTE DAS APOSTILAS"
+autor: "Grupo 1  ·  LAB365 × SENAI"
+slides:
+  - tipo: capa
+    titulo: "Assistente das apostilas"
+    subtitulo: "RAG que responde dúvidas dos alunos com as apostilas"
+    autor: "Grupo 1  ·  Caso 1  ·  LAB365 × SENAI"
+    notas: "Apresente o grupo e o caso: um assistente que responde dúvidas usando só o conteúdo das apostilas."
+
+  - tipo: secao
+    titulo: "O problema"
+    subtitulo: "Dúvida que chega fora da aula fica sem resposta"
+    icone: book-open
+    notas: "Contexto: quem sofre com o problema hoje."
+
+  - tipo: cards
+    titulo: "Problema e usuário"
+    itens:
+      - icone: graduation-cap
+        rotulo: "Usuário"
+        titulo: "Alunos do SENAI"
+        texto: "Estudam com as apostilas e têm dúvidas a qualquer hora, inclusive fora da aula."
+      - icone: clock
+        rotulo: "Dor"
+        titulo: "Resposta que demora"
+        texto: "O professor não consegue atender todos, e a dúvida esfria até a próxima aula."
+      - icone: file-search
+        rotulo: "Hoje"
+        titulo: "Busca manual no PDF"
+        texto: "Procurar no PDF é lento e impreciso; o aluno desiste ou pesquisa fora do material."
+    nota: "Objetivo: responder na hora, sempre citando o trecho da apostila usado."
+    notas: "Deixe claro o usuário e a dor. A métrica de sucesso aparece no fim."
+
+  - tipo: citacao
+    titulo: "A proposta"
+    frase: "Toda resposta vem das apostilas do curso, com a página citada como fonte."
+    fonte: "Princípio do Assistente das apostilas"
+    cards:
+      - icone: message-square-text
+        rotulo: "Pergunta"
+        titulo: "Em português"
+        texto: "O aluno escreve a dúvida como falaria com o professor."
+      - icone: search
+        rotulo: "Busca"
+        titulo: "Só no material"
+        texto: "O agente recupera os trechos mais relevantes das apostilas."
+      - icone: quote
+        rotulo: "Resposta"
+        titulo: "Com fonte"
+        texto: "A resposta cita apostila e página para o aluno conferir."
+    notas: "A regra de ouro: sem fonte, sem resposta."
+
+  - tipo: secao
+    titulo: "A arquitetura"
+    subtitulo: "Agente com recuperação (RAG) na AWS"
+    icone: network
+    notas: "Agora o como: padrão, serviços e fluxo."
+
+  - tipo: comparacao
+    titulo: "Padrão escolhido"
+    separador: "x"
+    esquerda:
+      icone: bot
+      rotulo: "Escolhido"
+      titulo: "Agente com RAG"
+      itens:
+        - { chave: "Conteúdo", valor: "atualiza ao trocar o PDF no S3" }
+        - { chave: "Fonte", valor: "cita o trecho usado na resposta" }
+        - { chave: "Custo", valor: "paga só pelo uso" }
+        - { chave: "Prazo", valor: "pronto em horas" }
+    direita:
+      icone: brain
+      rotulo: "Alternativa"
+      titulo: "Fine-tuning"
+      itens:
+        - { chave: "Conteúdo", valor: "retreina a cada apostila nova" }
+        - { chave: "Fonte", valor: "não mostra de onde veio" }
+        - { chave: "Custo", valor: "GPU para treinar" }
+        - { chave: "Prazo", valor: "semanas de preparo" }
+    nota: "Regra de arquitetura: comece pelo mais simples que resolve o problema."
+    notas: "Justifique por que RAG e não fine-tuning."
+
+  - tipo: diagrama
+    titulo: "Arquitetura da solução"
+    imagem: "saida/apostilas-depois.png"
+    passos:
+      - { titulo: "Pergunta", texto: "O aluno envia a dúvida pelo app" }
+      - { titulo: "Login", texto: "Cognito confirma quem é o aluno" }
+      - { titulo: "Chama o agente", texto: "API Gateway aciona o AgentCore Runtime" }
+      - { titulo: "Busca trechos", texto: "Knowledge Bases consulta as apostilas no S3" }
+      - { titulo: "Gera resposta", texto: "Bedrock responde citando a fonte" }
+    notas: "Percorra o diagrama seguindo os 5 passos numerados."
+
+  - tipo: processo
+    titulo: "Da apostila à resposta"
+    etapas:
+      - { icone: upload, titulo: "Ingestão", texto: "PDFs das apostilas vão para o S3" }
+      - { icone: scissors, titulo: "Chunking", texto: "Knowledge Bases divide em trechos" }
+      - { icone: binary, titulo: "Embeddings", texto: "Trechos viram vetores no OpenSearch" }
+      - { icone: search, titulo: "Recuperação", texto: "Busca os trechos mais próximos" }
+      - { icone: sparkles, titulo: "Geração", texto: "O modelo escreve a resposta" }
+    nota: "Apostila nova: basta subir o PDF e sincronizar a base, sem retreinar."
+    notas: "Explique o pipeline RAG de ponta a ponta."
+
+  - tipo: cards
+    titulo: "Modelo, dados e tools"
+    itens:
+      - icone: cpu
+        rotulo: "Modelo"
+        titulo: "Amazon Bedrock"
+        texto: "Modelo de linguagem por API, sem servidor para gerenciar."
+      - icone: database
+        rotulo: "Dados"
+        titulo: "Apostilas no S3"
+        texto: "PDFs oficiais do curso, indexados pelo Knowledge Bases."
+      - icone: server
+        rotulo: "Execução"
+        titulo: "AgentCore Runtime"
+        texto: "Roda o agente com isolamento entre sessões de alunos."
+      - icone: history
+        rotulo: "Contexto"
+        titulo: "AgentCore Memory"
+        texto: "Lembra a conversa para perguntas de continuação."
+    notas: "Cada peça responde uma pergunta do plano: modelo, dados e integrações."
+
+  - tipo: secao
+    titulo: "Governança e resultado"
+    subtitulo: "Limites, custo e como medimos o sucesso"
+    icone: shield-check
+    notas: "Fechando o plano: segurança, custo e métrica."
+
+  - tipo: conteudo
+    titulo: "Guardrails e governança"
+    icone: shield-check
+    bullets:
+      - "Bedrock Guardrails bloqueia assunto fora do curso e conteúdo impróprio"
+      - "Sem fonte na apostila, o agente responde que não sabe"
+      - "Nenhum dado pessoal do aluno vai para o prompt"
+      - "Credenciais via IAM Role, nunca chave no código"
+      - "Logs de uso no CloudTrail para auditoria"
+    nota: "Dados sempre públicos ou fictícios no workshop."
+    notas: "Mostre que o agente tem limites claros."
+
+  - tipo: numeros
+    titulo: "Custo e métrica"
+    itens:
+      - { valor: "< 3s", rotulo: "tempo de resposta por pergunta", fonte: "Meta do grupo" }
+      - { valor: "100%", rotulo: "das respostas com apostila e página citadas", fonte: "Critério de aceite" }
+      - { valor: "0", rotulo: "servidores para manter: tudo gerenciado e pago por uso", fonte: "Arquitetura serverless" }
+    nota: "Como medir: amostra semanal de respostas avaliada pelos professores."
+    notas: "Feche com números concretos e como serão medidos."
+
+  - tipo: fechamento
+    titulo: "Perguntas?"
+    subtitulo: "Assistente das apostilas  ·  Grupo 1"
+    numeros:
+      - { valor: "5", rotulo: "passos do fluxo" }
+      - { valor: "6", rotulo: "perguntas do plano" }
+      - { valor: "1", rotulo: "regra: sempre com fonte" }
+    notas: "Abra para perguntas do tribunal."
+
+  - tipo: encerramento

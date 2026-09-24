@@ -1,0 +1,53 @@
+slides:
+  - tipo: capa
+    titulo: "Arquitetura AWS com Kiro"
+    subtitulo: "Hands-on com spec, hooks e MCP"
+    autor: "Felipe Oliveira · SENAI LAB365"
+    grupo: "Grupo 1"
+
+  - tipo: secao
+    titulo: "Visão Geral"
+    subtitulo: "O que vamos construir hoje"
+
+  - tipo: conteudo
+    eyebrow: "Workshop Kiro e Agentes na AWS"
+    titulo: "O Desafio da Manhã"
+    bullets:
+      - "Um pedido em português vira um diagrama AWS"
+      - "Steering com guia visual da AWS em Markdown"
+      - "MCP de documentação oficial sem autenticação"
+      - "Spec do validador com critérios de aceite EARS"
+      - "Hooks que validam e renderizam ao salvar o YAML"
+      - "Diagrama entregue como PNG com ícones oficiais"
+
+  - tipo: comparacao
+    eyebrow: "Workshop Kiro e Agentes na AWS"
+    titulo: "Vibe x Spec"
+    esquerda:
+      titulo: "Vibe Coding"
+      bullets:
+        - "Começa com um prompt"
+        - "Contexto só no chat"
+        - "Revisão no fim"
+        - "Serve para prototipar"
+    direita:
+      titulo: "Spec-Driven"
+      bullets:
+        - "Começa com requisitos"
+        - "Steering e spec no repo"
+        - "Revisão em cada fase"
+        - "Serve para código duradouro"
+    separador: "x"
+    nota: "Mesma IA, processo diferente — o que muda é quando o humano revisa."
+
+  - tipo: diagrama
+    eyebrow: "Workshop Kiro e Agentes na AWS"
+    titulo: "Arquitetura do Caso"
+    imagem: "saida/apostilas-diagrama.png"
+
+  - tipo: fechamento
+    titulo: "Obrigado!"
+    proximos_passos:
+      - "Acesse o repositório do grupo no GitHub"
+      - "Continue no AWS Academy: Generative AI Foundations"
+      - "Defenda o plano no tribunal às 16h10"

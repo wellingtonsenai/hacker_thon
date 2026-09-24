@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="900" height="520" font-family="Arial, sans-serif">
+
+  <!-- Fundo -->
+  <rect width="900" height="520" fill="#F8F8F8" rx="16"/>
+
+  <!-- Título -->
+  <text x="450" y="42" text-anchor="middle" font-size="22" font-weight="bold" fill="#0E1D8E">Anatomia do Percevejo (Hemiptera)</text>
+
+  <!-- ===== CORPO ===== -->
+  <!-- Abdômen -->
+  <ellipse cx="450" cy="300" rx="110" ry="90" fill="#7B8B3A" stroke="#4a5a1a" stroke-width="2"/>
+  <!-- Tórax -->
+  <ellipse cx="450" cy="215" rx="85" ry="65" fill="#8FA04A" stroke="#4a5a1a" stroke-width="2"/>
+  <!-- Pronoto (escudo dorsal) -->
+  <ellipse cx="450" cy="195" rx="80" ry="45" fill="#A0B455" stroke="#4a5a1a" stroke-width="2"/>
+  <!-- Escutelo (triângulo) -->
+  <polygon points="450,215 410,265 490,265" fill="#C8D878" stroke="#4a5a1a" stroke-width="1.5"/>
+  <!-- Cabeça -->
+  <ellipse cx="450" cy="148" rx="42" ry="34" fill="#8FA04A" stroke="#4a5a1a" stroke-width="2"/>
+
+  <!-- Olhos -->
+  <circle cx="424" cy="142" r="9" fill="#CC3300" stroke="#880000" stroke-width="1.5"/>
+  <circle cx="476" cy="142" r="9" fill="#CC3300" stroke="#880000" stroke-width="1.5"/>
+  <circle cx="425" cy="141" r="4" fill="#110000"/>
+  <circle cx="477" cy="141" r="4" fill="#110000"/>
+
+  <!-- Rostro (probóscide) -->
+  <path d="M450,178 Q448,195 446,220" stroke="#3a2a00" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M450,178 Q452,195 454,220" stroke="#3a2a00" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Antenas -->
+  <line x1="415" y1="130" x2="310" y2="100" stroke="#3a2a00" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="310" y1="100" x2="250" y2="115" stroke="#3a2a00" stroke-width="2" stroke-linecap="round"/>
+  <line x1="485" y1="130" x2="590" y2="100" stroke="#3a2a00" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="590" y1="100" x2="650" y2="115" stroke="#3a2a00" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Patas dianteiras (par 1) -->
+  <path d="M390,215 Q340,200 290,220 Q270,230 255,250" stroke="#3a2a00" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M510,215 Q560,200 610,220 Q630,230 645,250" stroke="#3a2a00" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Patas medianas (par 2) -->
+  <path d="M375,255 Q315,255 270,275 Q252,285 240,305" stroke="#3a2a00" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M525,255 Q585,255 630,275 Q648,285 660,305" stroke="#3a2a00" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Patas traseiras (par 3) -->
+  <path d="M368,300 Q308,310 265,340 Q250,352 242,372" stroke="#3a2a00" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M532,300 Q592,310 635,340 Q650,352 658,372" stroke="#3a2a00" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Asas (hemélitros) - visíveis lateralmente -->
+  <path d="M365,235 Q290,240 270,295 Q268,320 340,340 Q390,350 420,330 L420,255 Z" fill="#D4E890" stroke="#4a5a1a" stroke-width="1.5" opacity="0.85"/>
+  <path d="M535,235 Q610,240 630,295 Q632,320 560,340 Q510,350 480,330 L480,255 Z" fill="#D4E890" stroke="#4a5a1a" stroke-width="1.5" opacity="0.85"/>
+
+  <!-- Glândula de odor (indicador) -->
+  <circle cx="450" cy="340" r="12" fill="#F08305" stroke="#b05a00" stroke-width="1.5" opacity="0.9"/>
+
+  <!-- ===== LABELS ===== -->
+  <!-- Cabeça -->
+  <line x1="450" y1="114" x2="450" y2="72" stroke="#555" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="450" y="68" text-anchor="middle" font-size="13" fill="#222" font-weight="bold">Cabeça</text>
+
+  <!-- Olho -->
+  <line x1="415" y1="133" x2="370" y2="108" stroke="#555" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="340" y="105" text-anchor="middle" font-size="12" fill="#222">Olho composto</text>
+
+  <!-- Antena -->
+  <line x1="280" y1="107" x2="280" y2="82" stroke="#555" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="280" y="76" text-anchor="middle" font-size="12" fill="#222">Antena</text>
+
+  <!-- Rostro -->
+  <line x1="454" y1="210" x2="510" y2="210" stroke="#555" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="565" y="214" text-anchor="start" font-size="12" fill="#222">Rostro (sugador)</text>
+
+  <!-- Pronoto -->
+  <line x1="370" y1="185" x2="310" y2="175" stroke="#555" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="238" y="179" text-anchor="middle" font-size="12" fill="#222">Pronoto</text>
+
+  <!-- Escutelo -->
+  <line x1="450" y1="258" x2="510" y2="268" stroke="#555" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="570" y="272" text-anchor="start" font-size="12" fill="#222">Escutelo</text>
+
+  <!-- Asa (hemélitro) -->
+  <line x1="290" y1="270" x2="245" y2="285" stroke="#555" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="165" y="289" text-anchor="middle" font-size="12" fill="#222">Hemélitro (asa)</text>
+
+  <!-- Abdômen -->
+  <line x1="450" y1="385" x2="450" y2="410" stroke="#555" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="450" y="425" text-anchor="middle" font-size="13" fill="#222" font-weight="bold">Abdômen</text>
+
+  <!-- Glândula de odor -->
+  <line x1="462" y1="340" x2="530" y2="360" stroke="#F08305" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="535" y="355" text-anchor="start" font-size="12" fill="#b05a00" font-weight="bold">Glândula de odor</text>
+
+  <!-- Patas -->
+  <line x1="252" y1="370" x2="220" y2="380" stroke="#555" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="170" y="384" text-anchor="middle" font-size="12" fill="#222">3 pares de patas</text>
+
+  <!-- Rodapé -->
+  <text x="450" y="500" text-anchor="middle" font-size="11" fill="#888">Euschistus heros — percevejo-marrom — escala ilustrativa</text>
+</svg>

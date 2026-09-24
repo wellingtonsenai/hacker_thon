@@ -1,1 +1,12 @@
 node_modules/
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Lock files do LibreOffice/Writer
+.~lock.*#
+
+# Previews intermediários (pasta por slide)
+saida/*-preview/

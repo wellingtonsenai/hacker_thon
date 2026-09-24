@@ -1,0 +1,89 @@
+# Deck de exemplo — Caso 1: Assistente das Apostilas
+# Gerado como referência para o painel web do workshop
+# Rode: python slides/gerador.py casos/deck-apostilas.yaml --saida saida/apostilas-deck.pptx
+
+slides:
+  - tipo: capa
+    titulo: "Assistente das Apostilas"
+    subtitulo: "RAG com Amazon Bedrock e Knowledge Bases"
+    autor: "Grupo 1 · LAB365 × SENAI"
+    grupo: "CASO 1"
+
+  - tipo: secao
+    titulo: "O Problema"
+    subtitulo: "Por que alunos ficam sem resposta?"
+
+  - tipo: conteudo
+    eyebrow: "Contexto e motivação"
+    titulo: "Problema e Usuário"
+    bullets:
+      - "Alunos fazem perguntas sobre apostilas fora do horário das aulas"
+      - "Professores não conseguem atender todos individualmente"
+      - "Buscas manuais no PDF são lentas e imprecisas"
+      - "Conteúdo das apostilas está em PDFs não indexados"
+      - "Solução: agente que responde com trechos das apostilas como fonte"
+
+  - tipo: secao
+    titulo: "A Arquitetura"
+    subtitulo: "Padrão RAG com serviços gerenciados"
+
+  - tipo: conteudo
+    eyebrow: "Padrão escolhido"
+    titulo: "RAG — Retrieval-Augmented Generation"
+    bullets:
+      - "Usuário faz pergunta → Cognito valida identidade"
+      - "API Gateway roteia para Lambda"
+      - "Lambda consulta Knowledge Bases (chunking + embedding automático)"
+      - "Bedrock gera resposta citando os trechos recuperados"
+      - "Progresso e histórico salvos no DynamoDB"
+      - "Apostilas em PDF armazenadas no S3"
+    nota: "Modelo padrão: Amazon Titan Text Premier. Fallback: Claude 3 Haiku."
+
+  - tipo: diagrama
+    eyebrow: "Diagrama gerado pela skill"
+    titulo: "Arquitetura do Assistente"
+    imagem: "saida/apostilas-diagrama.png"
+
+  - tipo: comparacao
+    eyebrow: "Decisão de arquitetura"
+    titulo: "RAG vs. Fine-tuning"
+    esquerda:
+      titulo: "RAG (escolhido)"
+      bullets:
+        - "Atualiza o conteúdo sem retreinar"
+        - "Fontes citáveis e auditáveis"
+        - "Custo menor e estável"
+        - "Pronto em horas, não semanas"
+    direita:
+      titulo: "Fine-tuning (alternativa)"
+      bullets:
+        - "Requer dados rotulados"
+        - "Retreino a cada apostila nova"
+        - "Custo de GPU elevado"
+        - "Não cita a fonte original"
+    separador: "vs"
+    nota: "Regra: comece pelo RAG. Fine-tuning só quando o domínio exige vocabulário muito especializado."
+
+  - tipo: conteudo
+    eyebrow: "Segurança e governança"
+    titulo: "Guardrails e Governança"
+    bullets:
+      - "Cognito com MFA obrigatório para professores"
+      - "Guardrails do Bedrock: filtro de conteúdo inapropriado ativo"
+      - "Nenhum dado pessoal de aluno nos prompts (anonimização no Lambda)"
+      - "Chaves AWS via IAM Role — nunca hardcoded"
+      - "Logs de acesso no CloudTrail por 90 dias"
+
+  - tipo: fechamento
+    titulo: "Pronto para defender no tribunal"
+    numeros:
+      - valor: "< 3s"
+        rotulo: "tempo de resposta"
+      - valor: "0"
+        rotulo: "chaves expostas"
+      - valor: "6"
+        rotulo: "pilares Well-Arch."
+    proximos_passos:
+      - "Gerar diagrama com a skill gerador-arquitetura"
+      - "Defender no tribunal às 16h10"
+      - "Fork do repositório para cada integrante"

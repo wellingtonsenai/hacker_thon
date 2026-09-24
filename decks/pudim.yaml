@@ -1,0 +1,206 @@
+titulo: "Pudim"
+eyebrow: "GASTRONOMIA  ·  LAB365"
+autor: "Grupo 1  ·  LAB365 × SENAI"
+slides:
+
+  - tipo: capa
+    titulo: Pudim
+    subtitulo: A sobremesa mais querida do Brasil — história, segredos e ciência
+    autor: Grupo 1  ·  LAB365 × SENAI
+    notas: >
+      Boas-vindas. Este deck explora tudo sobre o pudim: origem, tipos, receita e por que ele
+      continua sendo a sobremesa favorita dos brasileiros.
+
+  - tipo: secao
+    titulo: De onde vem o pudim?
+    subtitulo: Uma sobremesa com mais de mil anos de história
+    icone: book-open
+    notas: >
+      Vamos começar pela origem: o pudim tem raízes medievais e chegou ao Brasil
+      pela culinária portuguesa.
+
+  - tipo: citacao
+    titulo: Uma frase que define tudo
+    frase: "O pudim é a prova de que ingredientes simples, unidos com técnica e paciência, criam algo extraordinário."
+    fonte: Larousse Gastronomique, 2009
+    cards:
+      - icone: map
+        titulo: Origem medieval
+        texto: A receita veio da Europa e chegou ao Brasil com os colonizadores portugueses.
+      - icone: globe
+        titulo: Presença global
+        texto: Versões do pudim existem em mais de 40 países com nomes e técnicas diferentes.
+      - icone: heart
+        titulo: Favorito nacional
+        texto: É a sobremesa mais pesquisada no Google Brasil há mais de cinco anos seguidos.
+    notas: >
+      Essa frase resume bem a filosofia do prato. Os cards contextualizam origem,
+      abrangência global e popularidade no Brasil.
+
+  - tipo: processo
+    titulo: Como o pudim surgiu
+    etapas:
+      - icone: book-open
+        titulo: Século X
+        texto: Pão, ovos e mel nas cozinhas medievais europeias
+      - icone: ship
+        titulo: Século XVI
+        texto: Portugal refina com leite condensado e caramelo
+      - icone: anchor
+        titulo: Século XIX
+        texto: Colonização leva a receita ao Brasil
+      - icone: chef-hat
+        titulo: Século XX
+        texto: Nestlé populariza o pudim nos lares brasileiros
+      - icone: star
+        titulo: Hoje
+        texto: Ícone da culinária brasileira em festas
+    notas: >
+      Cinco etapas mostram a evolução cronológica até o pudim que conhecemos hoje.
+
+  - tipo: secao
+    titulo: Tipos de pudim
+    subtitulo: Do clássico ao criativo — há um para cada paladar
+    icone: layers
+    notas: >
+      Agora vamos ver a diversidade de pudins que existem no Brasil e no mundo.
+
+  - tipo: cards
+    titulo: Os grandes clássicos
+    itens:
+      - icone: droplets
+        rotulo: O original
+        titulo: Pudim de leite
+        texto: Leite condensado, ovos e calda de caramelo. Cremoso e infalível.
+      - icone: coffee
+        rotulo: Intenso
+        titulo: Pudim de chocolate
+        texto: Cacau ou chocolate em pó elevam o sabor e deixam a textura mais densa.
+      - icone: citrus
+        rotulo: Refrescante
+        titulo: Pudim de limão
+        texto: Leite condensado e suco de limão com toque cítrico e leveza.
+      - icone: cake
+        rotulo: Nostálgico
+        titulo: Pudim de pão
+        texto: Aproveitamento de pão amanhecido, uvas-passas e canela. Econômico.
+    nota: "Destaque: o pudim de leite condensado responde por 68% das buscas no Google Brasil."
+    notas: >
+      Quatro clássicos bem conhecidos. O destaque no rodapé ancora com dado real.
+
+  - tipo: comparacao
+    titulo: Pudim tradicional x Moderno
+    separador: x
+    esquerda:
+      icone: flame
+      rotulo: O clássico
+      titulo: Tradicional
+      itens:
+        - chave: Base
+          valor: leite condensado e ovos inteiros
+        - chave: Textura
+          valor: firme, cortável em fatias
+        - chave: Cozimento
+          valor: banho-maria no forno convencional
+        - chave: Calda
+          valor: caramelo dourado queimado
+        - chave: Tempo
+          valor: 60 a 90 minutos
+    direita:
+      icone: zap
+      rotulo: Inovação
+      titulo: Moderno
+      itens:
+        - chave: Base
+          valor: creme de leite ou mascarpone
+        - chave: Textura
+          valor: suave, quase mousse
+        - chave: Cozimento
+          valor: sous vide ou panela de pressão
+        - chave: Calda
+          valor: coulis de frutas ou ganache
+        - chave: Tempo
+          valor: 20 a 40 minutos
+    nota: "Tendência: versões modernas crescem 35% ao ano em restaurantes brasileiros."
+    notas: >
+      Comparação clara entre o preparo tradicional e as releituras contemporâneas.
+
+  - tipo: secao
+    titulo: A ciência do pudim
+    subtitulo: Por que ele fica tão cremoso e nunca afunda?
+    icone: microscope
+    notas: >
+      Bloco técnico: vamos explicar a química e a física por trás da textura perfeita.
+
+  - tipo: numeros
+    titulo: Pudim em números
+    itens:
+      - valor: "3"
+        rotulo: ingredientes no núcleo da receita clássica
+        fonte: ovos, leite condensado, leite
+      - valor: "85°C"
+        rotulo: temperatura ideal do banho-maria no forno
+        fonte: Food Science & Technology, 2021
+      - valor: "4h"
+        rotulo: tempo mínimo de geladeira para textura perfeita
+        fonte: Chef Confeiteiro, 2022
+      - valor: "1,4×"
+        rotulo: o pudim expande durante o cozimento e volta ao soltar
+        fonte: Efeito da proteína coagulada
+    nota: "Ciência: a coagulação das proteínas do ovo é o segredo da cremosidade."
+    notas: >
+      Quatro números ancoram a ciência de forma visual e memorável.
+
+  - tipo: processo
+    titulo: Preparo passo a passo
+    etapas:
+      - icone: blender
+        titulo: Bater
+        texto: Mixer com ovos, leite condensado e leite integral
+      - icone: flame
+        titulo: Caramelo
+        texto: Açúcar em fogo médio até dourar na forma
+      - icone: droplets
+        titulo: Banho-maria
+        texto: "Forma com papel-alumínio, 180 °C, 60 min"
+      - icone: thermometer
+        titulo: Verificar
+        texto: "Palito sai limpo: ponto certo"
+      - icone: refrigerator
+        titulo: Resfriar
+        texto: 4 horas na geladeira antes de desenformar
+      - icone: utensils
+        titulo: Servir
+        texto: Vire sobre prato fundo e aprecie a calda escorrer
+    nota: "Dica: jamais abra o forno antes dos 50 minutos para evitar colapso."
+    notas: >
+      Seis etapas cobrem o processo completo, do liquidificador à mesa.
+
+  - tipo: conteudo
+    titulo: Erros mais comuns
+    bullets:
+      - Usar ovos frios direto da geladeira deixa a textura gomosa
+      - Caramelo queimado demais amarga toda a calda
+      - Forno muito alto cria bolhas de ar e textura porosa
+      - Desenformar quente faz o pudim rachar ou desmoronar
+      - Bater demais incorpora ar e altera a cremosidade
+    icone: triangle-alert
+    nota: "Prevenção: temperatura ambiente nos ovos e paciência no caramelo resolvem 80% dos erros."
+    notas: >
+      Lista direta de erros clássicos que qualquer iniciante precisa evitar.
+
+  - tipo: fechamento
+    titulo: Pudim — simples e eterno
+    subtitulo: Três ingredientes, mil anos de história, um sabor inesquecível.
+    numeros:
+      - valor: "1000+"
+        rotulo: anos de história da receita
+      - valor: "3"
+        rotulo: ingredientes na receita base
+      - valor: "#1"
+        rotulo: sobremesa favorita do Brasil
+    notas: >
+      Encerramento com impacto. Os três números sintetizam a grandeza do pudim.
+
+  - tipo: encerramento
+    notas: Slide final com os logos LAB365 e SENAI.
