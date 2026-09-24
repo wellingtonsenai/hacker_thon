@@ -1,0 +1,13 @@
+{
+  "name": "atividade-aws-lab365",
+  "version": "1.0.0",
+  "description": "Hackathon LAB365 + SENAI - Workshop Kiro e Agentes na AWS",
+  "main": "validador.js",
+  "scripts": {
+    "validar": "node validador.js",
+    "validar:yaml": "node validador.js --yaml"
+  },
+  "dependencies": {
+    "js-yaml": "4.3.2"
+  }
+}

@@ -1,0 +1,55 @@
+# Caso de uso de exemplo — gerado pelo Dev Validador
+# Estrutura esperada pelo renderizador
+
+nome: "Plataforma de E-learning com IA"
+descricao: >
+  Plataforma educacional que usa modelos de linguagem para gerar conteúdo
+  personalizado, avaliar respostas e sugerir trilhas de aprendizado.
+
+servicos:
+  - id: cognito
+    nome: Amazon Cognito
+    descricao: Autenticação e gerenciamento de usuários
+    icone: cognito.svg
+
+  - id: api_gateway
+    nome: Amazon API Gateway
+    descricao: Entrada única para todas as requisições da aplicação
+    icone: api-gateway.svg
+
+  - id: lambda
+    nome: AWS Lambda
+    descricao: Processamento serverless de requisições
+    icone: lambda.svg
+
+  - id: bedrock
+    nome: Amazon Bedrock
+    descricao: Modelos de linguagem para geração de conteúdo e avaliação
+    icone: bedrock.svg
+
+  - id: dynamodb
+    nome: Amazon DynamoDB
+    descricao: Banco de dados NoSQL para progresso dos alunos
+    icone: dynamodb.svg
+
+  - id: s3
+    nome: Amazon S3
+    descricao: Armazenamento de materiais didáticos e mídias
+    icone: s3.svg
+
+  - id: cloudfront
+    nome: Amazon CloudFront
+    descricao: CDN para entrega rápida de conteúdo estático
+    icone: cloudfront.svg
+
+fluxo:
+  - passo: 1
+    descricao: "Aluno se autentica via Cognito"
+  - passo: 2
+    descricao: "Requisição chega ao API Gateway"
+  - passo: 3
+    descricao: "Lambda processa e chama o Bedrock"
+  - passo: 4
+    descricao: "Resposta personalizada é salva no DynamoDB"
+  - passo: 5
+    descricao: "Material complementar é servido via S3 + CloudFront"

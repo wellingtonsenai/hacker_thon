@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dev Validador — Checagem de Ícones</title>
+  <style>
+    /* ── reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0f1117;
+      --surface:   #1a1d27;
+      --border:    #2a2d3e;
+      --primary:   #6c63ff;
+      --primary-h: #8a83ff;
+      --success:   #22c55e;
+      --error:     #ef4444;
+      --warn:      #f59e0b;
+      --text:      #e2e8f0;
+      --muted:     #64748b;
+      --radius:    12px;
+      --font:      'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── header ── */
+    header {
+      width: 100%;
+      padding: 18px 32px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    header .badge {
+      background: var(--primary);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    header h1 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    header span.sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    /* ── layout ── */
+    .container {
+      width: 100%;
+      max-width: 760px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 16px 0;
+      gap: 16px;
+    }
+
+    /* ── chat window ── */
+    #chat {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-bottom: 16px;
+      min-height: 400px;
+      max-height: 60vh;
+    }
+
+    /* ── mensagens ── */
+    .msg {
+      display: flex;
+      gap: 10px;
+      animation: fadeIn .2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg.bot { align-items: flex-start; }
+    .msg.user { flex-direction: row-reverse; }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .msg.bot  .avatar { background: var(--primary); }
+    .msg.user .avatar { background: var(--border); }
+
+    .bubble {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .msg.bot  .bubble { background: var(--surface); border: 1px solid var(--border); }
+    .msg.user .bubble { background: var(--primary);  color: #fff; }
+
+    /* ── resultados dentro do bubble ── */
+    .result-block {
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .result-header {
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--border);
+      letter-spacing: .04em;
+    }
+
+    .result-body { padding: 10px 12px; }
+
+    .result-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .result-row:last-child { border-bottom: none; }
+
+    .tag-ok    { color: var(--success); font-size: 15px; }
+    .tag-fail  { color: var(--error);   font-size: 15px; }
+    .tag-warn  { color: var(--warn);    font-size: 15px; }
+
+    .pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    .pill-ok   { background: rgba(34,197,94,.15);  color: var(--success); }
+    .pill-fail { background: rgba(239,68,68,.15);  color: var(--error);   }
+    .pill-warn { background: rgba(245,158,11,.15); color: var(--warn);    }
+
+    .summary-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    /* ── input area ── */
+    .input-area {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    textarea {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      resize: none;
+      min-height: 40px;
+      max-height: 120px;
+      line-height: 1.5;
+    }
+
+    textarea::placeholder { color: var(--muted); }
+
+    button.send-btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+      white-space: nowrap;
+    }
+    button.send-btn:hover { background: var(--primary-h); }
+    button.send-btn:disabled { opacity: .5; cursor: default; }
+
+    /* ── quick actions ── */
+    .quick-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .qa-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .qa-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ── drop zone ── */
+    #drop-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    #drop-zone.drag-over {
+      border-color: var(--primary);
+      background: rgba(108,99,255,.06);
+      color: var(--primary);
+    }
+
+    /* ── scrollbar ── */
+    #chat::-webkit-scrollbar { width: 4px; }
+    #chat::-webkit-scrollbar-track { background: transparent; }
+    #chat::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    /* ── code/pre ── */
+    pre {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 12px;
+      overflow-x: auto;
+      margin-top: 8px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="badge">Dev Validador</span>
+  <h1>Checagem de Ícones</h1>
+  <span class="sub">LAB365 × SENAI · Workshop Kiro e Agentes na AWS</span>
+</header>
+
+<div class="container">
+
+  <div id="chat"></div>
+
+  <div class="input-area">
+    <div id="drop-zone">
+      ⬆ Arraste um arquivo <strong>.yaml</strong> aqui, ou cole o conteúdo abaixo
+    </div>
+
+    <div class="quick-actions">
+      <button class="qa-btn" onclick="loadExample()">📄 Carregar exemplo.yaml</button>
+      <button class="qa-btn" onclick="showHelp()">❓ Como usar</button>
+      <button class="qa-btn" onclick="clearChat()">🗑 Limpar chat</button>
+    </div>
+
+    <div class="input-row">
+      <textarea
+        id="input"
+        placeholder="Cole o conteúdo YAML aqui ou pergunte algo…"
+        rows="2"
+        onkeydown="handleKey(event)"
+      ></textarea>
+      <button class="send-btn" id="send-btn" onclick="handleSend()">Enviar ↩</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ─── estado ──────────────────────────────────────────────────────────────────
+
+// Ícones disponíveis — populados via drag-and-drop de arquivos de ícone
+// ou preenchidos manualmente para simular a pasta icones/
+let iconesDisponiveis = new Set();
+
+// ─── YAML parser mínimo (sem dependências externas no browser) ──────────────
+
+/**
+ * Parser YAML simplificado suficiente para o formato de caso de uso.
+ * Extrai todos os pares chave: valor de forma recursiva.
+ * Para produção com YAML complexo, carregar js-yaml via CDN.
+ */
+function parseYamlSimples(texto) {
+  const linhas = texto.split('\n');
+  const resultado = {};
+  const pilha = [{ indent: -1, obj: resultado }];
+
+  for (let linha of linhas) {
+    const trimmed = linha.trimEnd();
+    if (!trimmed || trimmed.trimStart().startsWith('#')) continue;
+
+    const indent = linha.length - linha.trimStart().length;
+    const conteudo = trimmed.trim();
+
+    // Remove item de lista
+    const isItem = conteudo.startsWith('- ');
+    const conteudoLimpo = isItem ? conteudo.slice(2) : conteudo;
+
+    if (!conteudoLimpo.includes(':')) continue;
+
+    const colonIdx = conteudoLimpo.indexOf(':');
+    const chave = conteudoLimpo.slice(0, colonIdx).trim();
+    const valor = conteudoLimpo.slice(colonIdx + 1).trim().replace(/^["']|["']$/g, '');
+
+    if (valor) {
+      // Achata tudo num array de {chave, valor}
+      if (!resultado._refs) resultado._refs = [];
+      resultado._refs.push({ chave, valor });
+    }
+  }
+
+  return resultado._refs || [];
+}
+
+/**
+ * Extrai referências de ícone do array de pares chave/valor.
+ */
+const CHAVES_ICONE = new Set(['icone', 'icon', 'icon_file', 'imagem', 'image', 'logo']);
+
+function extrairIcones(refs) {
+  return refs.filter(r => CHAVES_ICONE.has(r.chave.toLowerCase()));
+}
+
+// ─── checagem ────────────────────────────────────────────────────────────────
+
+function normalizarNome(nome) {
+  return nome.toLowerCase().replace(/^.*[/\\]/, ''); // só o nome do arquivo
+}
+
+function nomeBase(nome) {
+  return nome.replace(/\.[^.]+$/, '').toLowerCase();
+}
+
+function iconeExiste(ref) {
+  const valor = normalizarNome(ref.valor);
+  const base  = nomeBase(valor);
+
+  for (const disponivel of iconesDisponiveis) {
+    const d = normalizarNome(disponivel);
+    if (d === valor || nomeBase(d) === base) return true;
+  }
+  return false;
+}
+
+function validarConteudo(yamlTexto, nomeArquivo) {
+  const refs    = parseYamlSimples(yamlTexto);
+  const icones  = extrairIcones(refs);
+
+  if (icones.length === 0) {
+    return { ok: [], ausentes: [], aviso: 'Nenhuma chave de ícone encontrada no YAML.' };
+  }
+
+  const ok      = icones.filter(r =>  iconeExiste(r));
+  const ausentes= icones.filter(r => !iconeExiste(r));
+  return { ok, ausentes, aviso: null };
+}
+
+// ─── chat ─────────────────────────────────────────────────────────────────────
+
+function addMsg(tipo, html) {
+  const chat   = document.getElementById('chat');
+  const avatar = tipo === 'bot' ? '🤖' : '👤';
+  const msg    = document.createElement('div');
+  msg.className = `msg ${tipo}`;
+  msg.innerHTML = `
+    <div class="avatar">${avatar}</div>
+    <div class="bubble">${html}</div>
+  `;
+  chat.appendChild(msg);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function renderResultado(resultado, nomeArq) {
+  const { ok, ausentes, aviso } = resultado;
+  const total = ok.length + ausentes.length;
+
+  let html = `<strong>📋 ${escHtml(nomeArq)}</strong>`;
+
+  if (aviso) {
+    html += `<br><span class="tag-warn">⚠</span> ${escHtml(aviso)}`;
+    return html;
+  }
+
+  html += `<div class="result-block">`;
+  html += `<div class="result-header">Referências de ícone encontradas: ${total}</div>`;
+  html += `<div class="result-body">`;
+
+  for (const r of ok) {
+    html += `
+      <div class="result-row">
+        <span class="tag-ok">✔</span>
+        <code>${escHtml(r.chave)}</code>:
+        <strong>${escHtml(r.valor)}</strong>
+        <span class="pill pill-ok">existe</span>
+      </div>`;
+  }
+
+  for (const r of ausentes) {
+    html += `
+      <div class="result-row">
+        <span class="tag-fail">✘</span>
+        <code>${escHtml(r.chave)}</code>:
+        <strong>${escHtml(r.valor)}</strong>
+        <span class="pill pill-fail">ausente</span>
+      </div>`;
+  }
+
+  html += `</div></div>`;
+
+  html += `<div class="summary-bar">`;
+  html += `<span class="pill pill-ok">✔ ${ok.length} OK</span>`;
+  if (ausentes.length > 0) {
+    html += `<span class="pill pill-fail">✘ ${ausentes.length} ausentes</span>`;
+  } else {
+    html += `<span class="pill pill-ok">🎉 Todos os ícones existem!</span>`;
+  }
+
+  if (iconesDisponiveis.size === 0) {
+    html += `<span class="pill pill-warn">⚠ Nenhum ícone carregado — arraste os ícones aqui para validar de verdade</span>`;
+  }
+
+  html += `</div>`;
+  return html;
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+// ─── handlers ─────────────────────────────────────────────────────────────────
+
+function handleSend() {
+  const input = document.getElementById('input');
+  const texto = input.value.trim();
+  if (!texto) return;
+
+  input.value = '';
+
+  // Detecta se é YAML (contém ":" em múltiplas linhas)
+  const linhas = texto.split('\n').filter(l => l.trim() && !l.trim().startsWith('#'));
+  const pareceYaml = linhas.filter(l => l.includes(':')).length >= 2;
+
+  if (pareceYaml) {
+    addMsg('user', '📄 YAML colado para validação');
+    setTimeout(() => {
+      const resultado = validarConteudo(texto, 'conteúdo-colado.yaml');
+      addMsg('bot', renderResultado(resultado, 'conteúdo-colado.yaml'));
+    }, 300);
+  } else {
+    addMsg('user', escHtml(texto));
+    setTimeout(() => responderPergunta(texto), 300);
+  }
+}
+
+function responderPergunta(texto) {
+  const t = texto.toLowerCase();
+
+  if (t.includes('icone') || t.includes('ícone') || t.includes('icon')) {
+    if (iconesDisponiveis.size === 0) {
+      addMsg('bot', '📂 Nenhum ícone carregado ainda. Arraste os arquivos de ícone (<code>.svg</code>, <code>.png</code>, etc.) na área acima para registrá-los.');
+    } else {
+      const lista = [...iconesDisponiveis].map(i => `<li><code>${escHtml(i)}</code></li>`).join('');
+      addMsg('bot', `📂 <strong>${iconesDisponiveis.size} ícone(s) carregado(s):</strong><ul style="margin-top:8px;padding-left:20px">${lista}</ul>`);
+    }
+  } else if (t.includes('ajuda') || t.includes('help') || t.includes('como')) {
+    showHelp();
+  } else if (t.includes('limpar') || t.includes('clear')) {
+    clearChat();
+  } else {
+    addMsg('bot', `Não entendi. Tente colar um <strong>YAML</strong> para validar, ou clique em <em>"Como usar"</em>.`);
+  }
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    handleSend();
+  }
+}
+
+// ─── drag & drop ──────────────────────────────────────────────────────────────
+
+const dropZone = document.getElementById('drop-zone');
+
+dropZone.addEventListener('dragover', e => {
+  e.preventDefault();
+  dropZone.classList.add('drag-over');
+});
+
+dropZone.addEventListener('dragleave', () => {
+  dropZone.classList.remove('drag-over');
+});
+
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  processarArquivos([...e.dataTransfer.files]);
+});
+
+dropZone.addEventListener('click', () => {
+  const inp = document.createElement('input');
+  inp.type = 'file';
+  inp.multiple = true;
+  inp.accept = '.yaml,.yml,.svg,.png,.jpg,.jpeg,.webp';
+  inp.onchange = () => processarArquivos([...inp.files]);
+  inp.click();
+});
+
+function processarArquivos(files) {
+  const yamlFiles  = files.filter(f => f.name.endsWith('.yaml') || f.name.endsWith('.yml'));
+  const iconFiles  = files.filter(f => /\.(svg|png|jpg|jpeg|webp)$/i.test(f.name));
+
+  // Registra ícones
+  iconFiles.forEach(f => iconesDisponiveis.add(f.name));
+
+  if (iconFiles.length > 0) {
+    addMsg('bot', `📁 <strong>${iconFiles.length}</strong> ícone(s) registrado(s): ${iconFiles.map(f => `<code>${escHtml(f.name)}</code>`).join(', ')}`);
+  }
+
+  // Processa YAMLs
+  yamlFiles.forEach(f => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      addMsg('user', `📄 Arquivo carregado: <strong>${escHtml(f.name)}</strong>`);
+      setTimeout(() => {
+        const resultado = validarConteudo(ev.target.result, f.name);
+        addMsg('bot', renderResultado(resultado, f.name));
+      }, 300);
+    };
+    reader.readAsText(f);
+  });
+}
+
+// ─── quick actions ────────────────────────────────────────────────────────────
+
+async function loadExample() {
+  addMsg('user', '📄 Carregar exemplo.yaml');
+
+  // Tenta buscar o arquivo via fetch (funciona se servido por HTTP)
+  try {
+    const resp = await fetch('casos/exemplo.yaml');
+    if (resp.ok) {
+      const texto = await resp.text();
+      setTimeout(() => {
+        const resultado = validarConteudo(texto, 'exemplo.yaml');
+        addMsg('bot', renderResultado(resultado, 'exemplo.yaml'));
+      }, 300);
+      return;
+    }
+  } catch (_) {}
+
+  // Fallback: exemplo embutido
+  const exemplo = `nome: "Plataforma de E-learning com IA"
+servicos:
+  - id: cognito
+    nome: Amazon Cognito
+    icone: cognito.svg
+  - id: lambda
+    nome: AWS Lambda
+    icone: lambda.svg
+  - id: bedrock
+    nome: Amazon Bedrock
+    icone: bedrock.svg
+  - id: s3
+    nome: Amazon S3
+    icone: s3.svg`;
+
+  setTimeout(() => {
+    const resultado = validarConteudo(exemplo, 'exemplo.yaml');
+    addMsg('bot', renderResultado(resultado, 'exemplo.yaml'));
+  }, 300);
+}
+
+function showHelp() {
+  addMsg('bot', `
+    <strong>Como usar o Dev Validador</strong><br><br>
+    <strong>1. Carregar ícones</strong><br>
+    Arraste os arquivos <code>.svg</code> / <code>.png</code> da pasta <code>icones/</code> na área de drop.<br><br>
+    <strong>2. Validar um YAML</strong><br>
+    Arraste um arquivo <code>.yaml</code> da pasta <code>casos/</code>, ou cole o conteúdo diretamente no campo de texto.<br><br>
+    <strong>3. Interpretar o resultado</strong><br>
+    <span class="pill pill-ok">✔ existe</span> — o arquivo de ícone foi encontrado<br>
+    <span class="pill pill-fail">✘ ausente</span> — o ícone não existe na pasta <code>icones/</code><br><br>
+    <strong>Chaves detectadas automaticamente:</strong><br>
+    <code>icone</code>, <code>icon</code>, <code>icon_file</code>, <code>imagem</code>, <code>image</code>, <code>logo</code>
+  `);
+}
+
+function clearChat() {
+  document.getElementById('chat').innerHTML = '';
+  addMsg('bot', 'Chat limpo. Como posso ajudar?');
+}
+
+// ─── boas-vindas ──────────────────────────────────────────────────────────────
+
+addMsg('bot', `
+  Olá! Sou o <strong>Dev Validador</strong>. 👋<br><br>
+  Minha função é conferir se os ícones referenciados em um arquivo <strong>YAML de caso de uso</strong> existem na pasta <code>icones/</code>.<br><br>
+  Para começar:<br>
+  • Arraste os <strong>arquivos de ícone</strong> (.svg/.png) na área acima<br>
+  • Depois arraste ou cole o <strong>arquivo YAML</strong> do caso de uso<br><br>
+  Ou clique em <em>"Carregar exemplo.yaml"</em> para ver uma demonstração.
+`);
+</script>
+
+</body>
+</html>
